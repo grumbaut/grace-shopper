@@ -1,16 +1,29 @@
 const conn = require('./conn');
 const Category = require('./Category');
 const Product = require('./Product');
+const User = require('./User');
+const faker = require('faker');
 
 Product.belongsTo(Category);
 Category.hasMany(Product);
+
+
+const fakeUser = ()=> {
+  return {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email()
+  };
+};
+
 
 const syncAndSeed = ()=>{
   conn.sync({ force: true })
   .then(()=>{
     return Promise.all([
       Category.create({ name:'Kitchen Supplies'}),
-      Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 })
+      Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 }),
+      User.create(fakeUser())
     ]);
   })
   .then(([ category1, product1])=>{
