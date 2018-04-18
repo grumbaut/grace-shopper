@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Nav from './Nav';
 import Home from './Home';
+import Product from './Product';
 
 class Main extends React.Component {
   constructor(props) {
@@ -19,9 +20,8 @@ class Main extends React.Component {
       <HashRouter>
         <Nav />
         <div className='container-fluid'>
-          { /* Container-fluid is from bootstrap and imposes margins. Placing it here allows the navbar
-          to stretch across the screen. */ }
           <Switch>
+            <Route path='/products/:id' component={ Product } />
             <Route path='/' component={ Home } />
           </Switch>
         </div>
