@@ -16,16 +16,16 @@ describe('models', ()=> {
     it('there is 1 product in the database', ()=> {
       expect(products.length).to.equal(1);
     });
-    // describe('User data', ()=> {
-    //   let users;
-    //   beforeEach(()=> {
-    //     return User.findAll({})
-    //     .then( _users => users = _users);
-    //   });
-    //   it('we have users.', ()=> {
-    //     expect(users).to.be.ok;
-    //   });
-    // });
+    describe('User data', ()=> {
+      let users;
+      beforeEach(()=> {
+        return User.findAll({})
+        .then( _users => users = _users);
+      });
+      it('we have users.', ()=> {
+        expect(users).to.be.ok;
+      });
+    });
   });
 });
 
