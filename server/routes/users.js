@@ -3,8 +3,6 @@ const db = require('../db');
 const { User } = db.models;
 const path = require('path');
 
-
-
 usersRouter.get('/api/users', (req, res, next)=> {
   User.findAll()
     .then( users => res.send(users))
