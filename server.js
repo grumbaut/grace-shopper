@@ -13,7 +13,7 @@ app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', require('./server/routes'));
 
-app.use((err, res, res, next)=> {
+app.use((err, res, next)=> {
     res.status(500).send(err)
 });
 
