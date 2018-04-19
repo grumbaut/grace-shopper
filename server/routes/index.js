@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 router.use('/users', require('./users'));
 router.use('/categories', require('./categories'));
-router.use('/lineitems', require('./lineitems'));
+router.use('/lineItems', require('./lineItems'));    //Ed:  Icapitalized letter "I" in "lineItems"
 router.use('/orders', require('./orders'));
 router.use('/products', require('./products'));
 
