@@ -26754,8 +26754,8 @@ var Nav = function Nav() {
     'nav',
     { className: 'navbar navbar-expand-lg navbar-light bg-light' },
     _react2.default.createElement(
-      'a',
-      { className: 'navbar-brand', href: '#' },
+      _reactRouterDom.NavLink,
+      { className: 'navbar-brand', to: '/' },
       'Name Goes Here'
     ),
     _react2.default.createElement(
@@ -26773,8 +26773,8 @@ var Nav = function Nav() {
           'li',
           { className: 'nav-item active' },
           _react2.default.createElement(
-            'a',
-            { className: 'nav-link', href: '#' },
+            _reactRouterDom.NavLink,
+            { className: 'nav-link', to: '/' },
             'Home ',
             _react2.default.createElement(
               'span',
@@ -26787,8 +26787,8 @@ var Nav = function Nav() {
           'li',
           { className: 'nav-item' },
           _react2.default.createElement(
-            'a',
-            { className: 'nav-link', href: '#' },
+            _reactRouterDom.NavLink,
+            { className: 'nav-link', to: '/categories' },
             'Categories'
           )
         ),
@@ -26796,8 +26796,8 @@ var Nav = function Nav() {
           'li',
           { className: 'nav-item' },
           _react2.default.createElement(
-            'a',
-            { className: 'nav-link', href: '#' },
+            _reactRouterDom.NavLink,
+            { className: 'nav-link', to: '/products' },
             'Products'
           )
         )
@@ -26810,7 +26810,7 @@ var Nav = function Nav() {
           { className: 'nav-item' },
           _react2.default.createElement(
             _reactRouterDom.NavLink,
-            { className: 'nav-link', exact: true, to: '#', activeClassName: 'active' },
+            { className: 'nav-link', to: '#', activeClassName: 'active' },
             'Log In'
           )
         ),
@@ -26819,7 +26819,7 @@ var Nav = function Nav() {
           { className: 'nav-item' },
           _react2.default.createElement(
             _reactRouterDom.NavLink,
-            { className: 'nav-link', to: '/campuses', activeClassName: 'active' },
+            { className: 'nav-link', to: '/cart', activeClassName: 'active' },
             'Cart'
           )
         )
