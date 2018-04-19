@@ -4,6 +4,7 @@ const { Sequelize } = conn;
 const Order = conn.define('order', {
   cart: Sequelize.BOOL,
   total: Sequelize.INTEGER
+  products: []
   //isCart : BOOL
   // Checkout, review, payment, checkout complete
 
