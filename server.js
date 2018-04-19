@@ -18,7 +18,7 @@ app.use('/api', require('./server/routes'));
 app.get('/', (req, res, next)=> res.sendFile(path.join(__dirname, './public/index.html')));
 
 //Note: Keep the error handling as the last route
-app.use((err, res, next)=> {
+app.use((err, req, res, next)=> {
   res.status(500).send(err);
 });
 

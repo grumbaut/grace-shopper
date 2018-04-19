@@ -19,13 +19,15 @@ class Main extends React.Component {
   render() {
     return (
       <HashRouter>
-        <Nav />
-        <div className='container-fluid'>
-          <Switch>
-            <Route path='/products/:id' component={ Product } />
-            <Route path='/products' component={ Products } />
-            <Route path='/' component={ Home } />
-          </Switch>
+        <div>
+          <Nav />
+          <div className='container-fluid'>
+            <Switch>
+              <Route path='/products/:id' component={ Product } />
+              <Route path='/products' component={ Products } />
+              <Route path='/' component={ Home } />
+            </Switch>
+          </div>
         </div>
       </HashRouter>
     );

@@ -2873,11 +2873,7 @@ var _Main2 = _interopRequireDefault(_Main);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(
-  _reactRedux.Provider,
-  null,
-  _react2.default.createElement(_Main2.default, null)
-), document.getElementById('root'));
+_reactDom2.default.render(_react2.default.createElement(_Main2.default, null), document.getElementById('root'));
 
 /***/ }),
 /* 43 */
@@ -23750,16 +23746,20 @@ var Main = function (_React$Component) {
       return _react2.default.createElement(
         _reactRouterDom.HashRouter,
         null,
-        _react2.default.createElement(_Nav2.default, null),
         _react2.default.createElement(
           'div',
-          { className: 'container-fluid' },
+          null,
+          _react2.default.createElement(_Nav2.default, null),
           _react2.default.createElement(
-            _reactRouterDom.Switch,
-            null,
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/products/:id', component: _Product2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/products', component: _Products2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Home2.default })
+            'div',
+            { className: 'container-fluid' },
+            _react2.default.createElement(
+              _reactRouterDom.Switch,
+              null,
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/products/:id', component: _Product2.default }),
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/products', component: _Products2.default }),
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Home2.default })
+            )
           )
         )
       );
