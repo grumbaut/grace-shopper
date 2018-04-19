@@ -2,7 +2,7 @@ const conn = require('./conn');
 const { Sequelize } = conn;
 
 const Order = conn.define('order', {
-  cart: Sequelize.BOOL,
+  cart: Sequelize.BOOLEAN,
   total: Sequelize.INTEGER
   //products
   //isCart : BOOL
