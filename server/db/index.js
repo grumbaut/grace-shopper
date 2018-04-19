@@ -7,7 +7,6 @@ const LineItem = require('./LineItem');
 const faker = require('faker');
 
 Product.belongsTo(Category);
-Product.belongsToMany(LineItem);
 Category.hasMany(Product);
 LineItem.belongsTo(Order);
 LineItem.hasOne(Product);
