@@ -42,6 +42,9 @@ module.exports = {
   syncAndSeed,
   models: {
     Category,
-    Product
+    Product,
+    User,
+    LineItem,
+    Order
   }
 };

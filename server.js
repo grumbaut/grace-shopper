@@ -4,7 +4,7 @@ const app = express();
 const path = require('path');
 
 const db = require('./server/db');
-const { sync, seed } = db;
+const { syncAndSeed } = db;
 //const { Product, Category, User, Order, LineItem } = db.models;
 
 app.use(require('body-parser').json());
@@ -25,5 +25,5 @@ app.use((err, res, next)=> {
 const port = process.env.PORT || 3000;
 app.listen(port, ()=> `listening on port ${port}`);
 
-sync()
-  .then(()=> seed());
+syncAndSeed();
+
