@@ -2,10 +2,14 @@ const conn = require('./conn');
 const Category = require('./Category');
 const Product = require('./Product');
 const User = require('./User');
+const Order = require('./Order');
+const LineItem = require('./LineItem');
 const faker = require('faker');
 
 Product.belongsTo(Category);
 Category.hasMany(Product);
+LineItem.belongsTo(Order);
+Order.hasMany(LineItem);
 
 
 const fakeUser = ()=> {
