@@ -4,7 +4,7 @@ const app = express();
 const path = require('path');
 
 const db = require('./db');
-//const { sync, seed } = db;
+const { sync, seed } = db;
 //const { Product, Category, User, Order, LineItem } = db.models;
 
 app.use(require(body-parser).json());
