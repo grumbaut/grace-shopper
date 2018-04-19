@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Nav from './Nav';
 import Home from './Home';
 import Product from './Product';
+import Products from './Products';
 
 class Main extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class Main extends React.Component {
         <div className='container-fluid'>
           <Switch>
             <Route path='/products/:id' component={ Product } />
+            <Route path='/products' component={ Products } />
             <Route path='/' component={ Home } />
           </Switch>
         </div>
