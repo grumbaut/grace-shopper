@@ -1,15 +1,11 @@
 const router = require('express').Router();
-const db = require('../db');
-const { Product, Category, User, Order, LineItem } = db.models;
-const path = require('path');
+//Path and db are not being used, so they're not required. App should be router below. We can trim the requires to just './users' etc.
 
-router.get('/', (req, res, next)=> res.sendFile(path.join(__dirname, 'index.html')));
-
-app.use('/users', require('./server/routes/users'));
-app.use('/categories', require('./server/routes/categories'));
-app.use('/lineitems', require('./server/routes/lineitems'));
-app.use('/orders', require('./server/routes/orders'));
-app.use('/products', require('./server/routes/products'));
+router.use('/users', require('./users'));
+router.use('/categories', require('./categories'));
+router.use('/lineitems', require('./lineitems'));
+router.use('/orders', require('./orders'));
+router.use('/products', require('./products'));
 
 module.exports = router;
 
