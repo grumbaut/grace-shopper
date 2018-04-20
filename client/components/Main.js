@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories } from '../store';
+import { getCategories, getProducts } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -43,6 +43,7 @@ const mapState = null;
 const mapDispatch = dispatch => ({
   fetch() {
     dispatch(getCategories());
+    dispatch(getProducts());
   }
 });
 

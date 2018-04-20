@@ -7,6 +7,14 @@ const addProductsToStore = products => {
   return action;
 };
 
+export const getProducts = () => (
+  dispatch => (
+    axios.get('/api/products')
+      .then(res => res.data)
+      .then(products => dispatch(addProductsToStore(products)))
+  )
+);
+
 const reducer = (state = [], action) => {
   switch (action.type) {
   case GOT_PRODUCTS:

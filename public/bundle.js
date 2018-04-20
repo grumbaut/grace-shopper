@@ -23790,6 +23790,7 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     fetch: function fetch() {
       dispatch((0, _store.getCategories)());
+      dispatch((0, _store.getProducts)());
     }
   };
 };
@@ -28695,6 +28696,7 @@ module.exports = function spread(callback) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getProducts = undefined;
 
 var _axios = __webpack_require__(110);
 
@@ -28707,6 +28709,16 @@ var GOT_PRODUCTS = 'GOT_PRODUCTS';
 var addProductsToStore = function addProductsToStore(products) {
   var action = { type: GOT_PRODUCTS, products: products };
   return action;
+};
+
+var getProducts = exports.getProducts = function getProducts() {
+  return function (dispatch) {
+    return _axios2.default.get('/api/products').then(function (res) {
+      return res.data;
+    }).then(function (products) {
+      return dispatch(addProductsToStore(products));
+    });
+  };
 };
 
 var reducer = function reducer() {
