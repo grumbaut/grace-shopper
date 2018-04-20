@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { getCategories } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -14,6 +15,10 @@ class Main extends React.Component {
       categories: [],
       products: []
     };
+  }
+
+  componentDidMount() {
+    this.props.fetch();
   }
 
   render() {
@@ -34,4 +39,11 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+const mapState = null;
+const mapDispatch = dispatch => ({
+  fetch() {
+    dispatch(getCategories());
+  }
+});
+
+export default connect(mapState, mapDispatch)(Main);
