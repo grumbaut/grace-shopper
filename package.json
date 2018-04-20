@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run webpack",
+    "postinstall": "npm run webpack & npm run db-init",
     "webpack": "./node_modules/webpack/bin/webpack.js",
-    "test": "DATABASE_URL=postgres://localhost/grace_shopper_db ./node_modules/mocha/bin/mocha --watch",
+    "test": "DATABASE_URL=postgres://localhost/grace_shopper_db ./node_modules/mocha/bin/mocha --watch --recursive test/server/**/*.js",
+    "db-init": "pg-init grace_shopper_db",
     "start:dev": "npm run webpack -- -w & nodemon server.js --ignore dist/ --ignore src/"
   },
   "keywords": [],
