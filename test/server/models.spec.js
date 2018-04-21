@@ -4,7 +4,7 @@ const { Product, Category, User } = db.models;
 
 describe('models', ()=> {
   beforeEach(()=> {
-    return db.syncAndSeed();
+    //return db.syncAndSeed();
   });
   describe('User',()=> {
     it('exists',()=>{

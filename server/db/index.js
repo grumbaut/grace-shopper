@@ -23,7 +23,7 @@ const fakeUser = ()=> {
 
 
 const syncAndSeed = ()=>{
-  conn.sync({ force: true })
+  return conn.sync({ force: true })
   .then(()=>{
     return Promise.all([
       Category.create({ name:'Kitchen Supplies'}),
@@ -36,7 +36,6 @@ const syncAndSeed = ()=>{
       product1.setCategory(category1)
     ]);
   })
-  // .catch((err)=> console.log(err));
 };
 
 module.exports = {
