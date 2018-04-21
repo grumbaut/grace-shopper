@@ -2,10 +2,7 @@ const router = require('express').Router();
 const db = require('../db');
 const { Category } = db.models;
 
-//Path isn't being used here, so it can be removed.
-
-//I'm sure Prof will call this out, so this can just be "router." There's no namespace collision here, since they're separate routers. Since everything in the routes folder is for /api, we can get rid of /api below.
-router.get('/categories', (req, res, next)=> {
+router.get('/', (req, res, next)=> {
   Category.findAll()
     .then( categories => res.send(categories))
     .catch(next);
@@ -37,7 +34,5 @@ router.get('/categories', (req, res, next)=> {
 //     .then( category => res.send(category))
 //     .catch(next)
 // });
-
-//We only need error handling on the server.
 
 module.exports = router;

@@ -31,4 +31,8 @@ const User = conn.define('user', {
   }
 });
 
+User.prototype.correctPassword = function(password) { //this is a placeholder!!
+  return password === 'bobshops' ? true : false;
+};
+
 module.exports = User;

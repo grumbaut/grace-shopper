@@ -2,73 +2,86 @@ const expect = require('chai').expect;
 const db = require('../../server/db');
 const { Product, Category, User } = db.models;
 
-describe('models', ()=> {
-  beforeEach(()=> {
-    //return db.syncAndSeed();
+//Models tests, do they exist?
+describe('models', () => {
+  beforeEach(() => {
+    return db.syncAndSeed();
   });
-  describe('User',()=> {
-    it('exists',()=>{
+  describe('User', () => {
+    it('model User exists.', () => {
       expect(User).to.be.ok;
     });
   });
-  describe('Product',()=> {
-    it('exists',()=>{
+  describe('Product', () => {
+    it('model Product exists.', () => {
       expect(Product).to.be.ok;
     });
   });
-  describe('Category',()=> {
-    it('exists',()=>{
+  describe('Category', () => {
+    it('model Category exists.', () => {
       expect(Category).to.be.ok;
     });
   });
 });
-// describe('models', ()=> {
-//   beforeEach(()=> {
-//     return db.syncAndSeed();
-//   });
-//   describe('seeded data', ()=> {
-//     let products;
-//     beforeEach(()=> {
-//       return Product.findAll({})
-//       .then( _products => products = _products);
-//     });
-//     it('there is 1 product in the database', ()=> {
-//       expect(products.length).to.equal(1);
-//     });
-//     describe('User data', ()=> {
-//       let users;
-//       beforeEach(()=> {
-//         return User.findAll({})
-//         .then( _users => users = _users);
-//       });
-//       it('we have users.', ()=> {
-//         expect(users).to.be.ok;
-//       });
-//     });
-//   });
-// });
 
-// describe('Products', function() {
-//   describe('Number of products', function() {
-//     it('should return 3 when searching database for products', function(){
-//       assert.equal(-1, Product.findAll().length);
-//     });
-//   });
-// });
+//Seeding test, do we have all of our data seeding?
+describe('seeded data', () => {
+  describe('Product data', () => {
+    let products;
+    beforeEach(() => {
+      return Product.findAll({})
+        .then(_products => products = _products);
+    });
+    it('there is 1 product in the database.', () => {
+      expect(products.length).to.equal(1);
+    });
+  });
+  let products;
+  beforeEach(() => {
+    return Product.findAll({})
+      .then(_products => products = _products);
+  });
+  it('there is 1 product in the database.', () => {
+    expect(products.length).to.equal(1);
+  });
+  describe('User data', () => {
+    let users;
+    beforeEach(() => {
+      return User.findAll({})
+        .then(_users => users = _users);
+    });
+    it('we have 3 users in the database.', () => {
+      expect(users.length).to.equal(3);
+    });
+  });
+});
 
-// describe('Categories', function() {
-//   describe('Number of categories', function() {
-//     it('should return 3 when searching database for categories', function(){
-//       assert.equal(-1, Category.findAll().length);
-//     });
-//   });
-// });
+//User model test
+describe('User model', () => {
+  describe('instanceMethods', () => {
+    describe('correctPassword', () => {
+      let bob;
 
-// describe('Users', function() {
-//   describe('Number of users', function() {
-//     it('should return 3 when searching database for users', function(){
-//       assert.equal(-1, User.findAll().length);
-//     });
-//   });
-// });
+      beforeEach(() => {
+        return User.create({
+          firstName: 'Bob',
+          lastName: 'Smith',
+          email: 'bobby@gmail.com',
+          password: 'bobshops'
+        })
+          .then(user => {
+            bob = user;
+          });
+      });
+
+      it('returns true if the password is correct', () => {
+        expect(bob.correctPassword('bobshops')).to.be.equal(true);
+      })
+
+      it('returns false if the password is incorrect', () => {
+        expect(bob.correctPassword('bobshop')).to.be.equal(false);
+      });
+    });
+  });
+})
 

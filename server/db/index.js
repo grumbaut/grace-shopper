@@ -29,6 +29,8 @@ const syncAndSeed = ()=>{
       Category.create({ name:'Kitchen Supplies'}),
       Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 }),
       User.create(fakeUser()),
+      User.create(fakeUser()),
+      User.create(fakeUser())
     ]);
   })
   .then(([ category1, product1])=>{
