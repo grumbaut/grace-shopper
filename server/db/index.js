@@ -9,6 +9,7 @@ const faker = require('faker');
 Product.belongsTo(Category);
 Category.hasMany(Product);
 LineItem.belongsTo(Order);
+LineItem.hasOne(Product);
 Order.hasMany(LineItem);
 Order.belongsTo(User);
 
@@ -38,7 +39,8 @@ const syncAndSeed = ()=>{
     .then(([ category, product, lineItem, order ])=>{
       return Promise.all([
         product.setCategory(category),
-        order.addToCart(order.id, 3, product)
+        order.addToCart(order.id, 3, product),
+        lineItem.setProduct(product)
       ]);
     });
 };

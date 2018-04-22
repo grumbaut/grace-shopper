@@ -15,4 +15,11 @@ LineItem.createLineItem = function(quantity, product) {
   });
 };
 
+LineItem.prototype.changeQuantity = function(id, quantity) {
+  return LineItem.findById(id)
+    .then(lineItem => lineItem.update({
+      quantity
+    }));
+};
+
 module.exports = LineItem;

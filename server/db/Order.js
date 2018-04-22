@@ -17,7 +17,7 @@ Order.findOrCreateCart = function() {
 };
 
 Order.prototype.addToCart = function(id, quantity, product) {
-  Promise.all([
+  return Promise.all([
     Order.findById(id),
     LineItem.createLineItem(quantity, product)
   ])
@@ -27,7 +27,14 @@ Order.prototype.addToCart = function(id, quantity, product) {
     .then(() => Order.findOne({
       where: { id },
       include: [{ model: LineItem }]
-    }));
+    }))
+    .catch(err => console.error(err));
+};
+
+Order.prototype.checkout = function() {
+  this.update({
+    cart: false
+  });
 };
 
 //will have a UserId
