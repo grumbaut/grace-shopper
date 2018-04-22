@@ -1,27 +1,34 @@
 const conn = require('./conn');
 const { Sequelize } = conn;
-const { LineItem } = require('./LineItem');
+const LineItem = require('./LineItem');
 
 const Order = conn.define('order', {
   cart: {
     type: Sequelize.BOOLEAN,
     defaultValue: true
   },
-  total: {
-    type: Sequelize.INTEGER,
-    set() {
-      LineItem.findAll({
-        where: { orderId: this.getDataValue('id')}
-      })
-        .then(function(lineItems) {
-          const total = lineItems.reduce(function(acc, item) {
-            return acc + item.total;
-          });
-          this.setDataValue('total', total);
-        });
-    }
-  }
+  total: Sequelize.INTEGER
 });
+
+Order.findOrCreateCart = function() {
+  Order.findOrCreate({
+    where: { cart: true }
+  });
+};
+
+Order.prototype.addToCart = function(id, quantity, product) {
+  Promise.all([
+    Order.findById(id),
+    LineItem.createLineItem(quantity, product)
+  ])
+    .then(([order, lineItem]) => {
+      return lineItem.setOrder(order);
+    })
+    .then(() => Order.findOne({
+      where: { id },
+      include: [{ model: LineItem }]
+    }));
+};
 
 //will have a UserId
 module.exports = Order;
