@@ -11,6 +11,7 @@ Category.hasMany(Product);
 LineItem.belongsTo(Order);
 LineItem.hasOne(Product);
 Order.hasMany(LineItem);
+Order.belongsTo(User);
 
 
 const fakeUser = ()=> {
@@ -24,18 +25,19 @@ const fakeUser = ()=> {
 
 const syncAndSeed = ()=>{
   conn.sync({ force: true })
-  .then(()=>{
-    return Promise.all([
-      Category.create({ name:'Kitchen Supplies'}),
-      Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 }),
-      User.create(fakeUser())
-    ]);
-  })
-  .then(([ category1, product1])=>{
-    return Promise.all([
-      product1.setCategory(category1)
-    ]);
-  });
+    .then(()=>{
+      return Promise.all([
+        Category.create({ name:'Kitchen Supplies'}),
+        Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 }),
+        User.create(fakeUser()),
+        Order.create
+      ]);
+    })
+    .then(([ category1, product1])=>{
+      return Promise.all([
+        product1.setCategory(category1)
+      ]);
+    });
 };
 
 module.exports = {
