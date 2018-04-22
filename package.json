@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "npm run webpack",
     "webpack": "./node_modules/webpack/bin/webpack.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "DATABASE_URL=postgres://localhost/grace_shopper_db ./node_modules/mocha/bin/mocha --watch --recursive test/server/**/*.js",
+    "db-init": "pg-init grace_shopper_db",
     "start:dev": "npm run webpack -- -w & nodemon server.js --ignore dist/ --ignore src/"
   },
   "keywords": [],
@@ -19,8 +20,10 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.1.0",
+    "chai": "^4.1.2",
     "express": "^4.16.2",
     "faker": "^4.1.0",
+    "mocha": "^5.1.1",
     "pg": "^7.4.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

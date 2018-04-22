@@ -24,20 +24,21 @@ const fakeUser = ()=> {
 
 
 const syncAndSeed = ()=>{
-  conn.sync({ force: true })
+  return conn.sync({ force: true })
     .then(()=>{
       return Promise.all([
         Category.create({ name:'Kitchen Supplies'}),
         Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 }),
         User.create(fakeUser()),
-        Order.create
+        User.create(fakeUser()),
+        User.create(fakeUser())
       ]);
     })
     .then(([ category1, product1])=>{
       return Promise.all([
         product1.setCategory(category1)
       ]);
-    });
+    })
 };
 
 module.exports = {

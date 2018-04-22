@@ -3,7 +3,10 @@ const { Sequelize } = conn;
 const { LineItem } = require('./LineItem');
 
 const Order = conn.define('order', {
-  cart: Sequelize.BOOLEAN,
+  cart: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
+  },
   total: {
     type: Sequelize.INTEGER,
     set() {
