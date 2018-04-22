@@ -28,9 +28,9 @@ const syncAndSeed = ()=>{
     return Promise.all([
       Category.create({ name:'Kitchen Supplies'}),
       Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 }),
-      User.create(fakeUser()),
-      User.create(fakeUser()),
-      User.create(fakeUser())
+      User.create({firstName: 'Alice', lastName: 'Buyer', email: 'alice@wonderland.com', isAdmin: 'false', password: 'ALICE'}),
+      User.create({firstName: 'Bob', lastName: 'Bill', email: 'bob@wonderland.com', isAdmin: 'false', password: 'BOB'}),
+      User.create({firstName: 'Cat', lastName: 'Purchase', email: 'cat@wonderland.com', isAdmin: 'false', password: 'CAT'}),
     ]);
   })
   .then(([ category1, product1])=>{

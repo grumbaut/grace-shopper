@@ -85,3 +85,37 @@ describe('User model', () => {
   });
 })
 
+//AUTHENTICATION TESTS
+
+//This is how Prof did it, but if you console users, you only get a list of products (no categories even)
+    //   .then( users => {
+    //     userMap = users.reduce((memo, user)=> {
+    //       memo[user.firstName] = user
+    //       return memo;
+    //     }, {});
+    //     });
+
+
+describe ('authentication', () => {
+  let users;
+  beforeEach (()=> {
+    return db.syncAndSeed()
+      .then(User.findAll({}))
+      .then(_users => users = _users)
+  });
+  describe ('seeded data', ()=> {
+    it('Alice, Bob, Cat exist', ()=> {
+      expect (users[Alice].firstName.to.be.equal(3))
+    })
+  });
+  describe('authenticate', ()=> {
+    xit('authenticating with correct credentials returns a token', ()=> {});
+    xit('authenticating with incorrect credentials will throw an error with a 401 status', ()=> {})
+  });
+  describe('exchanging a token', ()=> {
+    xit('a valid token which matches a user returns the user', ()=> {});
+    xit('a valid token which does not match a user will return an error with a 401 status', ()=> {})
+    xit('a invalid token will return an error with a 401 status', ()=> {})
+    xit('a valid token with the wrong data type for a userId with will return a 401 status', ()=> {})
+  });
+})
