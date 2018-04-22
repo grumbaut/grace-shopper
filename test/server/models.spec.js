@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 const db = require('../../server/db');
 const { Product, Category, User } = db.models;
 
-//Models tests, do they exist?
+// Models tests, do they exist?
 describe('models', () => {
   beforeEach(() => {
     return db.syncAndSeed();
@@ -95,27 +95,75 @@ describe('User model', () => {
     //     }, {});
     //     });
 
+let users;
+const jwt = require('jwt-simple')
+const KEY = process.env.JWT_KEY
 
 describe ('authentication', () => {
-  let users;
+  
   beforeEach (()=> {
-    return db.syncAndSeed()
-      .then(User.findAll({}))
+    return User.findAll({})
       .then(_users => users = _users)
   });
   describe ('seeded data', ()=> {
     it('Alice, Bob, Cat exist', ()=> {
-      expect (users[Alice].firstName.to.be.equal(3))
+      expect (users[0].firstName).to.be.equal('Alice')
     })
   });
   describe('authenticate', ()=> {
-    xit('authenticating with correct credentials returns a token', ()=> {});
-    xit('authenticating with incorrect credentials will throw an error with a 401 status', ()=> {})
+    it('authenticating with correct credentials returns a token', ()=> {
+        const Alice = users[0]
+        const expectedToken = jwt.encode({
+            id: Alice.id
+        }, KEY);
+        return User.authenticate({
+          firstName: Alice.firstName,
+          password: Alice.password
+        })
+        .then( token => expect(token).to.equal(expectedToken));
+    });
+    it('authenticating with incorrect credentials will throw an error with a 401 status', ()=> {
+      const Alice = users[0]
+      return User.authenticate({
+        firstName: Alice.firstName,
+        password: 'bad password'
+      })
+      .then(()=> { throw 'no!!' })
+      .catch( ex => expect(ex.status).to.equal(401))
+    })
   });
   describe('exchanging a token', ()=> {
-    xit('a valid token which matches a user returns the user', ()=> {});
-    xit('a valid token which does not match a user will return an error with a 401 status', ()=> {})
-    xit('a invalid token will return an error with a 401 status', ()=> {})
-    xit('a valid token with the wrong data type for a userId with will return a 401 status', ()=> {})
+    it('a valid token which matches a user returns the user', ()=> {
+      const Alice = users[0]
+      const token = jwt.encode({
+        id: Alice.id
+      }, KEY)
+      return User.exchangeTokenForUser(token)
+        .then (user => expect(user.firstName).to.equal(Alice.firstName))
+    });
+    it('a valid token which does not match a user will return an error with a 401 status', ()=> {
+      const token = jwt.encode({
+        id: User.build().id
+      }, KEY)
+      return User.exchangeTokenForUser(token)
+        .then( user => { throw 'no!' })
+        .catch( ex => expect(ex.status).to.equal(401))
+    })
+    it('a invalid token will return an error with a 401 status', ()=> {
+      const token = jwt.encode({
+        id: User.build().id
+      }, 'some silly key')
+      return User.exchangeTokenForUser(token)
+        .then( user => { throw 'no!!' })
+        .catch( ex => expect(ex.status).to.equal(401))
+    })
+    it('a valid token with the wrong data type for a userId with will return a 401 status', ()=> {
+      const token = jwt.encode({
+        id: User.build().id
+      }, 'some silly key');
+      return User.exchangeTokenForUser(token)
+        .then (user => { throw 'no!!!' })
+        .catch( ex => expect(ex.status).to.equal(401))
+    })
   });
 })
