@@ -24,3 +24,4 @@ app.listen(port, ()=> `listening on port ${port}`);
 
 syncAndSeed();
 
+module.exports = app;

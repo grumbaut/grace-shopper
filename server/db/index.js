@@ -37,7 +37,7 @@ const syncAndSeed = ()=>{
     return Promise.all([
       product1.setCategory(category1)
     ]);
-  })
+  });
 };
 
 module.exports = {

@@ -20,8 +20,16 @@ const User = conn.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  userName: {
+    type: Sequelize.STRING,
+  },
   password: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    // Making `.password` act like a func hides it when serializing to JSON.
+    // This is a hack to get around Sequelize's lack of a "private" option.
+    get() {
+      return () => this.getDataValue('password');
+    }
   }
 },{
   getterMethods: {

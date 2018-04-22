@@ -66,6 +66,7 @@ describe('User model', () => {
         return User.create({
           firstName: 'Bob',
           lastName: 'Smith',
+          userName: 'bob123',
           email: 'bobby@gmail.com',
           password: 'bobshops'
         })
@@ -73,10 +74,13 @@ describe('User model', () => {
             bob = user;
           });
       });
+      it('User has a username and password', ()=> {
+        expect(bob.userName && bob.password).to.be.ok;
+      });
 
       it('returns true if the password is correct', () => {
         expect(bob.correctPassword('bobshops')).to.be.equal(true);
-      })
+      });
 
       it('returns false if the password is incorrect', () => {
         expect(bob.correctPassword('bobshop')).to.be.equal(false);
@@ -85,3 +89,25 @@ describe('User model', () => {
   });
 })
 
+// describe ('authentication', () => {
+//   let users;
+//   beforeEach (()=> {
+//     return User.findAll({})
+//       .then(_users => users = _users);
+//   });
+//   describe ('seeded data', ()=> {
+//     it('Alice, Bob, Cat exist', ()=> {
+//       expect(users[0].firstName).to.equal('Tom');
+//     });
+//   });
+//   describe('authenticate', ()=> {
+//     xit('authenticating with correct credentials returns a token', ()=> {});
+//     xit('authenticating with incorrect credentials will throw an error with a 401 status', ()=> {});
+//   });
+//   describe('exchanging a token', ()=> {
+//     xit('a valid token which matches a user returns the user', ()=> {});
+//     xit('a valid token which does not match a user will return an error with a 401 status', ()=> {})
+//     xit('a invalid token will return an error with a 401 status', ()=> {})
+//     xit('a valid token with the wrong data type for a userId with will return a 401 status', ()=> {})
+//   });
+//  })
