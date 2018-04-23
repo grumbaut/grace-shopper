@@ -4,23 +4,17 @@ const Product = require('./Product');
 const User = require('./User');
 const Order = require('./Order');
 const LineItem = require('./LineItem');
-// const faker = require('faker');
+const LineItemProduct = require('./LineItemProduct');
 
 Product.belongsTo(Category);
+Product.hasMany(LineItemProduct);
 Category.hasMany(Product);
 LineItem.belongsTo(Order);
+LineItem.hasMany(LineItemProduct);
+LineItemProduct.belongsTo(Product);
 Order.hasMany(LineItem);
 Order.belongsTo(User);
 User.hasMany(Order);
-
-
-// const fakeUser = ()=> {
-//   return {
-//     firstName: faker.name.firstName(),
-//     lastName: faker.name.lastName(),
-//     email: faker.internet.email()
-//   };
-// };
 
 
 const syncAndSeed = ()=>{
@@ -50,6 +44,7 @@ module.exports = {
     Product,
     User,
     LineItem,
-    Order
+    Order,
+    LineItemProduct
   }
 };
