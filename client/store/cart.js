@@ -7,8 +7,8 @@ const gotCart = cart => {
   return action;
 };
 
-export const fetchCart = () => (
-  dispatch => (
-    axios.get('/api/')
-  )
-)
+// export const fetchCart = () => (
+//   dispatch => (
+//     axios.get('/api/')
+//   )
+// );
