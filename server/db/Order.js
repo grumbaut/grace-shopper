@@ -7,13 +7,20 @@ const Order = conn.define('order', {
     type: Sequelize.BOOLEAN,
     defaultValue: true
   },
-  total: Sequelize.INTEGER
+  total: Sequelize.INTEGER,
+  date: Sequelize.STRING
 });
 
-Order.findOrCreateCart = function() {
-  Order.findOrCreate({
-    where: { cart: true }
-  });
+Order.findOrCreateCart = function(user) {
+  return Order.findById(user.id)
+    .then(cart => {
+      if(cart) {
+        return cart;
+      } else {
+        return Order.create()
+          .then(order => order.setUser(user));
+      }
+    });
 };
 
 Order.prototype.addToCart = function(id, quantity, product) {
@@ -33,7 +40,8 @@ Order.prototype.addToCart = function(id, quantity, product) {
 
 Order.prototype.checkout = function() {
   this.update({
-    cart: false
+    cart: false,
+    date: `${new Date().getMonth()}, ${new Date().getDate} ${new Date().getFullYear()}`
   });
 };
 

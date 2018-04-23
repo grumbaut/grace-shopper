@@ -9,7 +9,6 @@ const faker = require('faker');
 Product.belongsTo(Category);
 Category.hasMany(Product);
 LineItem.belongsTo(Order);
-LineItem.hasOne(Product);
 Order.hasMany(LineItem);
 Order.belongsTo(User);
 
@@ -29,20 +28,18 @@ const syncAndSeed = ()=>{
       return Promise.all([
         Category.create({ name:'Kitchen Supplies'}),
         Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 }),
-        LineItem.create({ quantity: 3 }),
-        Order.create({ cart: true }),
         User.create(fakeUser()),
         User.create(fakeUser()),
         User.create(fakeUser())
       ]);
     })
-    .then(([ category, product, lineItem, order ])=>{
+    .then(([ category, product, user1])=>{
       return Promise.all([
         product.setCategory(category),
-        order.addToCart(order.id, 3, product),
-        lineItem.setProduct(product)
+        Order.findOrCreateCart(user1)
       ]);
-    });
+    })
+    .then(([product, order]) => order.addToCart(order.id, 3, product))
 };
 
 module.exports = {

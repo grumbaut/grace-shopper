@@ -1,14 +1,14 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-// const GOT_CART = 'GOT_CART';
+const GOT_CART = 'GOT_CART';
 
-// const gotCart = cart => {
-//   const action = { type: GOT_CART, };
-//   return action;
-// };
+const gotCart = cart => {
+  const action = { type: GOT_CART, };
+  return action;
+};
 
-// export const fetchCart = () => (
-//   dispatch => (
-//     axios.get('/')
-//   )
-// )
+export const fetchCart = () => (
+  dispatch => (
+    axios.get('/api/')
+  )
+)
