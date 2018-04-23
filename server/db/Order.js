@@ -23,23 +23,18 @@ Order.findOrCreateCart = function(user) {
     });
 };
 
-Order.prototype.addToCart = function(id, quantity, product) {
-  return Promise.all([
-    Order.findById(id),
-    LineItem.createLineItem(quantity, product)
-  ])
-    .then(([order, lineItem]) => {
-      return lineItem.setOrder(order);
-    })
+Order.prototype.addToCart = function(quantity, product) {
+  return LineItem.createLineItem(quantity, product)
+    .then(lineItem => lineItem.setOrder(this))
     .then(() => Order.findOne({
-      where: { id },
+      where: { id: this.id },
       include: [{ model: LineItem }]
     }))
     .catch(err => console.error(err));
 };
 
 Order.prototype.checkout = function() {
-  this.update({
+  return this.update({
     cart: false,
     date: `${new Date().getMonth()}, ${new Date().getDate} ${new Date().getFullYear()}`
   });

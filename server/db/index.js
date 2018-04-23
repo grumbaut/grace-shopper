@@ -11,6 +11,7 @@ Category.hasMany(Product);
 LineItem.belongsTo(Order);
 Order.hasMany(LineItem);
 Order.belongsTo(User);
+User.hasMany(Order);
 
 
 // const fakeUser = ()=> {
@@ -39,7 +40,7 @@ const syncAndSeed = ()=>{
         Order.findOrCreateCart(user1)
       ]);
     })
-    .then(([product, order]) => order.addToCart(order.id, 3, product))
+    .then(([product, order]) => order.addToCart(3, product))
 };
 
 module.exports = {
