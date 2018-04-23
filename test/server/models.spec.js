@@ -113,7 +113,7 @@ describe('authentication', () => {
         id: Alice.id
       }, KEY);
       return User.authenticate({
-        firstName: Alice.firstName,
+        email: Alice.email,
         password: Alice.password
       })
         .then(token => expect(token).to.equal(expectedToken));
@@ -122,7 +122,7 @@ describe('authentication', () => {
     it('authenticating with incorrect credentials will throw an error with a 401 status', () => {
       const Alice = userMap.Alice;
       return User.authenticate({
-        firstName: Alice.firstName,
+        email: Alice.email,
         password: 'bad password'
       })
         .then(() => { throw 'no!!' })
@@ -137,7 +137,7 @@ describe('authentication', () => {
         id: Alice.id
       }, KEY);
       return User.exchangeTokenForUser(token)
-        .then(user => expect(user.firstName).to.equal(Alice.firstName));
+        .then(user => expect(user.email).to.equal(Alice.email));
     });
 
     it('a valid token which does not match a user will return an error with a 401 status', () => {

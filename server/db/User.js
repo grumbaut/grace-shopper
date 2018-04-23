@@ -6,7 +6,7 @@ const jwt = require('jwt-simple')
 const User = conn.define('user', {
   // id: {
   //   type: Sequelize.UUID,
-  //   defaultValue: Sequelize.UUIDV4, 
+  //   defaultValue: Sequelize.UUIDV4,
   //   primaryKey: true
   // },
   firstName: {
@@ -27,6 +27,9 @@ const User = conn.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  userName: {
+    type: Sequelize.STRING
+  },
   password: {
     type: Sequelize.STRING
   }
@@ -39,10 +42,11 @@ const User = conn.define('user', {
 });
 
 User.authenticate = function(credentials){
+  const { email, password } = credentials;
   return this.findOne({
     where: {
-      firstName: credentials.firstName,
-      password: credentials.password
+      email,
+      password
     }
   })
   .then( user => {
