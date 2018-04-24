@@ -1,22 +1,51 @@
-const { expect } = require('chai');
-const request = require('supertest');
-const test = require('tape');
-const db = require('../../server/db');
-const { Product, Category, User } = db.models;
- const app = require('../../server.js');
+// ED - START OF EDITS  
+// 
+//const server = require('../../server.js');
 
-describe('Test the root path', () => {
-  test('It should response the GET method', (done) => {
-      request(app)
-      .get('/')
-      .then((response) => {
-          expect(response.statusCode).to.be.equal(200);
-      })
-      .end((err, res)=> {
-        done.end();
-      });
+var request = require('supertest');
+describe('loading express', function () {
+  var server;
+  beforeEach(function () {
+    server = require('../../server.js');
+  });
+  afterEach(function () {
+    server.close();
+  });
+  it('responds to /', function testSlash(done) {
+  request(server)
+    .get('/')
+    .expect(200, done);
+  });
+  it('404 everything else', function testPath(done) {
+    request(server)
+      .get('/foo/bar')
+      .expect(404, done);
   });
 });
+
+
+
+// const { expect } = require('chai');
+// const request = require('supertest');
+// const test = require('tape');
+// const db = require('../../server/db');
+// const { Product, Category, User } = db.models;
+//  const app = require('../../server.js');
+
+// describe('Test the root path', () => {
+//   test('It should response the GET method', (done) => {
+//       request(app)
+//       .get('/')
+//       .then((response) => {
+//           expect(response.statusCode).to.be.equal(200);
+//       })
+//       .end((err, res)=> {
+//         done.end();
+//       });
+//   });
+// });
+
+//ED - END OF EDITS
 
 
 //User routes test
