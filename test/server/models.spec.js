@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const db = require('../../server/db');
-const { Product, Category, User, Order } = db.models;
+const { Product, Category, User, Order, LineItem } = db.models;
 
 // Models tests, do they exist?
 describe('models', () => {
@@ -114,6 +114,11 @@ describe('cart', () => {
         .then(updatedCart => {
           expect(updatedCart.lineitems[0].product.name).to.equal(product.name);
         });
+    });
+    it('checkout method sets cart status to false', () => {
+      cart.checkout()
+        .then(_cart => cart = _cart);
+      expect(cart.cart).to.equal(false);
     });
   });
 });

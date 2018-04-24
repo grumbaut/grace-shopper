@@ -40,6 +40,11 @@ Order.prototype.addToCart = function(quantity, product) {
     .catch(err => console.error(err));
 };
 
+Order.prototype.removeFromCart = function(id) {
+  LineItem.findById(id)
+    .then(lineItem => lineItem.destroy());
+};
+
 Order.prototype.checkout = function() {
   return this.update({
     cart: false,
