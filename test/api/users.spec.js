@@ -1,6 +1,6 @@
 // ED - START OF EDITS  
 // 
-//const server = require('../../server.js');
+//TO RUN TEST ENTER COMMAND:  mocha -R spec test/api/users.spec.js
 
 var request = require('supertest');
 describe('loading express', function () {
