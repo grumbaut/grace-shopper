@@ -30,6 +30,12 @@ Order.prototype.addToCart = function(quantity, product) {
       where: { id: this.id },
       include: [{ model: LineItem }]
     }))
+    .then(order => {
+      const total = order.lineitems.reduce((acc, item) => {
+        return acc + item.get().subtotal;
+      }, 0);
+      return order.update({ total });
+    })
     .catch(err => console.error(err));
 };
 
