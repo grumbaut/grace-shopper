@@ -25492,6 +25492,10 @@ var _Products = __webpack_require__(138);
 
 var _Products2 = _interopRequireDefault(_Products);
 
+var _Login = __webpack_require__(139);
+
+var _Login2 = _interopRequireDefault(_Login);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25538,7 +25542,8 @@ var Main = function (_React$Component) {
               null,
               _react2.default.createElement(_reactRouterDom.Route, { path: '/products/:id', component: _Product2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/products', component: _Products2.default }),
-              _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Home2.default })
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Home2.default }),
+              _react2.default.createElement(_reactRouterDom.Route, { path: '#', component: _Login2.default })
             )
           )
         )
@@ -28771,6 +28776,33 @@ var Products = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Products;
+
+/***/ }),
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Login = function Login() {
+  return _react2.default.createElement(
+    'h1',
+    null,
+    '\'placeholder\''
+  );
+};
+
+exports.default = Login;
 
 /***/ })
 /******/ ]);

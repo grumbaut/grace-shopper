@@ -7,6 +7,7 @@ import Nav from './Nav';
 import Home from './Home';
 import Product from './Product';
 import Products from './Products';
+import Login from './Login'
 
 class Main extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Main extends React.Component {
               <Route path='/products/:id' component={ Product } />
               <Route path='/products' component={ Products } />
               <Route path='/' component={ Home } />
+              <Route path='#' component={ Login } />
             </Switch>
           </div>
         </div>
