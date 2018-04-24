@@ -4,14 +4,12 @@ const Product = require('./Product');
 const User = require('./User');
 const Order = require('./Order');
 const LineItem = require('./LineItem');
-const LineItemProduct = require('./LineItemProduct');
 
 Product.belongsTo(Category);
-Product.hasMany(LineItemProduct);
+Product.hasMany(LineItem);
 Category.hasMany(Product);
 LineItem.belongsTo(Order);
-LineItem.hasMany(LineItemProduct);
-LineItemProduct.belongsTo(Product);
+LineItem.belongsTo(Product);
 Order.hasMany(LineItem);
 Order.belongsTo(User);
 User.hasMany(Order);
@@ -44,7 +42,6 @@ module.exports = {
     Product,
     User,
     LineItem,
-    Order,
-    LineItemProduct
+    Order
   }
 };

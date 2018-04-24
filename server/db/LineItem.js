@@ -14,15 +14,7 @@ LineItem.createLineItem = function(quantity, product) {
     subtotal: quantity * product.price
   })
     .then(lineItem => {
-      return LineItemProduct.create({
-        productId: product.id,
-        lineitemId: lineItem.id
-      });
-    })
-    .then(lineItemProduct => {
-      return LineItem.findById(lineItemProduct.lineitemId, {
-        include: [ { model: LineItemProduct, include: [ Product ] }]
-      });
+      return lineItem.setProduct(product);
     })
     .catch(err => console.error(err));
 };

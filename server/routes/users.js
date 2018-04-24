@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('../db');
-const { User, Order, LineItem, LineItemProduct, Product } = db.models;
+const { User, Order, LineItem, Product } = db.models;
 
 router.get('/', (req, res, next)=> {
   User.findAll({
@@ -8,10 +8,7 @@ router.get('/', (req, res, next)=> {
       model: Order,
       include: [{
         model: LineItem,
-        include: [{
-          model: LineItemProduct,
-          include: [ Product ]
-        }]
+        include: [ Product ]
       }]
     }]
   })
