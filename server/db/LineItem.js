@@ -8,7 +8,7 @@ const LineItem = conn.define('lineitem', {
   productPrice: Sequelize.FLOAT,
   subtotal: Sequelize.FLOAT,
 },{
-  getterMethods: {   //NO ASYNC IN VIRTUALS!!
+  getterMethods: {
     subtotal() {
       if(!this.productId){return 0;}
       return (this.quantity * this.productPrice)*1;
@@ -17,11 +17,10 @@ const LineItem = conn.define('lineitem', {
 }
 );
 
-
 LineItem.createLineItem = function(quantity, product) {
   return LineItem.create({
     quantity,
-   productPrice: product.price
+    productPrice: product.price
   })
     .then(lineItem => {
       return lineItem.setProduct(product);
