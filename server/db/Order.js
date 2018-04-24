@@ -1,6 +1,7 @@
 const conn = require('./conn');
 const { Sequelize } = conn;
 const LineItem = require('./LineItem');
+const Product = require('./Product');
 
 const Order = conn.define('order', {
   cart: {
@@ -28,7 +29,7 @@ Order.prototype.addToCart = function(quantity, product) {
     .then(lineItem => lineItem.setOrder(this))
     .then(() => Order.findOne({
       where: { id: this.id },
-      include: [{ model: LineItem }]
+      include: [{ model: LineItem, include: [Product] }]
     }))
     .then(order => {
       const total = order.lineitems.reduce((acc, item) => {

@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const db = require('../../server/db');
-const { Product, Category, User } = db.models;
+const { Product, Category, User, Order } = db.models;
 
 // Models tests, do they exist?
 describe('models', () => {
@@ -84,6 +84,39 @@ describe('User model', () => {
     });
   });
 })
+
+//CART TEST
+describe('cart', () => {
+  let cart;
+  beforeEach(() => {
+    return User.create({
+      firstName: 'Bob',
+      lastName: 'Smith',
+      email: 'bobby@gmail.com',
+      password: 'bobshops'
+    })
+      .then(user => {
+        return Order.findOrCreateCart(user);
+      })
+      .then(_cart => cart = _cart);
+  });
+  describe('cart', () => {
+    it('has a cart status of true', () => {
+      expect(cart.cart).to.equal(true);
+    });
+    it('can add products to cart', () => {
+      let product;
+      Product.findById(1)
+        .then(_product => {
+          product = _product;
+          return cart.addToCart(2, product);
+        })
+        .then(updatedCart => {
+          expect(updatedCart.lineitems[0].product.name).to.equal(product.name);
+        });
+    });
+  });
+});
 
 //AUTHENTICATION TESTS
 let userMap;
