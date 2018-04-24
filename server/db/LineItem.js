@@ -4,13 +4,22 @@ const Product = require('./Product');
 
 const LineItem = conn.define('lineitem', {
   quantity: Sequelize.INTEGER,
-  subtotal: Sequelize.FLOAT
-});
+  productPrice: Sequelize.FLOAT,
+  subtotal: Sequelize.FLOAT,
+},{
+  getterMethods: {
+    subtotal() {
+      if(!this.productId){return 0;}
+      return (this.quantity * this.productPrice)*1;
+    }
+  }
+}
+);
 
 LineItem.createLineItem = function(quantity, product) {
   return LineItem.create({
     quantity,
-    subtotal: quantity * product.price
+    productPrice: product.price
   })
     .then(lineItem => {
       return lineItem.setProduct(product);
