@@ -4364,9 +4364,9 @@ var Login = function (_React$Component) {
             'form',
             null,
             'Email: ',
-            _react2.default.createElement('input', { value: email, onChange: onChange }),
+            _react2.default.createElement('input', { value: email, onChange: onChange, name: 'email' }),
             'Password: ',
-            _react2.default.createElement('input', { value: password, onChange: onChange }),
+            _react2.default.createElement('input', { value: password, onChange: onChange, name: 'password' }),
             _react2.default.createElement(
               'button',
               { onClick: attemptLogin, className: 'btn btn-primary btn-sm' },

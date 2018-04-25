@@ -32,8 +32,8 @@ class Login extends React.Component {
         <ul>
         <h3> Login </h3>
             <form>
-                Email: <input value = { email } onChange = { onChange }></input> 
-                Password: <input value = { password } onChange = { onChange }></input> 
+                Email: <input value = { email } onChange = { onChange } name = 'email'></input> 
+                Password: <input value = { password } onChange = { onChange } name = 'password'></input> 
               <button onClick= { attemptLogin } className="btn btn-primary btn-sm"> Login </button>
             </form>
         </ul>
