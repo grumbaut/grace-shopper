@@ -8,6 +8,7 @@ import Home from './Home';
 import Product from './Product';
 import Products from './Products';
 import Categories from './Categories';
+import Category from './Category';
 
 class Main extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Main extends React.Component {
             <Switch>
               <Route path='/products/:id' component={ Product } />
               <Route path='/products' component={ Products } />
+              <Route path='/categories/:id' exact render={({ match })=> <Category id={ match.params.id * 1 }/> } />
               <Route path='/categories' component={ Categories } />
               <Route path='/' component={ Home } />
             </Switch>

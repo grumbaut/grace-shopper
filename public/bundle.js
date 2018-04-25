@@ -25496,6 +25496,10 @@ var _Categories = __webpack_require__(139);
 
 var _Categories2 = _interopRequireDefault(_Categories);
 
+var _Category = __webpack_require__(140);
+
+var _Category2 = _interopRequireDefault(_Category);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25542,6 +25546,10 @@ var Main = function (_React$Component) {
               null,
               _react2.default.createElement(_reactRouterDom.Route, { path: '/products/:id', component: _Product2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/products', component: _Products2.default }),
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/categories/:id', exact: true, render: function render(_ref) {
+                  var match = _ref.match;
+                  return _react2.default.createElement(_Category2.default, { id: match.params.id * 1 });
+                } }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/categories', component: _Categories2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _Home2.default })
             )
@@ -28865,6 +28873,137 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Categories);
+
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(16);
+
+var _reactRouterDom = __webpack_require__(20);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Category = function Category(_ref) {
+  var category = _ref.category,
+      categories = _ref.categories,
+      products = _ref.products,
+      id = _ref.id,
+      productsOfThisCategory = _ref.productsOfThisCategory;
+
+  if (!category) {
+    return null;
+  }
+  var nextCategoryIndex = categories.indexOf(category) + 1;
+  var nextCategoryId = nextCategoryIndex < categories.length ? categories[nextCategoryIndex].id : categories[0].id;
+  var priorCategoryIndex = categories.indexOf(category) - 1;
+  var lastCategoryIndex = categories.length - 1;
+  var priorCategoryId = priorCategoryIndex !== -1 ? categories[priorCategoryIndex].id : categories[lastCategoryIndex].id;
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'container' },
+    _react2.default.createElement(
+      'div',
+      { className: 'row' },
+      _react2.default.createElement(
+        'div',
+        { className: 'col' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          category.name
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Number of products in ',
+          category.name,
+          ': ',
+          productsOfThisCategory.length
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Products:'
+        ),
+        productsOfThisCategory.length === 0 ? _react2.default.createElement(
+          'p',
+          null,
+          'There are no products in this category yet'
+        ) : _react2.default.createElement(
+          'ul',
+          null,
+          productsOfThisCategory.map(function (product) {
+            return _react2.default.createElement(
+              'div',
+              { key: product.id },
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: '/products/' + product.id },
+                product.name
+              )
+            );
+          })
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'col' },
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/categories/' + priorCategoryId },
+          _react2.default.createElement(
+            'button',
+            null,
+            'Prior'
+          )
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/categories/' + nextCategoryId },
+          _react2.default.createElement(
+            'button',
+            null,
+            'Next'
+          )
+        )
+      )
+    )
+  );
+};
+
+var mapStateToProps = function mapStateToProps(_ref2, _ref3) {
+  var categories = _ref2.categories,
+      products = _ref2.products;
+  var id = _ref3.id;
+
+  var category = categories.find(function (category) {
+    return category.id === id;
+  });
+  var productsOfThisCategory = products.filter(function (product) {
+    return product.categoryId === id;
+  });
+  return {
+    category: category,
+    categories: categories,
+    products: products,
+    productsOfThisCategory: productsOfThisCategory
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(Category);
 
 /***/ })
 /******/ ]);
