@@ -3,9 +3,9 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import categories from './categories';
 import products from './products';
-import sessions from './sessions';
+import user from './sessions';
 
-const reducers = combineReducers({ categories, products, sessions });
+const reducers = combineReducers({ categories, products, user });
 const middleware = applyMiddleware(thunk, logger);
 
 const store = createStore(reducers, middleware);

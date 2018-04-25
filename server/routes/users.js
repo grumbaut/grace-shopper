@@ -2,19 +2,19 @@ const router = require('express').Router();
 const db = require('../db');
 const { User } = db.models;
 
-router.get('/', (req, res, next)=> {
+router.get('/', (req, res, next) => {
   User.findAll()
     .then( users => res.send(users))
     .catch(next);
 });
 
-router.post('/', (req, res, next)=> {
+router.post('/', (req, res, next) => {
   User.create(req.body)
     .then( user => res.send(user))
     .catch(next);
 });
 
-router.delete('/:id', (req, res, next)=> {
+router.delete('/:id', (req, res, next) => {
   User.findById(req.params.id)
     .then( user => {
       user.destroy();
@@ -23,7 +23,7 @@ router.delete('/:id', (req, res, next)=> {
     .catch(next);
 });
 
-router.put('/:id', (req, res, next)=> {
+router.put('/:id', (req, res, next) => {
   User.findById(req.params.id)
     .then( user => {
       Object.assign(user, req.body);
@@ -31,6 +31,15 @@ router.put('/:id', (req, res, next)=> {
     })
     .then( user => res.send(user))
     .catch(next);
+});
+
+router.post('/signup', (req, res, next) => {
+  User.create(req.body)
+    .then(user => {
+      const credentials = { email: user.email, password: user.password };
+      return User.authenticate(credentials);
+    })
+    .then(token => res.send(token));
 });
 
 module.exports = router;

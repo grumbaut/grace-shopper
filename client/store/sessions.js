@@ -2,6 +2,17 @@ import axios from 'axios';
 
 const SET_USER = 'SET_USER';
 
+export const signUp = (userInfo, history) => {
+  return dispatch => {
+    return axios.post('/api/sessions/signup', userInfo)
+      .then(result => {
+        window.localStorage.setItem('token', result.data);
+      })
+      .then(() => dispatch(getUserFromToken(window.localStorage.getItem('token'))))
+      .then(() => history.push('/'));
+  };
+};
+
 export const getUserFromToken = token => {
   return dispatch => {
     return axios.get(`/api/sessions/${token}`)
@@ -14,7 +25,7 @@ export const getUserFromToken = token => {
   };
 };
 
-export const logout = ()=> {
+export const logout = () => {
   return dispatch => {
     window.localStorage.removeItem('token');
     dispatch({
@@ -24,7 +35,7 @@ export const logout = ()=> {
   };
 };
 
-export const attemptLogin = (credentials)=> {
+export const attemptLogin = (credentials) => {
   return dispatch => {
     return axios.post('/api/sessions', credentials)
       .then (result => window.localStorage.setItem('token', result.data))

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../store/sessions';
-import { loggedIn } from './Login';
 
 const Nav = ({ user }) => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,11 +24,18 @@ const Nav = ({ user }) => (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
           {
-            user ? (
+            user && user.id ? (
               <a onClick={ logout }>Logout { user.firstName }</a>
             ) : (
               <NavLink className="nav-link" to="/login" activeClassName='active'>Log In</NavLink>
             )
+          }
+        </li>
+        <li className='nav-item'>
+          {
+            user && user.id ? (
+              <NavLink className='nav-link' to='/signup' activeClassName='active'>Sign Up</NavLink>
+            ) : null
           }
         </li>
         <li className="nav-item">

@@ -22,9 +22,6 @@ const User = conn.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  userName: {
-    type: Sequelize.STRING
-  },
   password: {
     type: Sequelize.STRING
   }

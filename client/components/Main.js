@@ -1,14 +1,14 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts, getUserFromToken, attemptLogin, logout } from '../store';
+import { getCategories, getProducts } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
 import Product from './Product';
 import Products from './Products';
-import Login from './Login'
-//import { disconnect } from 'cluster';
+import Login from './Login';
+import SignUp from './SignUp';
 
 class Main extends React.Component {
   constructor(props) {
@@ -32,8 +32,9 @@ class Main extends React.Component {
             <Switch>
               <Route path='/products/:id' component={ Product } />
               <Route path='/products' component={ Products } />
-              <Route exact path='/' component={ Home } />
+              <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
+              <Route exact path='/' component={ Home } />
             </Switch>
           </div>
         </div>
