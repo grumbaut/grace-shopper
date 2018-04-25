@@ -13,12 +13,15 @@ const Order = conn.define('order', {
 });
 
 Order.findOrCreateCart = function(user) {
-  return Order.findById(user.id)
+  const id = user.id ? user.id : 0;
+  return this.findOne({
+    where: { userId: id }
+  })
     .then(cart => {
       if(cart) {
         return cart;
       } else {
-        return Order.create()
+        return this.create()
           .then(order => order.setUser(user));
       }
     });

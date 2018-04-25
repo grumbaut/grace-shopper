@@ -20,19 +20,24 @@ const syncAndSeed = ()=>{
     .then(() => {
       return Promise.all([
         Category.create({ name:'Kitchen Supplies'}),
+        Category.create({ name: 'Decorative'}),
         Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 }),
+        Product.create({ name: 'Vase', description: 'Porcelain longnecked vase, ideal for roses.', price: 31.95 }),
+        Product.create({ name: 'Vanilla Diffuser', description: 'A room diffuser with reeds and vanilla oil', price: 6.85 }),
         User.create({firstName: 'Alice', lastName: 'Buyer', email: 'alice@wonderland.com', isAdmin: 'false', password: 'ALICE'}),
         User.create({firstName: 'Bob', lastName: 'Bill', email: 'bob@wonderland.com', isAdmin: 'false', password: 'BOB'}),
         User.create({firstName: 'Cat', lastName: 'Purchase', email: 'cat@wonderland.com', isAdmin: 'false', password: 'CAT'}),
       ]);
     })
-    .then(([ category, product, user1])=>{
+    .then(([ category1, category2, product1, product2, product3, user1])=>{
       return Promise.all([
-        product.setCategory(category),
+        product1.setCategory(category1),
+        product2.setCategory(category2),
+        product3.setCategory(category2),
         Order.findOrCreateCart(user1)
       ]);
     })
-    .then(([product, order]) => order.addToCart(3, product))
+    .then(([product1, product2, product3, order]) => order.addToCart(3, product1))
 };
 
 module.exports = {
