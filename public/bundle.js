@@ -28822,7 +28822,7 @@ var ProductCard = function ProductCard(_ref) {
     _react2.default.createElement(
       'h2',
       null,
-      product.price
+      '$' + product.price
     ),
     _react2.default.createElement(
       'p',
