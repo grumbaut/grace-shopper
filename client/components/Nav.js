@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { logout } from '../store/sessions'
-import { loggedIn } from './Login'
-
-//have left <a></a> on the logout portion for now - needs formatting
+import { logout } from '../store/sessions';
+import { loggedIn } from './Login';
 
 const Nav = ({ user }) => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -26,13 +24,13 @@ const Nav = ({ user }) => (
       </ul>
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-        {
-          loggedIn ? (
-            <a onClick =  { logout }> Logout { user.firstName } </a>
-          ) : (
-            <NavLink className="nav-link" to="/login" activeClassName='active'>Log In</NavLink>
-          )
-        }
+          {
+            user ? (
+              <a onClick={ logout }>Logout { user.firstName }</a>
+            ) : (
+              <NavLink className="nav-link" to="/login" activeClassName='active'>Log In</NavLink>
+            )
+          }
         </li>
         <li className="nav-item">
           <NavLink className="nav-link" to="/cart" activeClassName='active'>Cart</NavLink>
@@ -43,17 +41,15 @@ const Nav = ({ user }) => (
 );
 
 const mapState = ({ user }) => {
-  //const loggedIn = !!user.id
   return {
-    //loggedIn,
     user
-  }
-}
+  };
+};
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
-    logout: ()=> dispatch(logout())
-  }
-}
+    logout: () => dispatch(logout())
+  };
+};
 
 export default connect(mapState, mapDispatch)(Nav);

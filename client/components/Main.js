@@ -47,9 +47,6 @@ const mapDispatch = dispatch => ({
   fetch() {
     dispatch(getCategories());
     dispatch(getProducts());
-    dispatch(getUserFromToken());
-    dispatch(attemptLogin());
-    dispatch(logout());
   }
 });
 
