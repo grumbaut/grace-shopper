@@ -49,14 +49,14 @@ User.authenticate = function(credentials){
       password
     }
   })
-  .then( user => {
-    if(!user){
-      throw { status: 401 }
-    }
-    const token = jwt.encode({ id: user.id }, KEY)
-    return token;
-  })
-}
+    .then( user => {
+      if(!user){
+        throw { status: 401 }
+      }
+      const token = jwt.encode({ id: user.id }, KEY);
+      return token;
+    });
+};
 
 User.exchangeTokenForUser = function(token){
   try {
