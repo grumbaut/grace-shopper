@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts } from '../store';
+import { getCategories, getProducts, getUserFromToken } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -21,6 +21,10 @@ class Main extends React.Component {
 
   componentDidMount() {
     this.props.fetch();
+    if(window.localStorage.getItem('token')) {
+      const token = window.localStorage.getItem('token');
+      this.props.getUser(token);
+    }
   }
 
   render() {
@@ -48,6 +52,9 @@ const mapDispatch = dispatch => ({
   fetch() {
     dispatch(getCategories());
     dispatch(getProducts());
+  },
+  getUser(token) {
+    dispatch(getUserFromToken(token));
   }
 });
 

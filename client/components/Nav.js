@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../store/sessions';
 
-const Nav = ({ user }) => (
+const Nav = ({ user, logout }) => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
     <NavLink className="navbar-brand" to='/'>Name Goes Here</NavLink>
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@ const Nav = ({ user }) => (
         <li className="nav-item">
           {
             user && user.id ? (
-              <a onClick={ logout }>Logout { user.firstName }</a>
+              <NavLink to='/' className='nav-link' onClick={ logout }>Logout { user.firstName }</NavLink>
             ) : (
               <NavLink className="nav-link" to="/login" activeClassName='active'>Log In</NavLink>
             )
@@ -33,9 +33,9 @@ const Nav = ({ user }) => (
         </li>
         <li className='nav-item'>
           {
-            user && user.id ? (
+            user && user.id ? null : (
               <NavLink className='nav-link' to='/signup' activeClassName='active'>Sign Up</NavLink>
-            ) : null
+            )
           }
         </li>
         <li className="nav-item">

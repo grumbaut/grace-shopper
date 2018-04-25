@@ -42,6 +42,7 @@ class SignUp extends React.Component {
             <label htmlFor='password'>Password:</label>
             <input name='password' onChange={ this.handleChange } />
           </div>
+          <button type='submit' className='btn btn-primary'>Sign Up</button>
         </form>
       </div>
     );

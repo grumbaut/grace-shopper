@@ -33,13 +33,4 @@ router.put('/:id', (req, res, next) => {
     .catch(next);
 });
 
-router.post('/signup', (req, res, next) => {
-  User.create(req.body)
-    .then(user => {
-      const credentials = { email: user.email, password: user.password };
-      return User.authenticate(credentials);
-    })
-    .then(token => res.send(token));
-});
-
 module.exports = router;
