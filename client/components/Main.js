@@ -31,8 +31,8 @@ class Main extends React.Component {
             <Switch>
               <Route path='/products/:id' component={ Product } />
               <Route path='/products' component={ Products } />
-              <Route path='/' component={ Home } />
               <Route path='/categories' component={ Categories } />
+              <Route path='/' component={ Home } />
             </Switch>
           </div>
         </div>
