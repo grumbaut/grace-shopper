@@ -35,11 +35,12 @@ export const logout = () => {
   };
 };
 
-export const attemptLogin = (credentials) => {
+export const attemptLogin = (credentials, history) => {
   return dispatch => {
     return axios.post('/api/sessions', credentials)
       .then (result => window.localStorage.setItem('token', result.data))
-      .then(()=> dispatch(getUserFromToken(window.localStorage.getItem('token'))));
+      .then(()=> dispatch(getUserFromToken(window.localStorage.getItem('token'))))
+      .then(() => history.push('/'));
   };
 };
 

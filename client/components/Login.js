@@ -40,11 +40,11 @@ class Login extends React.Component {
   }
 }
 
-const mapDispatch = (dispatch)=> {
+const mapDispatch = (dispatch, { history })=> {
   return {
     attemptLogin: (credentials, event) => {
       event.preventDefault();
-      dispatch(attemptLogin(credentials));
+      dispatch(attemptLogin(credentials, history));
     }
   };
 };
