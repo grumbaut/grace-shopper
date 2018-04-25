@@ -28810,7 +28810,7 @@ var ProductCard = function ProductCard(_ref) {
   var product = _ref.product;
 
   if (!product) return null;
-
+  console.log(product.imageUrl);
   return _react2.default.createElement(
     'div',
     null,
@@ -28819,6 +28819,7 @@ var ProductCard = function ProductCard(_ref) {
       null,
       product.name
     ),
+    _react2.default.createElement('img', { src: product.imageUrl }),
     _react2.default.createElement(
       'h2',
       null,

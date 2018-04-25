@@ -21,9 +21,9 @@ const syncAndSeed = ()=>{
       return Promise.all([
         Category.create({ name:'Kitchen Supplies'}),
         Category.create({ name: 'Decorative'}),
-        Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 }),
-        Product.create({ name: 'Vase', description: 'Porcelain longnecked vase, ideal for roses.', price: 31.95 }),
-        Product.create({ name: 'Vanilla Diffuser', description: 'A room diffuser with reeds and vanilla oil', price: 6.85 }),
+        Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00, imageUrl: '/images/redmixingbowlset.jpg' }),
+        Product.create({ name: 'Vase', description: 'Porcelain longnecked vase, ideal for roses.', imageUrl: '/images/vase.jpg', price: 31.95 }),
+        Product.create({ name: 'Vanilla Diffuser', description: 'A room diffuser with reeds and vanilla oil', imageUrl: '/images/vanilladiffuser.jpg', price: 6.85 }),
         User.create({firstName: 'Alice', lastName: 'Buyer', email: 'alice@wonderland.com', isAdmin: 'false', password: 'ALICE'}),
         User.create({firstName: 'Bob', lastName: 'Bill', email: 'bob@wonderland.com', isAdmin: 'false', password: 'BOB'}),
         User.create({firstName: 'Cat', lastName: 'Purchase', email: 'cat@wonderland.com', isAdmin: 'false', password: 'CAT'}),
