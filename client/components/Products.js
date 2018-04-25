@@ -1,11 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import ProductCard from './ProductCard';
 
 class Products extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filter: null
+      filter: 0
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
@@ -14,7 +17,7 @@ class Products extends React.Component {
 
   render() {
     const { categories } = this.props;
-    const products = !this.state.filter
+    const products = !(this.state.filter * 1)
       ? this.props.products
       :
       this.props.products.filter(product => product.categoryId === Number(this.state.filter));
@@ -22,18 +25,23 @@ class Products extends React.Component {
 
     return (
       <div>
-        <select value='this.state.filter' onChange={ this.handleChange }>
-          <option>--Filter by category--</option>
+        <select value={ this.state.filter } onChange={ this.handleChange }>
+          <option value={ 0 }>All Products</option>
           { categories.map(category => (
             <option key={ category.id } value={ category.id }>
               { category.name }
             </option>
           ))}
         </select>
-        { /* render products here--likely through a product card component we can reuse */ }
+        { products.map(product => <ProductCard key={ product.id } product={ product } />)}
       </div>
     );
   }
 }
 
-export default Products;
+const mapState = state => ({
+  products: state.products,
+  categories: state.categories
+});
+
+export default connect(mapState)(Products);

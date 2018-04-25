@@ -88,6 +88,7 @@ describe('User model', () => {
 //CART TEST
 describe('cart', () => {
   let cart;
+  let user;
   beforeEach(() => {
     return User.create({
       firstName: 'Bob',
@@ -95,12 +96,16 @@ describe('cart', () => {
       email: 'bobby@gmail.com',
       password: 'bobshops'
     })
-      .then(user => {
+      .then(_user => {
+        user = _user;
         return Order.findOrCreateCart(user);
       })
       .then(_cart => cart = _cart);
   });
   describe('cart', () => {
+    it('generates a cart', () => {
+      expect(cart).to.be.ok;
+    });
     it('has a cart status of true', () => {
       expect(cart.cart).to.equal(true);
     });
@@ -119,6 +124,12 @@ describe('cart', () => {
       cart.checkout()
         .then(_cart => cart = _cart);
       expect(cart.cart).to.equal(false);
+    });
+    it('only generates a cart once', () => {
+      Order.findOrCreateCart(user)
+        .then(_cart => {
+          expect(_cart.id).to.equal(cart.id);
+        });
     });
   });
 });
