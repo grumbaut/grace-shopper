@@ -1,14 +1,9 @@
 const conn = require('./conn');
 const { Sequelize } = conn;
 const KEY = process.env.JWT_KEY;
-const jwt = require('jwt-simple')
+const jwt = require('jwt-simple');
 
 const User = conn.define('user', {
-  // id: {
-  //   type: Sequelize.UUID,
-  //   defaultValue: Sequelize.UUIDV4,
-  //   primaryKey: true
-  // },
   firstName: {
     type: Sequelize.STRING,
     allowNull: false
@@ -26,9 +21,6 @@ const User = conn.define('user', {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
-  },
-  userName: {
-    type: Sequelize.STRING
   },
   password: {
     type: Sequelize.STRING
@@ -50,11 +42,10 @@ User.authenticate = function(credentials){
     }
   })
     .then( user => {
-      if(!user){
-        throw { status: 401 }
+      if(user) {
+        return jwt.encode({ id: user.id }, KEY);
       }
-      const token = jwt.encode({ id: user.id }, KEY)
-      return token;
+      throw { status: 401 };
     });
 };
 

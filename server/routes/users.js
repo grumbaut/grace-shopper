@@ -16,13 +16,13 @@ router.get('/', (req, res, next)=> {
     .catch(next);
 });
 
-router.post('/', (req, res, next)=> {
+router.post('/', (req, res, next) => {
   User.create(req.body)
     .then( user => res.send(user))
     .catch(next);
 });
 
-router.delete('/:id', (req, res, next)=> {
+router.delete('/:id', (req, res, next) => {
   User.findById(req.params.id)
     .then( user => {
       user.destroy();
@@ -31,7 +31,7 @@ router.delete('/:id', (req, res, next)=> {
     .catch(next);
 });
 
-router.put('/:id', (req, res, next)=> {
+router.put('/:id', (req, res, next) => {
   User.findById(req.params.id)
     .then( user => {
       Object.assign(user, req.body);
