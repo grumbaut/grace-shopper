@@ -14,8 +14,7 @@ const Product = ({ product, categoryOfThisProduct, id }) => {
         <h1>{ product.name }</h1>
         <img src = {product.imageUrl} width={400} />
         <h2>{`$${product.price}`}</h2>
-        <p>{ product.description }</p>
-        {/*<Link to={`/products/${product.id}`}><i>details</i></Link>  */}    
+        <p>{ product.description }</p>          
       </div>
       <p>{product.name} is in our <Link to={`/categories/${categoryOfThisProduct.id}`}>{categoryOfThisProduct.name}</Link> category</p>
     </div>
