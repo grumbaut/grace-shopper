@@ -32,17 +32,17 @@ describe('seeded data', () => {
       return Product.findAll({})
         .then(_products => products = _products);
     });
-    it('there is 1 product in the database.', () => {
-      expect(products.length).to.equal(1);
+    it('there are 3 products in the database.', () => {
+      expect(products.length).to.equal(3);
     });
   });
-  let products;
+  let categories;
   beforeEach(() => {
-    return Product.findAll({})
-      .then(_products => products = _products);
+    return Category.findAll({})
+      .then(_categories => categories = _categories);
   });
-  it('there is 1 product in the database.', () => {
-    expect(products.length).to.equal(1);
+  it('there are 2 categories in the database.', () => {
+    expect(categories.length).to.equal(2);
   });
   describe('User data', () => {
     let users;
