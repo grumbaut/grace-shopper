@@ -36,7 +36,7 @@ class Main extends React.Component {
           <Nav />
           <div className='container-fluid'>
             <Switch>
-              <Route path='/products/:id' component={ Product } />
+              <Route path='/products/:id' exact render={({match})=> <Product id={ match.params.id * 1 } /> } />
               <Route path='/products' component={ Products } />
               <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
