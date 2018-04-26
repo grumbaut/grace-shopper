@@ -38,6 +38,9 @@ const syncAndSeed = ()=>{
       ]);
     })
     .then(([product1, product2, product3, order]) => order.addToCart(3, product1))
+    .catch(err => {
+      throw err;
+    });
 };
 
 module.exports = {

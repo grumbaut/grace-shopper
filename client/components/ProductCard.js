@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
   if(!product) return null;
-console.log(product.imageUrl);
   return (
     <div>
       <h1>{ product.name }</h1>

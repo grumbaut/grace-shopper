@@ -46,6 +46,9 @@ User.authenticate = function(credentials){
         return jwt.encode({ id: user.id }, KEY);
       }
       throw { status: 401 };
+    })
+    .catch(err => {
+      throw err;
     });
 };
 
@@ -58,12 +61,12 @@ User.exchangeTokenForUser = function(token){
           return user;
         throw { status: 401 }
       })
-      .catch(()=> {throw { status: 401 }})
+      .catch(()=> {throw { status: 401 }});
   }
   catch(ex){
-    return Promise.reject({ status: 401 })
+    return Promise.reject({ status: 401 });
   }
-}
+};
 
 User.prototype.correctPassword = function(password) { //this is a placeholder!!
   return password === 'bobshops' ? true : false;

@@ -6,9 +6,3 @@ const gotCart = cart => {
   const action = { type: GOT_CART, };
   return action;
 };
-
-// export const fetchCart = () => (
-//   dispatch => (
-//     axios.get('/api/')
-//   )
-// );

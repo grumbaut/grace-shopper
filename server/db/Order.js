@@ -24,6 +24,9 @@ Order.findOrCreateCart = function(user) {
         return this.create()
           .then(order => order.setUser(user));
       }
+    })
+    .catch(err => {
+      throw err;
     });
 };
 
@@ -40,25 +43,27 @@ Order.prototype.addToCart = function(quantity, product) {
       }, 0);
       return order.update({ total });
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+      throw err;
+    });
 };
 
 Order.prototype.removeFromCart = function(id) {
   LineItem.findById(id)
-    .then(lineItem => lineItem.destroy());
+    .then(lineItem => lineItem.destroy())
+    .catch(err => {
+      throw err;
+    });
 };
 
 Order.prototype.checkout = function() {
   return this.update({
     cart: false,
     date: `${new Date().getMonth()}, ${new Date().getDate} ${new Date().getFullYear()}`
-  });
+  })
+    .catch(err => {
+      throw err;
+    });
 };
 
-//will have a UserId
 module.exports = Order;
-
-//create class method
-//line item has productId and an orderId
-//order on front end is a map of the line items that have the order id
-//add completed: Sequelize.BOOLEAN to model to check if order has been completed
