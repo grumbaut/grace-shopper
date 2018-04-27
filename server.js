@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 
 const path = require('path');
-
 const db = require('./server/db');
 const { syncAndSeed } = db;
 
