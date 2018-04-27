@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ProductCard from './ProductCard';
 
 const Category = ({ category, categories, products, id, productsOfThisCategory })=> {
   if (!category) {
@@ -24,8 +25,8 @@ const Category = ({ category, categories, products, id, productsOfThisCategory }
            {
              productsOfThisCategory.map(product => {
                return (
-                 <div key={product.id}>
-                   <Link to={`/products/${product.id}`}>{product.name}</Link>
+                 <div key={product.id}>                   
+                   <ProductCard product={product} />                   
                  </div>
                )
              })
