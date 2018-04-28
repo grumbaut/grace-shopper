@@ -8,14 +8,22 @@ const Order = conn.define('order', {
     type: Sequelize.BOOLEAN,
     defaultValue: true
   },
-  total: Sequelize.INTEGER,
   date: Sequelize.STRING
+}, {
+  getterMethods: {
+    total() {
+      return this.lineitems.reduce((acc, item) => {
+        return acc + item.get().subtotal;
+      }, 0);
+    }
+  }
 });
 
 Order.findOrCreateCart = function(user) {
   const id = user.id ? user.id : 0;
   return this.findOne({
-    where: { userId: id }
+    where: { userId: id },
+    include: [{ model: LineItem, include: [Product]}]
   })
     .then(cart => {
       if(cart) {
@@ -37,12 +45,6 @@ Order.prototype.addToCart = function(quantity, product) {
       where: { id: this.id },
       include: [{ model: LineItem, include: [Product] }]
     }))
-    .then(order => {
-      const total = order.lineitems.reduce((acc, item) => {
-        return acc + item.get().subtotal;
-      }, 0);
-      return order.update({ total });
-    })
     .catch(err => {
       throw err;
     });

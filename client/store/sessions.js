@@ -1,5 +1,5 @@
 import axios from 'axios';
-import getCart from './cart';
+import { getCart } from './cart';
 
 const SET_USER = 'SET_USER';
 
@@ -24,7 +24,9 @@ export const getUserFromToken = token => {
     return axios.get(`/api/sessions/${token}`)
       .then( result => {
         dispatch(setUser(result.data));
-      });
+        dispatch(getCart(result.data));
+      })
+      .catch(err => console.error(err));
   };
 };
 

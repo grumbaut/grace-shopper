@@ -37,7 +37,11 @@ const syncAndSeed = ()=>{
         Order.findOrCreateCart(user1)
       ]);
     })
-    .then(([product1, product2, product3, order]) => order.addToCart(3, product1))
+    .then(([product1, product2, product3, order]) => {
+      order.addToCart(4, product3);
+      order.addToCart(2, product2);
+      order.addToCart(3, product1);
+    })
     .catch(err => {
       throw err;
     });
