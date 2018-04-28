@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "npm run webpack",
     "webpack": "./node_modules/webpack/bin/webpack.js",
-    "test": "DATABASE_URL=postgres://localhost/grace_shopper_db ./node_modules/mocha/bin/mocha --watch --recursive test/**/*.js",
+    "test": "JWT_KEY=fizzbuzz DATABASE_URL=postgres://localhost/grace_shopper_db ./node_modules/mocha/bin/mocha --watch --recursive test/**/*.js",
     "db-init": "pg-init grace_shopper_db",
     "start:dev": "npm run webpack -- -w & JWT_KEY=fizzbuzz nodemon server.js --ignore dist/ --ignore src/"
   },

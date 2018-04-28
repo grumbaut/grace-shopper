@@ -8,19 +8,18 @@ const app = require('../../app.js');
 
 //User routes test
 describe('User routes', () => {
-  beforeEach(() => {
-   return db.syncAndSeed();
-  });
-
   describe('/api/users', () => {
     const moesEmail = 'moe@gmail.com';
     beforeEach(() => {
-      return User.create({
+      return db.syncAndSeed()
+      .then(()=>{
+          return User.create({
         firstName: 'Moe',
         lastName: 'Stevens',
         userName: 'moe123',
         email: 'moe@gmail.com',
         password: 'moeshops'
+      });
       });
     });
 
