@@ -66,7 +66,7 @@ describe('authentication', () => {
         .catch(ex => expect(ex.status).to.equal(401));
     });
 
-    it('a invalid token will return an error with a 401 status', () => {
+   it('a invalid token will return an error with a 401 status', () => {
       const token = jwt.encode({
         id: User.build().id
       }, 'some silly key');
