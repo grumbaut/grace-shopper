@@ -26,6 +26,7 @@ describe('authentication', () => {
   describe('authenticate', () => {
     it('authenticating with correct credentials returns a token', () => {
       const Alice = userMap.Alice;
+      console.log(KEY + 'HEEEERREE!')
       const expectedToken = jwt.encode({
         id: Alice.id
       }, KEY);
