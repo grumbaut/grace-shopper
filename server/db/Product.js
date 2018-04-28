@@ -15,9 +15,9 @@ const Product = conn.define('product', {
     type: Sequelize.FLOAT,
     allowNull: false
   },
-  imageURL: {
+  imageUrl: {
     type: Sequelize.STRING,
-    defaultValue: 'public/images/noImage.jpg'
+    defaultValue: '/images/noImage.jpg'
   }
 });
 

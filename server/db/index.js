@@ -4,40 +4,43 @@ const Product = require('./Product');
 const User = require('./User');
 const Order = require('./Order');
 const LineItem = require('./LineItem');
-const faker = require('faker');
 
 Product.belongsTo(Category);
+Product.hasMany(LineItem);
 Category.hasMany(Product);
 LineItem.belongsTo(Order);
-LineItem.hasOne(Product);
+LineItem.belongsTo(Product);
 Order.hasMany(LineItem);
-
-
-const fakeUser = ()=> {
-  return {
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    email: faker.internet.email()
-  };
-};
+Order.belongsTo(User);
+User.hasMany(Order);
 
 
 const syncAndSeed = ()=>{
   return conn.sync({ force: true })
-  .then(()=>{
-    return Promise.all([
-      Category.create({ name:'Kitchen Supplies'}),
-      Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00 }),
-      User.create(fakeUser()),
-      User.create(fakeUser()),
-      User.create(fakeUser())
-    ]);
-  })
-  .then(([ category1, product1])=>{
-    return Promise.all([
-      product1.setCategory(category1)
-    ]);
-  });
+    .then(() => {
+      return Promise.all([
+        Category.create({ name:'Kitchen Supplies'}),
+        Category.create({ name: 'Decorative'}),
+        Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00, imageUrl: '/images/redmixingbowlset.jpg' }),
+        Product.create({ name: 'Vase', description: 'Porcelain longnecked vase, ideal for roses.', imageUrl: '/images/vase.jpg', price: 31.95 }),
+        Product.create({ name: 'Vanilla Diffuser', description: 'A room diffuser with reeds and vanilla oil', imageUrl: '/images/vanilladiffuser.jpg', price: 6.85 }),
+        User.create({firstName: 'Alice', lastName: 'Buyer', email: 'alice@wonderland.com', isAdmin: 'false', password: 'ALICE'}),
+        User.create({firstName: 'Bob', lastName: 'Bill', email: 'bob@wonderland.com', isAdmin: 'false', password: 'BOB'}),
+        User.create({firstName: 'Cat', lastName: 'Purchase', email: 'cat@wonderland.com', isAdmin: 'false', password: 'CAT'}),
+      ]);
+    })
+    .then(([ category1, category2, product1, product2, product3, user1])=>{
+      return Promise.all([
+        product1.setCategory(category1),
+        product2.setCategory(category2),
+        product3.setCategory(category2),
+        Order.findOrCreateCart(user1)
+      ]);
+    })
+    .then(([product1, product2, product3, order]) => order.addToCart(3, product1))
+    .catch(err => {
+      throw err;
+    });
 };
 
 module.exports = {

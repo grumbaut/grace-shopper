@@ -1,13 +1,10 @@
 //ALANS BRAINSTORMING
-//var app = require('../../server.js');
-
-
 const { expect } = require('chai');
 const request = require('supertest');
-const test = require('tape');
+//const test = require('tape');
 const db = require('../../server/db');
 const { Product, Category, User } = db.models;
-const app = require('../../server.js');
+const app = require('../../app.js');
 
 //User routes test
 describe('User routes', () => {
@@ -17,13 +14,6 @@ describe('User routes', () => {
 
   describe('/api/users', () => {
     const moesEmail = 'moe@gmail.com';
-    // var server;
-    // beforeEach(function () {
-    //  server = require('../../server.js');
-    // });
-    // afterEach(function (done) {
-    //   server.close(done);
-    // });
     beforeEach(() => {
       return User.create({
         firstName: 'Moe',
@@ -40,7 +30,7 @@ describe('User routes', () => {
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an('array');
-          expect(res.body[3].email).to.be.equal(moesEmail);
+          expect(res.body[2].email).to.be.equal(moesEmail);
         });
     });
   });

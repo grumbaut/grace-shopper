@@ -8,7 +8,7 @@
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "test": "DATABASE_URL=postgres://localhost/grace_shopper_db ./node_modules/mocha/bin/mocha --watch --recursive test/**/*.js",
     "db-init": "pg-init grace_shopper_db",
-    "start:dev": "npm run webpack -- -w & nodemon server.js --ignore dist/ --ignore src/"
+    "start:dev": "npm run webpack -- -w & JWT_KEY=fizzbuzz nodemon server.js --ignore dist/ --ignore src/"
   },
   "keywords": [],
   "author": "",
@@ -21,8 +21,10 @@
     "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.1.0",
     "chai": "^4.1.2",
+    "cluster": "^0.7.7",
     "express": "^4.16.2",
     "faker": "^4.1.0",
+    "jwt-simple": "^0.5.1",
     "mocha": "^5.1.1",
     "pg": "^7.4.1",
     "react": "^16.2.0",
