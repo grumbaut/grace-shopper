@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
 const db = require('../../server/db');
-const { Product, Category, User } = db.models;
+const { Product, Category, User, Order, LineItem } = db.models;
 
-//Models tests, do they exist?
+// Models tests
 describe('models', () => {
   beforeEach(() => {
     return db.syncAndSeed();
@@ -24,7 +24,7 @@ describe('models', () => {
   });
 });
 
-//Seeding test, do we have all of our data seeding?
+//Seeding test
 describe('seeded data', () => {
   describe('Product data', () => {
     let products;
@@ -32,17 +32,17 @@ describe('seeded data', () => {
       return Product.findAll({})
         .then(_products => products = _products);
     });
-    it('there is 1 product in the database.', () => {
-      expect(products.length).to.equal(1);
+    it('there are 3 products in the database.', () => {
+      expect(products.length).to.equal(3);
     });
   });
-  let products;
+  let categories;
   beforeEach(() => {
-    return Product.findAll({})
-      .then(_products => products = _products);
+    return Category.findAll({})
+      .then(_categories => categories = _categories);
   });
-  it('there is 1 product in the database.', () => {
-    expect(products.length).to.equal(1);
+  it('there are 2 categories in the database.', () => {
+    expect(categories.length).to.equal(2);
   });
   describe('User data', () => {
     let users;
@@ -87,27 +87,79 @@ describe('User model', () => {
       });
     });
   });
-})
+});
 
-// describe ('authentication', () => {
-//   let users;
-//   beforeEach (()=> {
-//     return User.findAll({})
-//       .then(_users => users = _users);
-//   });
-//   describe ('seeded data', ()=> {
-//     it('Alice, Bob, Cat exist', ()=> {
-//       expect(users[0].firstName).to.equal('Tom');
-//     });
-//   });
-//   describe('authenticate', ()=> {
-//     xit('authenticating with correct credentials returns a token', ()=> {});
-//     xit('authenticating with incorrect credentials will throw an error with a 401 status', ()=> {});
-//   });
-//   describe('exchanging a token', ()=> {
-//     xit('a valid token which matches a user returns the user', ()=> {});
-//     xit('a valid token which does not match a user will return an error with a 401 status', ()=> {})
-//     xit('a invalid token will return an error with a 401 status', ()=> {})
-//     xit('a valid token with the wrong data type for a userId with will return a 401 status', ()=> {})
-//   });
-//  })
+//LineItem test
+describe('LineItem model', () => {
+  describe('instanceMethods', () => {
+    describe('changeQuantity', () => {
+      let lineItem;
+      beforeEach(() => {
+        return LineItem.create({
+          quantity: 3 ,
+          productPrice: 10
+        })
+          .then(_lineItem => {
+            lineItem = _lineItem;
+          });
+      });
+
+      it('has a subtotal field that multiplies price by quantity', () => {
+        expect(lineItem.subtotal).to.be.equal(30);
+      });
+
+      it('has a changeQuantity method on an instance.', () => {
+        expect(lineItem.changeQuantity).to.be.ok;
+      });
+    });
+  });
+});
+
+//CART TEST
+describe('cart', () => {
+  let cart;
+  let user;
+  beforeEach(() => {
+    return User.create({
+      firstName: 'Bob',
+      lastName: 'Smith',
+      email: 'bobby@gmail.com',
+      password: 'bobshops'
+    })
+      .then(_user => {
+        user = _user;
+        return Order.findOrCreateCart(user);
+      })
+      .then(_cart => cart = _cart);
+  });
+  describe('cart', () => {
+    it('generates a cart', () => {
+      expect(cart).to.be.ok;
+    });
+    it('has a cart status of true', () => {
+      expect(cart.cart).to.equal(true);
+    });
+    it('can add products to cart', () => {
+      let product;
+      Product.findById(1)
+        .then(_product => {
+          product = _product;
+          return cart.addToCart(2, product);
+        })
+        .then(updatedCart => {
+          expect(updatedCart.lineitems[0].product.name).to.equal(product.name);
+        });
+    });
+    it('checkout method sets cart status to false', () => {
+      cart.checkout()
+        .then(_cart => cart = _cart);
+      expect(cart.cart).to.equal(false);
+    });
+    it('only generates a cart once', () => {
+      Order.findOrCreateCart(user)
+        .then(_cart => {
+          expect(_cart.id).to.equal(cart.id);
+        });
+    });
+  });
+});
