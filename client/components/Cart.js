@@ -26,15 +26,15 @@ class Cart extends React.Component {
     const updatedItem = Object.assign(currentItem, { quantity: value, subtotal: (value * lineItem.product.price).toFixed(2) });
     const updatedState = this.state.lineItems.filter(item => item.id === Number(id) ? updatedItem : item);
     this.setState({ lineItems: updatedState});
+    const { userId, cart } = this.props;
+    this.handleSubmit(userId, cart.id)
   }
 
-  handleSubmit(event, userId, cartId) {
-    event.preventDefault();
+  handleSubmit(userId, cartId) {
     this.props.updateCart(userId, cartId, this.state.lineItems);
   }
 
   render() {
-    const { userId, cart } = this.props;
     if(!this.state.lineItems || !this.state.lineItems.length) return null;
     const { lineItems } = this.state;
     const quantityNum = [];
@@ -45,27 +45,25 @@ class Cart extends React.Component {
     return (
       <div>
         <h1>Cart</h1>
-        <form onSubmit={ event => this.handleSubmit(event, userId, cart.id)}>
-          { lineItems.map(lineItem => (
-            <div className='row' key={ lineItem.id }>
-              <div className='col-2'>
-                <select value={ lineItem.quantity } onChange={ event => this.handleChange(event, lineItem) }>
-                  { quantityNum.map(num => (
-                    <option key={ num } value={ num }>{ num }</option>
-                  ))}
-                </select>
-              </div>
-              <div className='col-6'>
-                { lineItem.product.name }
-              </div>
-              <div className='col-4'>
-                <p>Subtotal: { lineItem.subtotal }</p>
-              </div>
+        { lineItems.map(lineItem => (
+          <div className='row' key={ lineItem.id }>
+            <div className='col-2'>
+              <select value={ lineItem.quantity } onChange={ event => this.handleChange(event, lineItem) }>
+                { quantityNum.map(num => (
+                  <option key={ num } value={ num }>{ num }</option>
+                ))}
+              </select>
             </div>
-          ))}
-          <p><strong>Total:</strong> { total }</p>
-          <button className='btn btn-primary btn-sm'>Update Cart</button>
-        </form>
+            <div className='col-6'>
+              { lineItem.product.name }
+            </div>
+            <div className='col-4'>
+              <p>Subtotal: { lineItem.subtotal }</p>
+            </div>
+          </div>
+        ))}
+        <p><strong>Total:</strong> { total }</p>
+        <button className='btn btn-primary btn-sm'>Checkout</button>
       </div>
     );
   }

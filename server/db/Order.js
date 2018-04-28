@@ -12,9 +12,10 @@ const Order = conn.define('order', {
 }, {
   getterMethods: {
     total() {
-      return this.lineitems.reduce((acc, item) => {
-        return acc + item.get().subtotal;
+      const total = this.lineitems.reduce((acc, item) => {
+        return acc + Number(item.get().subtotal);
       }, 0);
+      return total.toFixed(2);
     }
   }
 });
