@@ -26,7 +26,6 @@ describe('authentication', () => {
   describe('authenticate', () => {
     it('authenticating with correct credentials returns a token', () => {
       const Alice = userMap.Alice;
-      console.log(Alice.password);
       const expectedToken = jwt.encode({
         id: Alice.id
       }, KEY);
@@ -34,7 +33,7 @@ describe('authentication', () => {
         email: Alice.email,
         password: Alice.password
       })
-       // .then(token => expect(token).to.equal(expectedToken));
+     .then(token => expect(token).to.equal(expectedToken));
     });
 
     it('authenticating with incorrect credentials will throw an error with a 401 status', () => {
