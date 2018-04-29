@@ -1,44 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateCart } from '../store';
+import { updateCart, deleteItem, updateQuantity } from '../store';
 
 class Cart extends React.Component {
   constructor(props) {
     super(props);
-    const { cart } = this.props;
-    this.state = {
-      lineItems: cart && cart.lineitems ? cart.lineitems : []
-    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(!this.state.lineItems || !this.state.lineItems.length) {
-      this.setState({ lineItems: nextProps.cart.lineitems });
-    }
   }
 
   handleChange(event, lineItem) {
     const { id } = lineItem;
     const { value } = event.target;
-    const currentItem = this.state.lineItems.find(item => item.id === Number(id));
+    const currentItem = this.props.lineItems.find(item => item.id === Number(id));
     const updatedItem = Object.assign(currentItem, { quantity: value, subtotal: (value * lineItem.product.price).toFixed(2) });
-    const updatedState = this.state.lineItems.filter(item => item.id === Number(id) ? updatedItem : item);
-    this.setState({ lineItems: updatedState});
+    const lineItems = this.props.lineItems.filter(item => item.id === Number(id) ? updatedItem : item);
+    this.props.updateQuantity(lineItems);
     const { userId, cart } = this.props;
-    this.handleSubmit(userId, cart.id)
+    this.handleSubmit(userId, cart.id);
   }
 
   handleSubmit(userId, cartId) {
-    this.props.updateCart(userId, cartId, this.state.lineItems);
+    this.props.updateCart(userId, cartId, this.props.lineItems);
   }
 
   render() {
-    if(!this.state.lineItems || !this.state.lineItems.length) return null;
-    const { lineItems } = this.state;
+    const { lineItems, deleteItem } = this.props;
+    if(!lineItems || !lineItems.length) return null;
     const quantityNum = [];
-    const total = this.state.lineItems.reduce((acc, item) => acc + Number(item.subtotal), 0).toFixed(2);
+    const total = lineItems.reduce((acc, item) => acc + Number(item.subtotal), 0).toFixed(2);
     for(let i = 1; i <= 50; i++) {
       quantityNum.push(i);
     }
@@ -54,11 +44,14 @@ class Cart extends React.Component {
                 ))}
               </select>
             </div>
-            <div className='col-6'>
+            <div className='col-5'>
               { lineItem.product.name }
             </div>
-            <div className='col-4'>
+            <div className='col-3'>
               <p>Subtotal: { lineItem.subtotal }</p>
+            </div>
+            <div className='col-2'>
+              <button className='btn btn-danger btn-sm' onClick={ () => deleteItem(lineItem.id)}>X</button>
             </div>
           </div>
         ))}
@@ -71,12 +64,19 @@ class Cart extends React.Component {
 
 const mapState = state => ({
   cart: state.cart,
-  userId: state.user.id
+  userId: state.user.id,
+  lineItems: state.cart.lineitems
 });
 
 const mapDispatch = dispatch => ({
+  updateQuantity(lineItems) {
+    dispatch(updateQuantity(lineItems));
+  },
   updateCart(userId, orderId, lineItemId, quantity) {
     dispatch(updateCart(userId, orderId, lineItemId, quantity));
+  },
+  deleteItem(lineItem, userId, orderId) {
+    dispatch(deleteItem(lineItem, userId, orderId));
   }
 });
 

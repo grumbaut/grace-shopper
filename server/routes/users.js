@@ -36,7 +36,7 @@ router.put('/:id', (req, res, next) => {
     .catch(next);
 });
 
-//ORDER ROUTES
+//CART ROUTES
 router.get('/:id/orders', (req, res, next)=> {
   Order.findAll({
     include: [{ model: LineItem }]
@@ -64,7 +64,13 @@ router.delete('/:id/orders/:orderId', (req, res, next)=> {
 router.put('/:id/orders/:orderId/add', (req, res, next)=> {
   Order.findById(req.params.orderId)
     .then(order => order.addToCart(req.body.quantity, req.body.product))
-    .then( order => res.send(order))
+    .then(() => Order.findById(req.params.orderId, {
+      include: [{
+        model: LineItem,
+        include: [Product]
+      }]
+    }))
+    .then(order => res.send(order))
     .catch(next);
 });
 

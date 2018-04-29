@@ -13,13 +13,27 @@ const LineItem = conn.define('lineitem', {
 }
 );
 
-LineItem.createLineItem = function(quantity, product) {
-  return LineItem.create({
-    quantity,
-    productPrice: product.price
+LineItem.updateOrCreateLineItem = function(order, quantity, product) {
+  return this.find({
+    where: {
+      orderId: order.id,
+      productId: product.id
+    }
   })
     .then(lineItem => {
-      return lineItem.setProduct(product);
+      if(!lineItem) {
+        return this.create({
+          quantity: quantity,
+          productPrice: product.price,
+          productId: product.id,
+          orderId: order.id
+        });
+      } else {
+        const updatedQuantity = lineItem.quantity + quantity;
+        return lineItem.update({
+          quantity: updatedQuantity
+        });
+      }
     })
     .catch(err => {
       throw err;

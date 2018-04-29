@@ -40,20 +40,13 @@ Order.findOrCreateCart = function(user) {
 };
 
 Order.prototype.addToCart = function(quantity, product) {
-  return LineItem.createLineItem(quantity, product)
-    .then(lineItem => lineItem.setOrder(this))
-    .then(() => Order.findOne({
-      where: { id: this.id },
-      include: [{ model: LineItem, include: [Product] }]
+  return LineItem.updateOrCreateLineItem(this, quantity, product)
+    .then(() => Order.findById(this.id, {
+      include: [{
+        model: LineItem,
+        include: [Product]
+      }]
     }))
-    .catch(err => {
-      throw err;
-    });
-};
-
-Order.prototype.removeFromCart = function(id) {
-  LineItem.findById(id)
-    .then(lineItem => lineItem.destroy())
     .catch(err => {
       throw err;
     });

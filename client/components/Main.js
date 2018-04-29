@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts, getUserFromToken, getCart } from '../store';
+import { getCategories, getProducts, getUserFromToken } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
