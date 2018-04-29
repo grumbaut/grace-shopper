@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
 
-const Product = ({ product, categoryOfThisProduct, id }) => {
+const Product = ({ product, categories }) => {
   if (!product) {
     return null;
   }
+  const categoryOfThisProduct = categories.find(category=> category.id === product.categoryId);
   return (
     <div>
-      {/*<ProductCard product={product} />*/}
       <div>
         <h1>{ product.name }</h1>
         <img src = {product.imageUrl} width={400} />
@@ -18,15 +18,15 @@ const Product = ({ product, categoryOfThisProduct, id }) => {
       </div>
       <p>{product.name} is in our <Link to={`/categories/${categoryOfThisProduct.id}`}>{categoryOfThisProduct.name}</Link> category</p>
     </div>
-  )
-}
+  );
+};
 
-const mapStateToProps = ({ products, categories }, { id })=> {
+const mapStateToProps = ({ products, categories }, { id }) => {
   const product = products.find( product => product.id === id );
-  const categoryOfThisProduct = categories.find(category=> category.id === product.categoryId);
   return {
     product,
-    categoryOfThisProduct
+    categories
+    // categoryOfThisProduct
   };
 };
 
