@@ -17,9 +17,9 @@ export const updateProduct = (product, history)=> {
         }
     }
     return(dispatch) => {
-        return axios.post('/api/students', product)
+        return axios.post('/api/products', product)
             .then(result => result.data)
-            .then(student => dispatch ({
+            .then(product => dispatch ({
                 type: CREATE_PRODUCT,  
                 product
                 })

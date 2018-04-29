@@ -56,8 +56,8 @@ const mapState = ({ categories, products })=> {
 
 const mapDispatch = (dispatch, { history }) => {
     return {
-        createProduct: (product) => dispatch(createProduct(product, history))
+        updateProduct: (product) => dispatch(updateProduct(product, history))
     }
-}
+  }
 
 export default connect(mapState, mapDispatch)(createProduct);
