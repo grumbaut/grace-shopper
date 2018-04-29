@@ -5,8 +5,8 @@ import ProductCard from './ProductCard';
 import { updateProduct } from '../store/product';
 
 class Product extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(product){
+    super(product)
 
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -51,11 +51,10 @@ class Product extends React.Component {
       return null;
     }
     const productCategory = categories.find(category => category.id === product.categoryId);
-    console.log('productCategory is', productCategory);
 
     return (      
       <div>
-          <h1>{ product.name }</h1>
+          <h1>{ product.name }, {this.state.name} is new Name </h1>
           <img src = { product.imageUrl } width={400} />
           <h2>{`$${product.price}`}</h2>
           <p>{ product.description }</p>   

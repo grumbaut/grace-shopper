@@ -31,6 +31,11 @@ const Nav = ({ user, logout }) => (
             )
           }
         </li>
+        {
+          user.isAdmin === true ?        
+            <li className="nav-item"><NavLink className="nav-link" to='/admin'>Admin functionality</NavLink></li>
+          :  <li className="nav-item"><NavLink className="nav-link" to='/support'>Contact Support</NavLink></li>
+        }
         <li className='nav-item'>
           {
             user && user.id ? null : (

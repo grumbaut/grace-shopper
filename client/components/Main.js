@@ -5,12 +5,14 @@ import { getCategories, getProducts, getUserFromToken } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
+import createProduct from './createProduct'
 import Product from './Product';
 import Products from './Products';
 import Login from './Login';
 import SignUp from './SignUp';
 import Category from './Category';
 import Categories from './Categories';
+import AdminIndex from './AdminIndex';
 
 class Main extends React.Component {
   constructor(props) {
@@ -36,6 +38,8 @@ class Main extends React.Component {
           <Nav />
           <div className='container-fluid'>
             <Switch>
+              <Route path='/admin' exact component = { AdminIndex } />
+              <Route path='/createProduct' exact component = { createProduct } />
               <Route path='/products/:id' exact render={({match})=> <Product id={ match.params.id * 1 } /> } />
               <Route path='/products' component={ Products } />
               <Route path='/signup' component={ SignUp } />

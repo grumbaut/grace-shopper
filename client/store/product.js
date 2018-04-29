@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
+const CREATE_PRODUCT = 'CREATE_PRODUCT'
 
 export const updateProduct = (product, history)=> {
     console.log('store', product)
@@ -15,6 +16,19 @@ export const updateProduct = (product, history)=> {
                 .then(() => history.push('/'));
         }
     }
+    return(dispatch) => {
+        return axios.post('/api/students', product)
+            .then(result => result.data)
+            .then(student => dispatch ({
+                type: CREATE_PRODUCT,  
+                product
+                })
+            )
+            .then (() => {
+                history.push('/products')
+        })
+    }
+
 }
 
 const reducer = (state = [], action) => {
@@ -22,7 +36,12 @@ const reducer = (state = [], action) => {
   switch (action.type) {
     case UPDATE_PRODUCT:
     state = state.map( product => product.id === action.product.id ? action.product : product )
-  default:
+    break;
+    
+    case CREATE_PRODUCT:
+    state = [... state, action.product]
+   
+   default:
     return state;
   }
 };

@@ -24,6 +24,7 @@ class Products extends React.Component {
 
     return (
       <div>
+      
         <select value={ this.state.filter } onChange={ this.handleChange }>
           <option value={ 0 }>All Products</option>
           { categories.map(category => (
