@@ -5,17 +5,27 @@ import ProductCard from './ProductCard';
 import { updateProduct } from '../store/product';
 
 class Product extends React.Component {
-  constructor(product){
-    super()
+  constructor(props){
+    super(props)
 
-    this.onChange = this.onChange.bind(this)
-    this.onSave = this.onSave.bind(this)
+    this.onChange = this.onChange.bind(this);
+    this.onSave = this.onSave.bind(this);
     
     this.state = {
-      name: product.name ? product.name: '',
-      description: product.description ? product.description: '',
-      price: product.price ? product.price: 0,
-      categoryId: product.categoryId ? product.categoryId: ''
+      name: this.props.product ? this.props.product.name : '',
+      description: this.props.product ? this.props.product.description : '',
+      price: this.props.product ? this.props.product.price : 0,
+      categoryId: this.props.product ? this.props.product.categoryId : ''
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.product) {
+      this.setState({
+        name: nextProps.product.name,
+        description: nextProps.product.description,
+        price: nextProps.product.price,
+        categoryId: nextProps.product.categoryId
+      });
     }
   }
   onSave(ev){
@@ -29,13 +39,19 @@ class Product extends React.Component {
     this.setState(change);
   }
   render(){
-    const { user, products, categories, id } = this.props
-    const { onChange, onSave } = this
-    const product = products.find( product => product.id === id );
+    const { user, categories, product } = this.props;
+    // const { product } = this.state;
+    const { onChange, onSave } = this;    
+
+    if (!product) {
+      return null;
+    }
+    console.log('product is', product);
     const productCategory = categories.find(category => category.id === product.categoryId);
-    return (
+    console.log('productCategory is', productCategory);
+
+    return (      
       <div>
-        {/*<ProductCard product={product} />*/}
           <h1>{ product.name }</h1>
           <img src = { product.imageUrl } width={400} />
           <h2>{`$${product.price}`}</h2>
@@ -60,10 +76,14 @@ class Product extends React.Component {
 }
 
 const mapState = ({ products, categories, user }, { id })=> {
+  const product = products.find( product => product.id === id );
+  console.log('product in mapState', product);
+  console.log('products in mapState are: ', products);
   return {
     products,
     categories,
-    user
+    user,
+    product
   };
 };
 
