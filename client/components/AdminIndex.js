@@ -9,7 +9,7 @@ const AdminIndex = ()=> {
        <ul>
            <li><Link to='/createProduct'>Create a new product</Link></li>
            <li><Link to='/products'>Update products</Link></li>
-           <li><Link to='/users'>View users</Link></li>
+           <li><Link to='/users'>View and update users</Link></li>
            <li><Link to='/orders'>View orders</Link></li>
        </ul>
        </div>
