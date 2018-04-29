@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const GOT_CART = 'GOT_CART';
 const GOT_UPDATED_CART = 'GOT_UPDATED_CART';
-const UPDATE_QUANTITY = 'UPDATE_QUANTITY';
 const DELETED_ITEM = 'DELETED_ITEM';
 
 const gotCart = cart => {
@@ -17,11 +16,6 @@ const gotUpdatedCart = cart => {
 
 const deletedItem = id => {
   const action = { type: DELETED_ITEM, id };
-  return action;
-};
-
-export const updateQuantity = lineItems => {
-  const action = { type: UPDATE_QUANTITY, lineItems };
   return action;
 };
 
@@ -69,8 +63,6 @@ const reducer = (state = {}, action) => {
     return action.cart;
   case GOT_UPDATED_CART:
     return action.cart;
-  case UPDATE_QUANTITY:
-    return Object.assign({}, state, action.lineItems);
   case DELETED_ITEM:
     return Object.assign({}, state, { lineitems: state.lineitems.filter(item => item.id !== Number(action.id)) });
   default:

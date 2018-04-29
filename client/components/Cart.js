@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { updateCart, deleteItem, updateQuantity } from '../store';
 
 class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event, lineItem) {
@@ -15,17 +15,19 @@ class Cart extends React.Component {
     const currentItem = this.props.lineItems.find(item => item.id === Number(id));
     const updatedItem = Object.assign(currentItem, { quantity: value, subtotal: (value * lineItem.product.price).toFixed(2) });
     const lineItems = this.props.lineItems.filter(item => item.id === Number(id) ? updatedItem : item);
-    this.props.updateQuantity(lineItems);
     const { userId, cart } = this.props;
-    this.handleSubmit(userId, cart.id);
-  }
-
-  handleSubmit(userId, cartId) {
-    this.props.updateCart(userId, cartId, this.props.lineItems);
+    this.props.updateCart(userId, cart.id, lineItems);
   }
 
   render() {
-    const { lineItems, deleteItem } = this.props;
+    const { lineItems, deleteItem, userId } = this.props;
+    if(!userId) {
+      return (
+        <h1>
+          <Link to='/signup'>Sign up</Link> or <Link to='/login'>login</Link> to view your cart.
+        </h1>
+      )
+    }
     if(!lineItems || !lineItems.length) return <h1>Your cart is empty.</h1>;
     const quantityNum = [];
     const total = lineItems.reduce((acc, item) => acc + Number(item.subtotal), 0).toFixed(2);
