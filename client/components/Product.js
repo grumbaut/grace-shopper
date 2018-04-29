@@ -12,26 +12,44 @@ class Product extends React.Component {
     this.onSave = this.onSave.bind(this)
     
     this.state = {
-      name: product.name ? product.name: '',
-      description: product.description ? product.description: '',
+      name: product.name ? product.name: 'placeholder',
+      description: product.description ? product.description: 'placeholder',
       price: product.price ? product.price: 0,
-      categoryId: product.categoryId ? product.categoryId: ''
+      categoryId: product.categoryId ? product.categoryId: 1,
+      imageUrl: product.imageUrl ? product.imageUrl: '/images/noImage.jpg'
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.product) {
+      this.setState({
+        name: nextProps.product.name,
+        description: nextProps.product.description,
+        price: nextProps.product.price,
+        categoryId: nextProps.product.categoryId,
+        imageUrl: nextProps.product.imageUrl
+      });
     }
   }
   onSave(ev){
     ev.preventDefault()
-    const product = { productId: this.props.id, name: this.state.name, description: this.state.description, price: this.state.price, imageURL: this.props.product.imageURL, categoryId: this.state.categoryId }
+    const product = { productId: this.props.id, name: this.state.name, description: this.state.description, price: this.state.price, imageURL: this.state.imageURL, categoryId: this.state.categoryId }
+    console.log(product, 'this is the Saved product')
     updateProduct(product)
   }
   onChange(ev){
     const change = {};
     change[ev.target.name] = ev.target.value;
+    console.log(change, 'this is the change requested')
     this.setState(change);
   }
   render(){
-    const { user, products, categories, id } = this.props
+    const { user, product, categories } = this.props
     const { onChange, onSave } = this
-    const product = products.find( product => product.id === id );
+    const { price, name, imageUrl, description } = this.state
+
+    if (!product) {
+      return null;
+    }
     const productCategory = categories.find(category => category.id === product.categoryId);
     return (
       <div>
@@ -47,7 +65,9 @@ class Product extends React.Component {
               <ul>
               <form onSubmit= { onSave }>
               <h3>Admin: you may update this product </h3>
-                  <li> Price <input onChange = { this.onChange } name = 'price'></input> </li>
+                  <li> Price <input name =  'price' onChange = { this.onChange } ></input> </li>
+                  <li> Name <input onChange = { this.onChange } name = 'name'></input> </li>
+                  <li> Category <input onChange = { this.onChange } name = 'categoryId'></input> </li>
                   <button type='submit'> Update </button>
               </form>
               </ul>    
@@ -60,21 +80,18 @@ class Product extends React.Component {
 }
 
 const mapState = ({ products, categories, user }, { id })=> {
+  const product = products.find( product => product.id === id );
   return {
-    products,
+    product,
     categories,
     user
   };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
-      updateProduct: (product) => dispatch(updateProduct(product))
+      updateProduct: (product) => dispatch(updateProduct(product, history))
   }
 }
 
 export default connect(mapState, mapDispatch)(Product);
-
-
-// <li> Stock <input onChange = { this.onChange } name = 'quantity'></input> </li>
-// <li> Category <input onChange = { this.onChange } name = 'categoryId'></input> </li>

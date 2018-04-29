@@ -6,7 +6,7 @@ import products from './products';
 import product from './product'
 import user from './sessions';
 
-const reducers = combineReducers({ categories, products, user });
+const reducers = combineReducers({ categories, products, product, user });
 const middleware = applyMiddleware(thunk, logger);
 
 const store = createStore(reducers, middleware);
