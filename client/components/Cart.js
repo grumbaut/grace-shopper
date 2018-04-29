@@ -26,7 +26,7 @@ class Cart extends React.Component {
 
   render() {
     const { lineItems, deleteItem } = this.props;
-    if(!lineItems || !lineItems.length) return null;
+    if(!lineItems || !lineItems.length) return <h1>Your cart is empty.</h1>;
     const quantityNum = [];
     const total = lineItems.reduce((acc, item) => acc + Number(item.subtotal), 0).toFixed(2);
     for(let i = 1; i <= 50; i++) {
