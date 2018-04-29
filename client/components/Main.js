@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts, getUserFromToken } from '../store';
+import { getCategories, getProducts, getUsers, getUserFromToken } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -13,13 +13,15 @@ import SignUp from './SignUp';
 import Category from './Category';
 import Categories from './Categories';
 import AdminIndex from './AdminIndex';
+import Users from './Users';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       categories: [],
-      products: []
+      products: [],
+      users: []
     };
   }
   
@@ -39,6 +41,7 @@ class Main extends React.Component {
           <div className='container-fluid'>
             <Switch>
               <Route path='/admin' exact component = { AdminIndex } />
+              <Route path='/users' exact component = { Users } />
               <Route path='/createProduct' exact component = { createProduct } />
               <Route path='/products/:id' exact render={({match})=> <Product id={ match.params.id * 1 } /> } />
               <Route path='/products' component={ Products } />
@@ -60,6 +63,7 @@ const mapDispatch = dispatch => ({
   fetch() {
     dispatch(getCategories());
     dispatch(getProducts());
+    dispatch(getUsers());
   },
   getUser(token) {
     dispatch(getUserFromToken(token));
