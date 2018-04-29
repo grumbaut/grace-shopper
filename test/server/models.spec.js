@@ -66,6 +66,7 @@ describe('User model', () => {
         return User.create({
           firstName: 'Bob',
           lastName: 'Smith',
+          userName: 'bob123',
           email: 'bobby@gmail.com',
           password: 'bobshops'
         })
@@ -73,10 +74,13 @@ describe('User model', () => {
             bob = user;
           });
       });
+      it('User has a username and password', ()=> {
+        expect(bob.userName && bob.password).to.be.ok;
+      });
 
       it('returns true if the password is correct', () => {
         expect(bob.correctPassword('bobshops')).to.be.equal(true);
-      })
+      });
 
       it('returns false if the password is incorrect', () => {
         expect(bob.correctPassword('bobshop')).to.be.equal(false);
@@ -159,4 +163,3 @@ describe('cart', () => {
     });
   });
 });
-
