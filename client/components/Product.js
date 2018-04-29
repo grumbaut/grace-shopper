@@ -5,11 +5,11 @@ import ProductCard from './ProductCard';
 import { updateProduct } from '../store/product';
 
 class Product extends React.Component {
-  constructor(product){
-    super()
+  constructor(props){
+    super(props)
 
-    this.onChange = this.onChange.bind(this)
-    this.onSave = this.onSave.bind(this)
+    this.onChange = this.onChange.bind(this);
+    this.onSave = this.onSave.bind(this);
     
     this.state = {
       name: product.name ? product.name: 'placeholder',
@@ -51,9 +51,10 @@ class Product extends React.Component {
       return null;
     }
     const productCategory = categories.find(category => category.id === product.categoryId);
-    return (
+    console.log('productCategory is', productCategory);
+
+    return (      
       <div>
-        {/*<ProductCard product={product} />*/}
           <h1>{ product.name }</h1>
           <img src = { product.imageUrl } width={400} />
           <h2>{`$${product.price}`}</h2>
@@ -84,7 +85,8 @@ const mapState = ({ products, categories, user }, { id })=> {
   return {
     product,
     categories,
-    user
+    user,
+    product
   };
 };
 
