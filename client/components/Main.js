@@ -5,7 +5,7 @@ import { getCategories, getProducts, getUserFromToken } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
-import createProduct from './createProduct'
+import createProduct from './createProduct';
 import Product from './Product';
 import Products from './Products';
 import Login from './Login';

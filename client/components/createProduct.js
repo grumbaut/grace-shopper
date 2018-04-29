@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class createProduct extends Component {
-    constructor(){
+    constructor(product){
         super()
         this.state = {
             name: product.name ? product.name: 'placeholder',
@@ -13,9 +14,15 @@ class createProduct extends Component {
     }
     render(){
         return (
-            <hr/>
+            <h1> heloo! </h1>
         )
     }
 }
 
-export default createProduct;
+const mapDispatch = (dispatch, { history }) => {
+    return {
+        createProduct: (product) => dispatch(createProduct(product, history))
+    }
+  }
+
+export default connect(null, mapDispatch)(createProduct);
