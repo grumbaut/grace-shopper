@@ -20,7 +20,7 @@ class Main extends React.Component {
       products: []
     };
   }
-
+  
   componentDidMount() {
     this.props.fetch();
     if(window.localStorage.getItem('token')) {
@@ -61,5 +61,6 @@ const mapDispatch = dispatch => ({
     dispatch(getUserFromToken(token));
   }
 });
+
 
 export default connect(mapState, mapDispatch)(Main);

@@ -3,6 +3,7 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import categories from './categories';
 import products from './products';
+import product from './product'
 import user from './sessions';
 
 const reducers = combineReducers({ categories, products, user });
@@ -14,3 +15,4 @@ export default store;
 export * from './categories';
 export * from './products';
 export * from './sessions';
+export * from './product';
