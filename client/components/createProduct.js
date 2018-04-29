@@ -14,15 +14,50 @@ class createProduct extends Component {
     }
     render(){
         return (
-            <h1> heloo! </h1>
+            <div>
+            <ul>
+            <h3> Create New Product </h3>
+                <form onSubmit ={ this.onSave }>
+                    <li> 
+                        Name <input name = 'name' onChange = { this.onChange }></input> 
+                    </li>        
+                    
+                    <li> 
+                        Price: <input name = 'price' onChange = { this.onChangeLast }></input> 
+                    </li>  
+                    
+                    <li> 
+                        Image <input name = 'imageUrl' onChange = { this.onChangeImage }></input> 
+                    </li>  
+    
+                    <li> 
+                         Category:    
+                         <select onChange = { this.onChange }>
+                         <option> None </option>
+                            {
+                                this.props.categories.map (category => <option key={ category.id } value={ category.name }> { category.name } </option>)
+                            }
+                         </select>
+                     </li> 
+                    <button type='submit' className="btn btn-primary btn-sm"> Create </button>
+                </form>
+            </ul>
+            </div>
         )
     }
 }
+
+const mapState = ({ categories, products })=> {
+    return {
+      categories,
+      products
+    }
+};
 
 const mapDispatch = (dispatch, { history }) => {
     return {
         createProduct: (product) => dispatch(createProduct(product, history))
     }
-  }
+}
 
-export default connect(null, mapDispatch)(createProduct);
+export default connect(mapState, mapDispatch)(createProduct);

@@ -8,15 +8,17 @@ const ProductCard = ({ product, user }) => {
       <h1>{ product.name }</h1>
       <img src = {product.imageUrl} width={200} />
       <h2>{`$${product.price}`}</h2>
-      <p>{ product.description }</p>
-      {
-        user.isAdmin === true ? 
-          <Link to={`/products/${product.id}`}><i>Update Product</i></Link>
-          :
-          <Link to={`/products/${product.id}`}><i>Product Details</i></Link>  
-      }     
+      <p>{ product.description }</p>   
     </div>
   );
 };
 
 export default ProductCard;
+
+
+// {
+//   user.isAdmin === true ? 
+//     <Link to={`/products/${product.id}`}><i>Update Product</i></Link>
+//     :
+//     <Link to={`/products/${product.id}`}><i>Product Details</i></Link>  
+// }  
