@@ -43,11 +43,19 @@ const syncAndSeed = ()=>{
         User.create({firstName: 'Cat', lastName: 'Purchase', email: 'cat@wonderland.com', isAdmin: 'false', password: 'CAT'}),
       ]);
     })
-    .then(([ category1, category2, product1, product2, product3, user1])=>{
+    .then(([ category1, category2, product1, product2, product3, user1, rev1, rev2, rev3, rev4, user2, user3])=>{
       return Promise.all([
         product1.setCategory(category1),
         product2.setCategory(category2),
         product3.setCategory(category2),
+        rev1.setUser(user1),
+        rev1.setProduct(product1),
+        rev2.setUser(user2),
+        rev2.setProduct(product1),
+        rev3.setUser(user3),
+        rev3.setProduct(product1),
+        rev4.setUser(user3),
+        rev4.setProduct(product2),
         Order.findOrCreateCart(user1)
       ]);
     })
@@ -56,11 +64,6 @@ const syncAndSeed = ()=>{
       throw err;
     });
 };
-
-//return Promise.all([
-  //       review.setUser(user),
-  //       review.setProduct(product)
-  //     ]);
 
 module.exports = {
   syncAndSeed,
