@@ -4,6 +4,7 @@ const Product = require('./Product');
 const User = require('./User');
 const Order = require('./Order');
 const LineItem = require('./LineItem');
+const Review = require('./Review');
 
 Product.belongsTo(Category);
 Product.hasMany(LineItem);
@@ -13,6 +14,10 @@ LineItem.belongsTo(Product);
 Order.hasMany(LineItem);
 Order.belongsTo(User);
 User.hasMany(Order);
+Review.belongsTo(Product);
+Product.hasMany(Review);
+Review.belongsTo(User);
+User.hasMany(Review);
 
 
 const syncAndSeed = ()=>{
@@ -50,6 +55,7 @@ module.exports = {
     Product,
     User,
     LineItem,
-    Order
+    Order,
+    Review
   }
 };
