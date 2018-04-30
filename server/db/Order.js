@@ -8,7 +8,12 @@ const Order = conn.define('order', {
     type: Sequelize.BOOLEAN,
     defaultValue: true
   },
-  date: Sequelize.STRING
+  date: Sequelize.STRING,
+  address: Sequelize.STRING,
+  name: Sequelize.STRING,
+  city: Sequelize.STRING,
+  state: Sequelize.STRING,
+  zip: Sequelize.STRING
 }, {
   getterMethods: {
     total() {

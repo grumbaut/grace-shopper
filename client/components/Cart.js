@@ -58,7 +58,7 @@ class Cart extends React.Component {
           </div>
         ))}
         <p><strong>Total:</strong> { total }</p>
-        <button className='btn btn-primary btn-sm'>Checkout</button>
+        <Link to='/checkout'><button className='btn btn-primary btn-sm'>Checkout</button></Link>
       </div>
     );
   }
