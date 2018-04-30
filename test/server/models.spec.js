@@ -101,7 +101,7 @@ describe('LineItem model', () => {
       });
 
       it('has a subtotal field that multiplies price by quantity', () => {
-        expect(lineItem.subtotal).to.be.equal(30);
+        expect(lineItem.subtotal).to.be.equal('30.00');
       });
 
       it('has a changeQuantities method.', () => {
