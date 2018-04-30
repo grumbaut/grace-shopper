@@ -5,6 +5,10 @@ const User = require('./User');
 const Review = conn.define('review', {
   content: {
     type: Sequelize.TEXT
+  },
+  star: {
+    type: Sequelize.INTEGER,
+    validate: {min:1, max: 5}
   }
 }, {
     defaultScope: {
@@ -14,19 +18,10 @@ const Review = conn.define('review', {
     }
 });
 
-// Review.createReview = function(comment, user, product) {
-//   return Review.create({
-//     comment
-//   })
-//   .then(review => {
-//     return Promise.all([
-//       review.setUser(user),
-//       review.setProduct(product)
-//     ]);
-//   })
-//   .catch(err => {
-//     throw err;
-//   });
-// };
+// Reviews
+// All reviews must belong to a product
+// All reviews must belong to a user
+// All reviews must be at least X characters
+// ...be able to leave reviews for products (including text and a 5-star rating), so that I can share my experiences with other visitors
 
 module.exports = Review;
