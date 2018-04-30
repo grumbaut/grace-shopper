@@ -87,8 +87,8 @@ describe('User model', () => {
 
 //LineItem test
 describe('LineItem model', () => {
-  describe('instanceMethods', () => {
-    describe('changeQuantity', () => {
+  describe('classMethods', () => {
+    describe('changeQuantities', () => {
       let lineItem;
       beforeEach(() => {
         return LineItem.create({
@@ -104,8 +104,20 @@ describe('LineItem model', () => {
         expect(lineItem.subtotal).to.be.equal(30);
       });
 
-      it('has a changeQuantity method on an instance.', () => {
-        expect(lineItem.changeQuantity).to.be.ok;
+      it('has a changeQuantities method.', () => {
+        expect(LineItem.changeQuantities).to.be.ok;
+      });
+      it('changeQuantities changes quantity', () => {
+        lineItem.update({ quantity: 5 })
+          .then(lineItem => {
+            expect(lineItem.quantity).to.equal(5);
+          });
+      });
+      it('changeQuantities changes subtotal', () => {
+        lineItem.update({ quantity: 6})
+          .then(lineItem => {
+            expect(lineItem.subtotal).to.equal(60);
+          });
       });
     });
   });

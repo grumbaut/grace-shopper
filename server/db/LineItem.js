@@ -7,7 +7,7 @@ const LineItem = conn.define('lineitem', {
 },{
   getterMethods: {
     subtotal() {
-      return (this.quantity * this.productPrice).toFixed(2);
+      return Number((this.quantity * this.productPrice).toFixed(2));
     }
   }
 }
