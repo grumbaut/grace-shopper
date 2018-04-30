@@ -5,6 +5,7 @@ const User = require('./User');
 const Order = require('./Order');
 const LineItem = require('./LineItem');
 const Review = require('./Review');
+const fake = require('faker');
 
 Product.belongsTo(Category);
 Product.hasMany(LineItem);
@@ -19,6 +20,13 @@ Product.hasMany(Review);
 Review.belongsTo(User);
 User.hasMany(Review);
 
+const reviews = [
+  { content: fake.lorem.paragraph(), star: 5 },
+  { content: fake.lorem.paragraph(), star: 4 },
+  { content: fake.lorem.paragraph(), star: 3 },
+  { content: fake.lorem.paragraph(), star: 1 }
+]
+
 
 const syncAndSeed = ()=>{
   return conn.sync({ force: true })
@@ -30,6 +38,7 @@ const syncAndSeed = ()=>{
         Product.create({ name: 'Vase', description: 'Porcelain longnecked vase, ideal for roses.', imageUrl: '/images/vase.jpg', price: 31.95 }),
         Product.create({ name: 'Vanilla Diffuser', description: 'A room diffuser with reeds and vanilla oil', imageUrl: '/images/vanilladiffuser.jpg', price: 6.85 }),
         User.create({firstName: 'Alice', lastName: 'Buyer', email: 'alice@wonderland.com', isAdmin: 'false', password: 'ALICE'}),
+        Review.bulkCreate(reviews),
         User.create({firstName: 'Bob', lastName: 'Bill', email: 'bob@wonderland.com', isAdmin: 'false', password: 'BOB'}),
         User.create({firstName: 'Cat', lastName: 'Purchase', email: 'cat@wonderland.com', isAdmin: 'false', password: 'CAT'}),
       ]);
@@ -47,6 +56,11 @@ const syncAndSeed = ()=>{
       throw err;
     });
 };
+
+//return Promise.all([
+  //       review.setUser(user),
+  //       review.setProduct(product)
+  //     ]);
 
 module.exports = {
   syncAndSeed,
