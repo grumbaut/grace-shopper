@@ -11,3 +11,10 @@ const Review = (props) => {
   );
 };
 
+const mapState = ({ reviews }) => {
+  return (
+    reviews
+  );
+};
+
+export default connect(mapState)(Review);
