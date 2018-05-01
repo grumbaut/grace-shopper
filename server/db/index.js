@@ -31,7 +31,7 @@ const syncAndSeed = ()=>{
         Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00, imageUrl: '/images/redmixingbowlset.jpg' }),
         Product.create({ name: 'Vase', description: 'Porcelain longnecked vase, ideal for roses.', imageUrl: '/images/vase.jpg', price: 31.95 }),
         Product.create({ name: 'Vanilla Diffuser', description: 'A room diffuser with reeds and vanilla oil', imageUrl: '/images/vanilladiffuser.jpg', price: 6.85 }),
-        User.create({firstName: 'Alice', lastName: 'Buyer', email: 'alice@wonderland.com', isAdmin: 'false', password: 'ALICE'}),
+        User.create({firstName: 'Alice', lastName: 'Buyer', email: 'alice@wonderland.com', isAdmin: 'true', password: 'ALICE'}),
         Review.create({ content: fake.lorem.paragraph(), rating: 5 }),
         Review.create({ content: fake.lorem.paragraph(), rating: 4 }),
         Review.create({ content: fake.lorem.paragraph(), rating: 3 }),
