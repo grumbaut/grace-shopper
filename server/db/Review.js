@@ -6,7 +6,7 @@ const Review = conn.define('review', {
   content: {
     type: Sequelize.TEXT
   },
-  star: {
+  rating: {
     type: Sequelize.INTEGER,
     validate: {min:1, max: 5}
   }

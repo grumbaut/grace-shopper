@@ -1,22 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-const Review = (props) => {
+const Review = ({review}) => {
   const star = '/images/star.png';
-  const review = props.review;
+  const stars = (num)=> {
+    let starray = [];
+    for(var i = 0; i < num; i++){
+       starray.push(<img src={star} key={i} />);
+    }
+  return starray;
+  };
+
+  if(!review) return null;
   return (
     <div>
-      <div>Rating: <img src={star} /></div>
+      <div>Rating: {stars(review.rating).map(star => star)}</div>
       {review.content}
       <p>Reviewer: {review.user.name}</p>
     </div>
   );
 };
 
-const mapState = ({ reviews }) => {
-  return (
-    reviews
-  );
-};
-
-export default connect(mapState)(Review);
+export default Review;
