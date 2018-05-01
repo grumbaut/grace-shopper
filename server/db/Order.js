@@ -25,18 +25,18 @@ const Order = conn.define('order', {
   }
 });
 
-Order.findOrCreateCart = function(user) {
-  const id = user.id ? user.id : 0;
+Order.findOrCreateCart = function(userId, orderId) {
   return this.findOne({
-    where: { userId: id },
+    where: { userId: userId, cart: false },
     include: [{ model: LineItem, include: [Product]}]
   })
     .then(cart => {
       if(cart) {
         return cart;
       } else {
-        return this.create()
-          .then(order => order.setUser(user));
+        return this.create({
+          orderId
+        });
       }
     })
     .catch(err => {
@@ -57,10 +57,16 @@ Order.prototype.addToCart = function(quantity, product) {
     });
 };
 
-Order.prototype.checkout = function() {
+Order.prototype.checkout = function(shippingInfo) {
+  const { name, address, city, state, zip } = shippingInfo;
   return this.update({
     cart: false,
-    date: `${new Date().getMonth()}, ${new Date().getDate} ${new Date().getFullYear()}`
+    date: `${new Date().getMonth()}/${new Date().getDate()}/${new Date().getFullYear()}`,
+    name,
+    address,
+    city,
+    state,
+    zip
   })
     .catch(err => {
       throw err;

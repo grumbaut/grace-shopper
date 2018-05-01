@@ -1,7 +1,7 @@
 import React from 'react';
-import ProductCard from './ProductCard';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { checkout } from '../store';
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Checkout extends React.Component {
 
   render() {
     const { name, address, city, state, zip } = this.state;
-    const { cart } = this.props;
+    const { cart, checkoutCart, userId } = this.props;
     if(!cart.id) return null;
     return (
       <div>
@@ -41,7 +41,7 @@ class Checkout extends React.Component {
         ))}
         <p><Link to='/cart'>Edit Cart</Link></p>
         <p><strong>Total: </strong>{ '$' + cart.total }</p>
-        <form>
+        <form onSubmit={ event => checkoutCart(event, userId, cart.id, this.state) }>
           <div className='form-group'>
             <label htmlFor='name'>Recipient Name: </label>
             <input name='name' value={ name } onChange={ this.handleChange } />
@@ -70,9 +70,15 @@ class Checkout extends React.Component {
 }
 
 const mapState = state => ({
-  cart: state.cart
+  cart: state.cart,
+  userId: state.user.id
 });
 
-const mapDispatch = null;
+const mapDispatch = (dispatch, { history }) => ({
+  checkoutCart(event, userId, orderId, shippingInfo) {
+    event.preventDefault();
+    dispatch(checkout(userId, orderId, shippingInfo, history));
+  }
+});
 
 export default connect(mapState, mapDispatch)(Checkout);

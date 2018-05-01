@@ -88,8 +88,8 @@ router.put('/:id/orders/:orderId/quantity', (req, res, next) => {
 
 router.put('/:id/orders/:orderId/checkout', (req, res, next)=> {
   Order.findById(req.params.orderId)
-    .then(order => order.checkout())
-    .then(order => res.send(order))
+    .then(order => order.checkout(req.body, req.params.orderId))
+    .then(() => res.sendStatus(200))
     .catch(next);
 });
 

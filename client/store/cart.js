@@ -3,6 +3,7 @@ import axios from 'axios';
 const GOT_CART = 'GOT_CART';
 const GOT_UPDATED_CART = 'GOT_UPDATED_CART';
 const DELETED_ITEM = 'DELETED_ITEM';
+const CHECKOUT_CART = 'CHECKOUT_CART';
 
 const gotCart = cart => {
   const action = { type: GOT_CART, cart };
@@ -19,9 +20,14 @@ const deletedItem = id => {
   return action;
 };
 
-export const getCart = user => (
+const checkoutCart = () => {
+  const action = { type: CHECKOUT_CART };
+  return action;
+};
+
+export const getCart = userId => (
   dispatch => (
-    axios.post(`/api/users/${user.id}/orders`)
+    axios.post(`/api/users/${userId}/orders`)
       .then(res => res.data)
       .then(cart => {
         dispatch(gotCart(cart));
@@ -57,6 +63,14 @@ export const deleteItem = id => (
   )
 );
 
+export const checkout = (userId, orderId, shippingInfo, history) => (
+  dispatch => (
+    axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, shippingInfo)
+      .then(() => dispatch(checkoutCart()))
+      .then(() => dispatch(getCart(userId)))
+  )
+);
+
 const reducer = (state = {}, action) => {
   switch (action.type) {
   case GOT_CART:
@@ -65,6 +79,8 @@ const reducer = (state = {}, action) => {
     return action.cart;
   case DELETED_ITEM:
     return Object.assign({}, state, { lineitems: state.lineitems.filter(item => item.id !== Number(action.id)) });
+  case CHECKOUT_CART:
+    return {};
   default:
     return state;
   }
