@@ -46,8 +46,7 @@ router.get('/:id/orders', (req, res, next)=> {
 });
 
 router.post('/:id/orders', (req, res, next)=> {
-  User.findById(req.params.id)
-    .then(user => Order.findOrCreateCart(user))
+  Order.findOrCreateCart(req.params.id)
     .then(cart => res.send(cart))
     .catch(next);
 });

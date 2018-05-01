@@ -34,7 +34,7 @@ const syncAndSeed = ()=>{
         product1.setCategory(category1),
         product2.setCategory(category2),
         product3.setCategory(category2),
-        Order.findOrCreateCart(user1)
+        Order.findOrCreateCart(user1.id)
       ]);
     })
     .then(([product1, product2, product3, order]) => {

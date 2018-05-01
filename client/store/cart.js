@@ -29,9 +29,7 @@ export const getCart = userId => (
   dispatch => (
     axios.post(`/api/users/${userId}/orders`)
       .then(res => res.data)
-      .then(cart => {
-        dispatch(gotCart(cart));
-      })
+      .then(cart => dispatch(gotCart(cart)))
       .catch(err => console.error(err))
   )
 );

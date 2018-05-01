@@ -25,9 +25,9 @@ const Order = conn.define('order', {
   }
 });
 
-Order.findOrCreateCart = function(userId, orderId) {
+Order.findOrCreateCart = function(userId) {
   return this.findOne({
-    where: { userId: userId, cart: false },
+    where: { userId, cart: false },
     include: [{ model: LineItem, include: [Product]}]
   })
     .then(cart => {
@@ -35,13 +35,11 @@ Order.findOrCreateCart = function(userId, orderId) {
         return cart;
       } else {
         return this.create({
-          orderId
+          userId
         });
       }
     })
-    .catch(err => {
-      throw err;
-    });
+    .catch(err => console.error(err));
 };
 
 Order.prototype.addToCart = function(quantity, product) {
@@ -52,9 +50,7 @@ Order.prototype.addToCart = function(quantity, product) {
         include: [Product]
       }]
     }))
-    .catch(err => {
-      throw err;
-    });
+    .catch(err => console.error(err));
 };
 
 Order.prototype.checkout = function(shippingInfo) {
