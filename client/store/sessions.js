@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getCart } from './cart';
 
 const SET_USER = 'SET_USER';
 const GOT_USERS = 'GOT_USERS';
@@ -16,6 +17,11 @@ export const getUsers = () => (
   )
 );
 
+const setUser = user => {
+  const action = { type: SET_USER, user};
+  return action;
+};
+
 export const signUp = (userInfo, history) => {
   return dispatch => {
     return axios.post('/api/sessions/signup', userInfo)
@@ -31,11 +37,10 @@ export const getUserFromToken = token => {
   return dispatch => {
     return axios.get(`/api/sessions/${token}`)
       .then( result => {
-        dispatch({
-          type: SET_USER,
-          user: result.data
-        });
-      });
+        dispatch(setUser(result.data));
+        dispatch(getCart(result.data));
+      })
+      .catch(err => console.error(err));
   };
 };
 

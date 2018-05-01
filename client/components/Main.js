@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts, getUsers, getUserFromToken } from '../store';
+import { getCategories, getProducts, getUsers, getUserFromToken, getReviews } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -14,6 +14,8 @@ import Category from './Category';
 import Categories from './Categories';
 import AdminIndex from './AdminIndex';
 import Users from './Users';
+import Cart from './Cart';
+import Checkout from './Checkout';
 
 class Main extends React.Component {
   constructor(props) {
@@ -21,8 +23,9 @@ class Main extends React.Component {
     this.state = {
       categories: [],
       products: [],
-      users: []
-    }
+      users: [],
+      reviews: []
+    };
   }
   
   componentDidMount() {
@@ -44,10 +47,12 @@ class Main extends React.Component {
               <Route path='/users' exact component = { Users } />
               <Route path='/createProduct' exact component = { createProduct } />
               <Route path='/products/:id' exact render={({match})=> <Product id={ match.params.id * 1 } /> } />
+              <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
               <Route path='/products' component={ Products } />
+              <Route path='/checkout' component={ Checkout } />
               <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
-              <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
+              <Route path='/cart' component={ Cart } />
               <Route path='/categories' component={ Categories } />
               <Route exact path='/' component={ Home } />
             </Switch>
@@ -64,6 +69,7 @@ const mapDispatch = dispatch => ({
     dispatch(getCategories());
     dispatch(getProducts());
     dispatch(getUsers());
+    dispatch(getReviews());
   },
   getUser(token) {
     dispatch(getUserFromToken(token));

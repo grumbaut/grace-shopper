@@ -7,33 +7,45 @@ const LineItem = conn.define('lineitem', {
 },{
   getterMethods: {
     subtotal() {
-      return (this.quantity * this.productPrice)*1;
+      return Number((this.quantity * this.productPrice).toFixed(2));
     }
   }
 }
 );
 
-LineItem.createLineItem = function(quantity, product) {
-  return LineItem.create({
-    quantity,
-    productPrice: product.price
+LineItem.updateOrCreateLineItem = function(order, quantity, product) {
+  return this.find({
+    where: {
+      orderId: order.id,
+      productId: product.id
+    }
   })
     .then(lineItem => {
-      return lineItem.setProduct(product);
+      if(!lineItem) {
+        return this.create({
+          quantity: quantity,
+          productPrice: product.price,
+          productId: product.id,
+          orderId: order.id
+        });
+      } else {
+        const updatedQuantity = lineItem.quantity + quantity;
+        return lineItem.update({
+          quantity: updatedQuantity
+        });
+      }
     })
     .catch(err => {
       throw err;
     });
 };
 
-LineItem.prototype.changeQuantity = function(id, quantity) {
-  return LineItem.findById(id)
-    .then(lineItem => lineItem.update({
-      quantity
-    }))
-    .catch(err => {
-      throw err;
-    });
+LineItem.changeQuantities = function(lineItems) {
+  return Promise.all(lineItems.map(item => LineItem.findById(item.id)))
+    .then(items => Promise.all(items.map(item => {
+      const quantity = lineItems.find(_item => _item.id === item.id).quantity;
+      return item.update({ quantity });
+    })));
 };
 
 module.exports = LineItem;

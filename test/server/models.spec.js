@@ -4,9 +4,6 @@ const { Product, Category, User, Order, LineItem } = db.models;
 
 // Models tests
 describe('models', () => {
-  beforeEach(() => {
-    return db.syncAndSeed();
-  });
   describe('User', () => {
     it('model User exists.', () => {
       expect(User).to.be.ok;
@@ -47,8 +44,9 @@ describe('seeded data', () => {
   describe('User data', () => {
     let users;
     beforeEach(() => {
-      return User.findAll({})
-        .then(_users => users = _users);
+      return db.syncAndSeed()
+        .then(() => User.findAll()
+          .then(_users => users = _users));
     });
     it('we have 3 users in the database.', () => {
       expect(users.length).to.equal(3);
@@ -91,8 +89,8 @@ describe('User model', () => {
 
 //LineItem test
 describe('LineItem model', () => {
-  describe('instanceMethods', () => {
-    describe('changeQuantity', () => {
+  describe('classMethods', () => {
+    describe('changeQuantities', () => {
       let lineItem;
       beforeEach(() => {
         return LineItem.create({
@@ -105,11 +103,23 @@ describe('LineItem model', () => {
       });
 
       it('has a subtotal field that multiplies price by quantity', () => {
-        expect(lineItem.subtotal).to.be.equal(30);
+        expect(lineItem.subtotal).to.be.equal(30.00);
       });
 
-      it('has a changeQuantity method on an instance.', () => {
-        expect(lineItem.changeQuantity).to.be.ok;
+      it('has a changeQuantities method.', () => {
+        expect(LineItem.changeQuantities).to.be.ok;
+      });
+      it('changeQuantities changes quantity', () => {
+        lineItem.update({ quantity: 5 })
+          .then(lineItem => {
+            expect(lineItem.quantity).to.equal(5);
+          });
+      });
+      it('changeQuantities changes subtotal', () => {
+        lineItem.update({ quantity: 6})
+          .then(lineItem => {
+            expect(lineItem.subtotal).to.equal(60);
+          });
       });
     });
   });

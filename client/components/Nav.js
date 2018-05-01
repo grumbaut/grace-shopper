@@ -44,7 +44,8 @@ const Nav = ({ user, logout }) => (
           }
         </li>
         <li className="nav-item">
-          <NavLink className="nav-link" to="/cart" activeClassName='active'>Cart</NavLink>
+          {
+            user && user.id ? <NavLink className="nav-link" to="/cart" activeClassName='active'>Cart</NavLink> : null }
         </li>
       </ul>
     </div>

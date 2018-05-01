@@ -21,7 +21,6 @@ class Products extends React.Component {
       ? this.props.products
       :
       this.props.products.filter(product => product.categoryId === Number(this.state.filter));
-
     return (
       <div>
 
@@ -33,7 +32,7 @@ class Products extends React.Component {
             </option>
           ))}
         </select>
-        { products.map(product => <ProductCard key={ product.id } product={ product } />)}
+        { products.map(product => <ProductCard key={ product.id } product={ product } history={ this.props.history } />)}
       </div>
     );
   }

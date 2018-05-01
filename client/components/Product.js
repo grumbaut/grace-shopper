@@ -84,8 +84,7 @@ const mapState = ({ products, categories, user }, { id })=> {
   return {
     product,
     categories,
-    user,
-    product
+    user
   };
 };
 
