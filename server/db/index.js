@@ -20,12 +20,6 @@ Product.hasMany(Review);
 Review.belongsTo(User);
 User.hasMany(Review);
 
-// const reviews = [
-//   { content: fake.lorem.paragraph(), star: 5 },
-//   { content: fake.lorem.paragraph(), star: 4 },
-//   { content: fake.lorem.paragraph(), star: 3 },
-//   { content: fake.lorem.paragraph(), star: 1 }
-// ]
 
 
 const syncAndSeed = ()=>{
@@ -62,7 +56,10 @@ const syncAndSeed = ()=>{
         rev4.setProduct(product2)
       ]);
     })
-    .then(([product1, product2, product3, order]) => order.addToCart(3, product1))
+    .then(([product1, product2, product3, order]) => {
+      order.addToCart(4, product3);
+      order.addToCart(3, product1);
+    })
     .catch(err => {
       throw err;
     });

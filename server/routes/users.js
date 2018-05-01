@@ -2,6 +2,7 @@ const router = require('express').Router();
 const db = require('../db');
 const { User, Order, LineItem, Product } = db.models;
 
+//USER ROUTES
 router.get('/', (req, res, next)=> {
   User.findAll({
     include: [{
@@ -13,12 +14,6 @@ router.get('/', (req, res, next)=> {
     }]
   })
     .then( users => res.send(users))
-    .catch(next);
-});
-
-router.post('/', (req, res, next) => {
-  User.create(req.body)
-    .then( user => res.send(user))
     .catch(next);
 });
 
@@ -41,6 +36,7 @@ router.put('/:id', (req, res, next) => {
     .catch(next);
 });
 
+//CART ROUTES
 router.get('/:id/orders', (req, res, next)=> {
   Order.findAll({
     include: [{ model: LineItem }]
@@ -65,10 +61,28 @@ router.delete('/:id/orders/:orderId', (req, res, next)=> {
     .catch(next);
 });
 
-router.put('/:id/orders/:orderId', (req, res, next)=> {
+router.put('/:id/orders/:orderId/add', (req, res, next)=> {
   Order.findById(req.params.orderId)
     .then(order => order.addToCart(req.body.quantity, req.body.product))
-    .then( order => res.send(order))
+    .then(() => Order.findById(req.params.orderId, {
+      include: [{
+        model: LineItem,
+        include: [Product]
+      }]
+    }))
+    .then(order => res.send(order))
+    .catch(next);
+});
+
+router.put('/:id/orders/:orderId/quantity', (req, res, next) => {
+  LineItem.changeQuantities(req.body)
+    .then(() => Order.findById(req.params.orderId, {
+      include: [{
+        model: LineItem,
+        include: [Product]
+      }]
+    }))
+    .then(order => res.send(order))
     .catch(next);
 });
 

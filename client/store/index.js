@@ -16,3 +16,5 @@ export * from './categories';
 export * from './products';
 export * from './sessions';
 export * from './reviews';
+export * from './cart';
+

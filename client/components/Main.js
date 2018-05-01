@@ -11,6 +11,8 @@ import Login from './Login';
 import SignUp from './SignUp';
 import Category from './Category';
 import Categories from './Categories';
+import Cart from './Cart';
+import Checkout from './Checkout';
 
 class Main extends React.Component {
   constructor(props) {
@@ -38,10 +40,12 @@ class Main extends React.Component {
           <div className='container-fluid'>
             <Switch>
               <Route path='/products/:id' exact render={({match})=> <Product id={ match.params.id * 1 } /> } />
+              <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
               <Route path='/products' component={ Products } />
+              <Route path='/checkout' component={ Checkout } />
               <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
-              <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
+              <Route path='/cart' component={ Cart } />
               <Route path='/categories' component={ Categories } />
               <Route exact path='/' component={ Home } />
             </Switch>

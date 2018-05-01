@@ -8,14 +8,28 @@ const Order = conn.define('order', {
     type: Sequelize.BOOLEAN,
     defaultValue: true
   },
-  total: Sequelize.INTEGER,
-  date: Sequelize.STRING
+  date: Sequelize.STRING,
+  address: Sequelize.STRING,
+  name: Sequelize.STRING,
+  city: Sequelize.STRING,
+  state: Sequelize.STRING,
+  zip: Sequelize.STRING
+}, {
+  getterMethods: {
+    total() {
+      const total = this.lineitems.reduce((acc, item) => {
+        return acc + Number(item.get().subtotal);
+      }, 0);
+      return total.toFixed(2);
+    }
+  }
 });
 
 Order.findOrCreateCart = function(user) {
   const id = user.id ? user.id : 0;
   return this.findOne({
-    where: { userId: id }
+    where: { userId: id },
+    include: [{ model: LineItem, include: [Product]}]
   })
     .then(cart => {
       if(cart) {
@@ -31,26 +45,13 @@ Order.findOrCreateCart = function(user) {
 };
 
 Order.prototype.addToCart = function(quantity, product) {
-  return LineItem.createLineItem(quantity, product)
-    .then(lineItem => lineItem.setOrder(this))
-    .then(() => Order.findOne({
-      where: { id: this.id },
-      include: [{ model: LineItem, include: [Product] }]
+  return LineItem.updateOrCreateLineItem(this, quantity, product)
+    .then(() => Order.findById(this.id, {
+      include: [{
+        model: LineItem,
+        include: [Product]
+      }]
     }))
-    .then(order => {
-      const total = order.lineitems.reduce((acc, item) => {
-        return acc + item.get().subtotal;
-      }, 0);
-      return order.update({ total });
-    })
-    .catch(err => {
-      throw err;
-    });
-};
-
-Order.prototype.removeFromCart = function(id) {
-  LineItem.findById(id)
-    .then(lineItem => lineItem.destroy())
     .catch(err => {
       throw err;
     });
