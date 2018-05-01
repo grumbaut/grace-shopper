@@ -30,7 +30,7 @@ class ProductCard extends React.Component {
         <h2>{`$${product.price}`}</h2>
         <p>{ product.description }</p>
         <Link to={`/products/${product.id}`}><button className='btn btn-primary btn-sm'>Details</button></Link>
-        { !user && !user.id ? null :
+        { !user.id ? null :
           <form onSubmit={ event => addToCart(event, user.id, cart.id, this.state.quantity, product)}>
             <select value={ this.state.quantity } onChange={ this.handleChange }>
               { quantity.map(num => <option key={ num } value={ num }>{ num }</option>)}

@@ -26,7 +26,7 @@ class Cart extends React.Component {
         <h1>
           <Link to='/signup'>Sign up</Link> or <Link to='/login'>login</Link> to view your cart.
         </h1>
-      )
+      );
     }
     if(!lineItems || !lineItems.length) return <h1>Your cart is empty.</h1>;
     const quantityNum = [];

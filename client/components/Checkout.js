@@ -1,4 +1,6 @@
 import React from 'react';
+import ProductCard from './ProductCard';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Checkout extends React.Component {
@@ -20,10 +22,25 @@ class Checkout extends React.Component {
 
   render() {
     const { name, address, city, state, zip } = this.state;
-
+    const { cart } = this.props;
+    if(!cart.id) return null;
     return (
       <div>
         <h1>Checkout</h1>
+        <div className='row'>
+          <div className='col-2'><strong>Quantity</strong></div>
+          <div className='col-6'><strong>Name</strong></div>
+          <div className='col-4'><strong>Subtotal</strong></div>
+        </div>
+        { cart.lineitems.map(item => (
+          <div className='row' key={ item.id } >
+            <div className='col-2'>{ item.quantity }</div>
+            <div className='col-6'>{ item.product.name }</div>
+            <div className='col-4'>{ '$' + item.subtotal.toFixed(2) }</div>
+          </div>
+        ))}
+        <p><Link to='/cart'>Edit Cart</Link></p>
+        <p><strong>Total: </strong>{ '$' + cart.total }</p>
         <form>
           <div className='form-group'>
             <label htmlFor='name'>Recipient Name: </label>

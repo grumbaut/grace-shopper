@@ -21,7 +21,6 @@ class Products extends React.Component {
       ? this.props.products
       :
       this.props.products.filter(product => product.categoryId === Number(this.state.filter));
-
     return (
       <div>
         <select value={ this.state.filter } onChange={ this.handleChange }>
