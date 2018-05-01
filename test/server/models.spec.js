@@ -4,9 +4,6 @@ const { Product, Category, User, Order, LineItem } = db.models;
 
 // Models tests
 describe('models', () => {
-  beforeEach(() => {
-    return db.syncAndSeed();
-  });
   describe('User', () => {
     it('model User exists.', () => {
       expect(User).to.be.ok;
@@ -47,8 +44,9 @@ describe('seeded data', () => {
   describe('User data', () => {
     let users;
     beforeEach(() => {
-      return User.findAll({})
-        .then(_users => users = _users);
+      return db.syncAndSeed()
+        .then(() => User.findAll()
+          .then(_users => users = _users));
     });
     it('we have 3 users in the database.', () => {
       expect(users.length).to.equal(3);
