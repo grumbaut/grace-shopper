@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import Review from './Review';
 
-const Product = ({ product, categories, id }) => {
+const Product = ({ product, categories, reviews, id }) => {
   if (!product) {
     return null;
   }
@@ -15,13 +15,13 @@ const Product = ({ product, categories, id }) => {
         <h1>{ product.name }</h1>
         <img src = {product.imageUrl} width={400} />
         <h2>{`$${product.price}`}</h2>
-        <p>{ product.description }</p>          
+        <p>{ product.description }</p>
       </div>
       <p>{product.name} is in our <Link to={`/categories/${categoryOfThisProduct.id}`}>{categoryOfThisProduct.name}</Link> category</p>
       <h4>Reviews:</h4>
       {
         reviews.map(review =>  {
-          if (review.productId === +id) return <Review review={review} key={review.id} />
+          if (review.productId === id) return <Review review={review} key={review.id} />;
         })
       }
     </div>

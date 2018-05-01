@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const Review = (props) => {
-  const star = '/public/images/star.png';
+  const star = '/images/star.png';
   const review = props.review;
   return (
     <div>

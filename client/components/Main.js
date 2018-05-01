@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts, getUserFromToken } from '../store';
+import { getCategories, getProducts, getUserFromToken, getReviews } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -17,7 +17,8 @@ class Main extends React.Component {
     super(props);
     this.state = {
       categories: [],
-      products: []
+      products: [],
+      reviews: []
     };
   }
 
@@ -56,6 +57,7 @@ const mapDispatch = dispatch => ({
   fetch() {
     dispatch(getCategories());
     dispatch(getProducts());
+    dispatch(getReviews());
   },
   getUser(token) {
     dispatch(getUserFromToken(token));
