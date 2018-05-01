@@ -22,7 +22,7 @@ class Main extends React.Component {
       categories: [],
       products: [],
       users: []
-    };
+    }
   }
   
   componentDidMount() {

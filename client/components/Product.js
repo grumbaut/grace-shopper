@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
-import { updateProduct } from '../store/product';
+import { updateProduct } from '../store/products';
 
 class Product extends React.Component {
   constructor(product){
