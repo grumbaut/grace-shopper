@@ -1,6 +1,20 @@
 import axios from 'axios';
 
 const SET_USER = 'SET_USER';
+const GOT_USERS = 'GOT_USERS';
+
+const addUsersToStore = users => {
+  const action = { type: GOT_USERS, users };
+  return action;
+};
+
+export const getUsers = () => (
+  dispatch => (
+    axios.get('/api/users')
+      .then(res => res.data)
+      .then(categories => dispatch(addUsersToStore(users)))
+  )
+);
 
 export const signUp = (userInfo, history) => {
   return dispatch => {
@@ -48,6 +62,10 @@ const reducer = (state = {}, action) => {
   switch (action.type) {
   case SET_USER:
     return action.user;
+    break;
+  case GOT_USERS:
+    return action.users;
+    break;
   default:
     return state;
   }
