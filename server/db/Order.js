@@ -27,7 +27,7 @@ const Order = conn.define('order', {
 
 Order.findOrCreateCart = function(userId) {
   return this.findOne({
-    where: { userId, cart: false },
+    where: { userId, cart: true },
     include: [{ model: LineItem, include: [Product]}]
   })
     .then(cart => {
@@ -57,12 +57,7 @@ Order.prototype.checkout = function(shippingInfo) {
   const { name, address, city, state, zip } = shippingInfo;
   return this.update({
     cart: false,
-    date: `${new Date().getMonth()}/${new Date().getDate()}/${new Date().getFullYear()}`,
-    name,
-    address,
-    city,
-    state,
-    zip
+    date: `${new Date().getMonth()}/${new Date().getDate()}/${new Date().getFullYear()}`
   })
     .catch(err => {
       throw err;
