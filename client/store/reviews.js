@@ -60,7 +60,7 @@ export const saveReview = review => (
     dispatch => (
       axios.put(`api/reviews/${review.id}`, review)
         .then( res => res.data)
-        .then( updatedReview => dispatch(updateReviewInStore(updatedReview)) )
+        .then( updatedReview => dispatch(updateReviewInStore(updatedReview)))
     )
   ) : (
   dispatch => (
