@@ -50,16 +50,7 @@ describe('User routes', () => {
         .get('/api/users')
         .expect(200)
         .then(res => {
-          expect(res.body[2].email).to.be.equal(moesEmail);
-        });
-    });
-
-    xit('User has its own api route by Id', () => {
-      return request(app)
-        .get('/api/users/1')
-        .expect(200)
-        .then(res => {
-          expect(res.body.name).to.be.equal('Alice Buyer');
+          expect(res.body[1].email).to.be.equal(moesEmail);
         });
     });
 });
@@ -79,7 +70,7 @@ describe('Product routes', ()=> {
     return request(app)
     .get('/api/products')
     .then( res => {
-      expect(res.body[0].name).to.be.equal('Mixing Bowl');
+      expect(res.body[1].name).to.be.equal('Mixing Bowl');
     });
   });
 });
