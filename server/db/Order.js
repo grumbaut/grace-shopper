@@ -39,7 +39,12 @@ Order.findOrCreateCart = function(userId) {
         });
       }
     })
-    .catch(err => console.error(err));
+    .then(cart => this.findById(cart.id, {
+      include: [{
+        model: LineItem,
+        include: [Product]
+      }]
+    }));
 };
 
 Order.prototype.addToCart = function(quantity, product) {
@@ -49,19 +54,20 @@ Order.prototype.addToCart = function(quantity, product) {
         model: LineItem,
         include: [Product]
       }]
-    }))
-    .catch(err => console.error(err));
+    }));
 };
 
 Order.prototype.checkout = function(shippingInfo) {
   const { name, address, city, state, zip } = shippingInfo;
   return this.update({
     cart: false,
-    date: `${new Date().getMonth()}/${new Date().getDate()}/${new Date().getFullYear()}`
+    date: `${new Date().getMonth()}/${new Date().getDate()}/${new Date().getFullYear()}`,
+    name,
+    address,
+    city,
+    state,
+    zip
   })
-    .catch(err => {
-      throw err;
-    });
 };
 
 module.exports = Order;

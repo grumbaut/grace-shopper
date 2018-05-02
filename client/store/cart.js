@@ -3,7 +3,6 @@ import axios from 'axios';
 const GOT_CART = 'GOT_CART';
 const GOT_UPDATED_CART = 'GOT_UPDATED_CART';
 const DELETED_ITEM = 'DELETED_ITEM';
-const CHECKOUT_CART = 'CHECKOUT_CART';
 
 const gotCart = cart => {
   const action = { type: GOT_CART, cart };
@@ -17,11 +16,6 @@ const gotUpdatedCart = cart => {
 
 const deletedItem = id => {
   const action = { type: DELETED_ITEM, id };
-  return action;
-};
-
-const checkoutCart = () => {
-  const action = { type: CHECKOUT_CART };
   return action;
 };
 
@@ -64,8 +58,8 @@ export const deleteItem = id => (
 export const checkout = (userId, orderId, shippingInfo, history) => (
   dispatch => (
     axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, shippingInfo)
-      .then(() => dispatch(checkoutCart()))
       .then(() => dispatch(getCart(userId)))
+      .then(() => history.push('/'))
   )
 );
 
@@ -77,8 +71,6 @@ const reducer = (state = {}, action) => {
     return action.cart;
   case DELETED_ITEM:
     return Object.assign({}, state, { lineitems: state.lineitems.filter(item => item.id !== Number(action.id)) });
-  case CHECKOUT_CART:
-    return {};
   default:
     return state;
   }
