@@ -11,17 +11,14 @@ class Product extends React.Component {
       name: this.props.product ? this.props.product.name : '',
       description: this.props.product ? this.props.product.description : '',
       price: this.props.product ? this.props.product.price : 0,
-      // categoryId: this.props.product ? this.props.product.categoryId : -1,
       imageUrl: this.props.product ? this.props.product.imageUrl : '',
       categoryId: -1
     };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSelectCategory = this.onSelectCategory.bind(this);
-    this.onChangeCategory = this.onChangeCategory.bind(this);
+    this.onSaveCategory = this.onSaveCategory.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    
-
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.product) {
@@ -34,6 +31,25 @@ class Product extends React.Component {
       });
     }
   }
+  onChangeInput(ev){
+    this.setState({ [ev.target.name]: ev.target.value });
+  }
+  onSaveCategory(ev){
+    ev.preventDefault();
+    const product = {
+      id: this.props.id,
+      name: this.state.name,
+      description: this.state.description,
+      price: this.state.price,
+      imageUrl: this.state.imageUrl,
+      categoryId: this.state.categoryId
+    };
+    console.log('product in onSaveCategory is', product);
+    this.props.saveProduct(product);
+  }
+  onSelectCategory(ev){
+    this.setState({ [ev.target.name]: ev.target.value * 1 });
+  }
   onSave(ev){
     ev.preventDefault();
     const product =
@@ -42,64 +58,67 @@ class Product extends React.Component {
         name: this.state.name, 
         description: this.state.description,
         price: this.state.price, 
-        imageURL: this.state.imageURL
-      }
+        imageUrl: this.state.imageUrl,
+      };
+    console.log('product in onSave is', product);
     this.props.saveProduct(product);
-  }
-  onChangeInput(ev){
-    this.setState({ [ev.target.name]: ev.target.value });
   }
   onDelete(){
     this.props.deleteProduct({ id: this.props.id });
   }
-  onSelectCategory(ev){
-    ev.preventDefault();
-    const product = {
-      id: this.props.id,
-      name: this.state.name,
-      description: this.state.description,
-      price: this.state.price,
-      imageUrl: this.state.imageURL,
-      categoryid: this.state.categoryId
-    }
-  }
-  onChangeCategory(ev){
-    this.setState({ [ev.target.name]: ev.target.value * 1 });
-  }
   render(){
-    const { user, product, categories, id } = this.props;
-    const { name, price, imageUrl, description, categoryId } = this.state;
-    const { onChangeInput, onSelectCategory, onChangeCategory, onSave, onDelete } = this;
+    const { user, product, categories } = this.props;
+    const { name, price, categoryId } = this.state;
+    const { onChangeInput, onSelectCategory, onSaveCategory, onSave, onDelete } = this;
     if (!product) {
       return null;
     }
-    const availableCategory = categories.filter( category => category.id !== product.categoryId);
+    const availableCategories = categories.filter( category => category.id !== product.categoryId);
     const productCategory = categories.find(category => category.id === product.categoryId);
 
-    return (      
+    return (
       <div>
-          <h1>{ product.name }</h1>
-          <img src = { product.imageUrl } width={400} />
-          <h2>{`$${product.price}`}</h2>
-          <p>{ product.description }</p>   
+        <h1>{ product.name }</h1>
+        <img src = { product.imageUrl } width={400} />
+        <h2>{`$${product.price}`}</h2>
+        <p>{ product.description }</p>   
         <p>{ product.name } is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>        
         {
           user.isAdmin ? (
-            <form onSubmit= { onSave }>
-            <h3>Admin: you may update this product </h3>
-                <li> Price <input name =  'price' onChange = { this.onChange } ></input> </li>
-                <li> Name <input onChange = { this.onChange } name = 'name'></input> </li>
-                <li> Category <input onChange = { this.onChange } name = 'categoryId'></input> </li>
-                <button type='submit'> Update </button>
-            </form>
+            <div>
+              <form onSubmit= { onSave }>
+                <h3>Admin: you may update this product </h3>
+                <p>Name:<br />
+                <input value={ name } name="name" onChange={ onChangeInput } />
+                </p>
+                <p>Price:<br />
+                <input value={ price } name="price" onChange = { onChangeInput } />
+                </p>
+                <button type="submit"> Update </button>
+              </form>
+              <form onSubmit={ onSaveCategory }>
+                <p>Current category: {productCategory.name}</p>
+                <select value={ categoryId } name="categoryId" onChange={ onSelectCategory }>
+                  <option value="-1">Select New Category</option>     
+                  {
+                    availableCategories.map( category => {
+                      return (
+                        <option key={ category.id } value={ category.id }>
+                          { category.name }
+                        </option>
+                      );
+                    })
+                  }
+                  </select>
+                  <button disabled={ categoryId*1 === -1}>Change</button>
+              </form>    
+            </div>
           )
-
-          : (<button> Add to cart</button>)
-        }
-        
+          : (<button>Add to cart</button>)
+        }        
       </div>
-      )
-    }  
+      );
+    }
 }
 
 const mapState = ({ products, categories, user }, { id })=> {
