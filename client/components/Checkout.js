@@ -11,7 +11,8 @@ class Checkout extends React.Component {
       address: '',
       city: '',
       state: '',
-      zip: ''
+      zip: '',
+      email: ''
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -21,7 +22,7 @@ class Checkout extends React.Component {
   }
 
   render() {
-    const { name, address, city, state, zip } = this.state;
+    const { name, address, city, state, zip, email } = this.state;
     const { cart, checkoutCart, userId } = this.props;
     if(!cart.id) return null;
     return (
@@ -45,6 +46,10 @@ class Checkout extends React.Component {
           <div className='form-group'>
             <label htmlFor='name'>Recipient Name: </label>
             <input name='name' value={ name } onChange={ this.handleChange } />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='email'>Recipient Email: </label>
+            <input name='email' value={ email } onChange={ this.handleChange } />
           </div>
           <div className='form-group'>
             <label htmlFor='address'>Shipping Address: </label>

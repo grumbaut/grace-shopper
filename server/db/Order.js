@@ -2,18 +2,63 @@ const conn = require('./conn');
 const { Sequelize } = conn;
 const LineItem = require('./LineItem');
 const Product = require('./Product');
+const User = require('./User')
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'williams.pomona@gmail.com',
+    pass: 'graceshopper'
+  }
+});
+
+const generateEmail = (order, user) => {
+  const total = '$' + order.total;
+  return `
+    <div>
+    <h1>${user.name}, your Williams-Pomona order has been received!</h1>
+    <p>Hello, ${user.name},</p>
+    <p>Thank you for shopping Williams-Pomona! We've received your order and will let you know as soon as it's shipped.</p>
+    <table>
+    <tr>
+      <th>Quantity</th>
+      <th>Product</th>
+      <th>Subtotal</th>
+    </tr>
+    ${order.lineitems.reduce((string, item) => {
+    const subtotal = '$' + item.subtotal;
+    const row = `
+      <tr>
+        <td>${item.quantity}</td>
+        <td>${item.product.name}</td>
+        <td>${subtotal}</td>
+      </tr>
+      `;
+    return string += row;
+  }, ``)}
+    <tr>
+      <td><strong>Total: </strong>${total}</td>
+      <td></td>
+      <td></td>
+    </tr>
+    </table>
+    </div>
+  `;
+};
 
 const Order = conn.define('order', {
-  cart: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true
+  status: {
+    type: Sequelize.STRING,
+    defaultValue: 'cart'
   },
   date: Sequelize.STRING,
   address: Sequelize.STRING,
   name: Sequelize.STRING,
   city: Sequelize.STRING,
   state: Sequelize.STRING,
-  zip: Sequelize.STRING
+  zip: Sequelize.STRING,
+  email: Sequelize.STRING
 }, {
   getterMethods: {
     total() {
@@ -27,7 +72,7 @@ const Order = conn.define('order', {
 
 Order.findOrCreateCart = function(userId) {
   return this.findOne({
-    where: { userId, cart: true },
+    where: { userId, status: 'cart' },
     include: [{ model: LineItem, include: [Product]}]
   })
     .then(cart => {
@@ -57,17 +102,35 @@ Order.prototype.addToCart = function(quantity, product) {
     }));
 };
 
-Order.prototype.checkout = function(shippingInfo) {
-  const { name, address, city, state, zip } = shippingInfo;
+Order.prototype.checkout = function(userId, shippingInfo) {
+  const { name, address, city, state, zip, email } = shippingInfo;
   return this.update({
-    cart: false,
+    status: 'processing',
     date: `${new Date().getMonth()}/${new Date().getDate()}/${new Date().getFullYear()}`,
     name,
     address,
     city,
     state,
-    zip
+    zip,
+    email
   })
+    .then(() => User.findById(userId))
+    .then(user => {
+      const mailOptions = {
+        from: 'williams.pomona@gmail.com',
+        to: user.email,
+        subject: 'Williams-Pomona: Your order has been received!',
+        html: generateEmail(this, user)
+      };
+      transporter.sendMail(mailOptions, (err, info) => {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(info);
+        }
+      });
+      return user;
+    });
 };
 
 module.exports = Order;

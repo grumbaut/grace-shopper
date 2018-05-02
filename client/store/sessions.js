@@ -26,7 +26,7 @@ export const getUserFromToken = token => {
         dispatch(setUser(result.data));
         dispatch(getCart(result.data.id));
       })
-      .catch(err => console.error(err));
+      .catch(() => window.localStorage.removeItem('token'));
   };
 };
 
