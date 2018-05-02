@@ -35,7 +35,7 @@ class ProductCard extends React.Component {
             <select value={ this.state.quantity } onChange={ this.handleChange }>
               { quantity.map(num => <option key={ num } value={ num }>{ num }</option>)}
             </select>
-            <button className='btn btn-primary btn-sm'>Add to Cart</button>
+            <button type="button" className='btn btn-primary btn-sm'>Add to Cart</button>
           </form>
         }
       </div>
