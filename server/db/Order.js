@@ -129,7 +129,7 @@ Order.prototype.checkout = function(userId, shippingInfo) {
           console.log(info);
         }
       });
-      return user;
+      return this;
     });
 };
 

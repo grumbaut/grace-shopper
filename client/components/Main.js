@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts, getUserFromToken, getReviews } from '../store';
+import { getCategories, getProducts, getUserFromToken, getReviews, getOrders } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -13,6 +13,8 @@ import Category from './Category';
 import Categories from './Categories';
 import Cart from './Cart';
 import Checkout from './Checkout';
+import Account from './Account';
+import ManageOrders from './ManageOrders';
 
 class Main extends React.Component {
   constructor(props) {
@@ -41,7 +43,9 @@ class Main extends React.Component {
             <Switch>
               <Route path='/products/:id' exact render={({match})=> <Product id={ match.params.id * 1 } /> } />
               <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
+              <Route path='/manage-orders' component={ ManageOrders} />
               <Route path='/products' component={ Products } />
+              <Route path='/account' component={ Account } />
               <Route path='/checkout' component={ Checkout } />
               <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
@@ -62,6 +66,7 @@ const mapDispatch = dispatch => ({
     dispatch(getCategories());
     dispatch(getProducts());
     dispatch(getReviews());
+    dispatch(getOrders());
   },
   getUser(token) {
     dispatch(getUserFromToken(token));
