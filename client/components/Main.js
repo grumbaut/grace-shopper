@@ -46,8 +46,8 @@ class Main extends React.Component {
               <Route path='/admin' exact component = { AdminIndex } />
               <Route path='/users' exact component = { Users } />
               <Route path='/createProduct' exact component = { createProduct } />
-              <Route path='/products/:id' exact render={({match, history})=> <Product id={ match.params.id * 1 } /> } />
-              <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } history={ history } /> } />
+              <Route path='/products/:id' exact render={({match, history})=> <Product id={ match.params.id * 1 } history={ history } /> } />
+              <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
               <Route path='/products' component={ Products } />
               <Route path='/checkout' component={ Checkout } />
               <Route path='/signup' component={ SignUp } />

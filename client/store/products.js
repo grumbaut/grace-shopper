@@ -56,20 +56,17 @@ export const deleteProduct = (product, history) => (
   )
 );
 
-export const saveProduct = (product, history) => (
+export const saveProduct = (product) => (
   product.id ? (
     dispatch => (
       axios.put(`/api/products/${product.id}`, product)
         .then(result => result.data)
-        // .then((product)=> console.log('product in store is', product))
         .then(product => dispatch(updateProductInStore(product))))
-        // .then(() => history.push(`/products/${product.id}`)))
       ) : (
       dispatch => (
         axios.post(`api/products`, product)
           .then(res => res.data)
           .then(product => dispatch(createProductInStore(product)))
-          // .then(() => history.push(`/products/${product.id}`))
       )
     )
   );

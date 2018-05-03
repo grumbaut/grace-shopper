@@ -1,8 +1,12 @@
+//ADD:
+// 2) ADDING TO CART ABILITY;
+// 3) ADD PRODUCT
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import ProductCard from './ProductCard';
 import { saveProduct, deleteProduct } from '../store/products';
+import { addToCart } from '../store';
 
 class Product extends React.Component {
   constructor(props){
@@ -12,13 +16,15 @@ class Product extends React.Component {
       description: this.props.product ? this.props.product.description : '',
       price: this.props.product ? this.props.product.price : 0,
       imageUrl: this.props.product ? this.props.product.imageUrl : '',
-      categoryId: -1
+      categoryId: -1,
+      quantity: 1
     };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSelectCategory = this.onSelectCategory.bind(this);
     this.onSaveCategory = this.onSaveCategory.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.product) {
@@ -66,10 +72,17 @@ class Product extends React.Component {
   onDelete(){
     this.props.deleteProduct({ id: this.props.id });
   }
+  handleChange(event) {
+    this.setState({ quantity: event.target.value });
+  }
   render(){
-    const { user, product, categories } = this.props;
+    const { user, product, categories, addToCart } = this.props;
     const { name, price, categoryId } = this.state;
     const { onChangeInput, onSelectCategory, onSaveCategory, onSave, onDelete } = this;
+    const quantity = [];
+    for (let i = 1; i <= 50; i++) {
+      quantity.push(i);
+    }
     if (!product) {
       return null;
     }
@@ -82,7 +95,7 @@ class Product extends React.Component {
         <img src = { product.imageUrl } width={400} />
         <h2>{`$${product.price}`}</h2>
         <p>{ product.description }</p>   
-        <p>{ product.name } is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>        
+        <p>{ product.name } is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>
         {
           user.isAdmin ? (
             <div>
@@ -99,7 +112,7 @@ class Product extends React.Component {
               <form onSubmit={ onSaveCategory }>
                 <p>Current category: {productCategory.name}</p>
                 <select value={ categoryId } name="categoryId" onChange={ onSelectCategory }>
-                  <option value="-1">Select New Category</option>     
+                  <option value="-1">Select New Category</option>
                   {
                     availableCategories.map( category => {
                       return (
@@ -109,12 +122,25 @@ class Product extends React.Component {
                       );
                     })
                   }
-                  </select>
-                  <button disabled={ categoryId*1 === -1}>Change</button>
-              </form>    
+                </select>
+                <button disabled={ categoryId * 1 === -1}>Change</button>
+              </form>   
+              <button onClick={ onDelete }>Delete</button>
             </div>
           )
-          : (<button>Add to cart</button>)
+          : (
+            <div>
+            { 
+              !user.id ? null :
+              <form onSubmit={ event => addToCart(event, user.id, cart.id, this.state.quantity, product)}>
+                <select value={ this.state.quantity } onChange={ this.handleChange }>
+                  { quantity.map(num => <option key={ num } value={ num }>{ num }</option>)}
+                </select>
+                <button className='btn btn-primary btn-sm'>Add to Cart</button>
+              </form>
+            }
+            </div>
+          )
         }        
       </div>
       );
@@ -132,7 +158,7 @@ const mapState = ({ products, categories, user }, { id })=> {
 
 const mapDispatch = (dispatch, { history }) => {
   return {
-    saveProduct: (product) => dispatch(saveProduct(product, history)),
+    saveProduct: (product) => dispatch(saveProduct(product)),
     deleteProduct: (product) => dispatch(deleteProduct(product, history))
   }
 }
