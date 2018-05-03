@@ -102,12 +102,14 @@ const seed = () => {
   .then(() => {
     return Promise.all(reviews.map( review => Review.create(review)))
   })
-  // .then(() => Order.findOrCreateCart(users[0]))
-  // .then( order => order.addToCart(4, products[2]))
-  // .then( order => order.addToCart(3, products[0]))
+  .then(() => User.findById(1))
+  .then( user => Order.findOrCreateCart(user))
+  .then( order => order.addToCart(1, () => Product.findById(3))) 
+  // .then( order => order.addToCart(3, () => Product.findById(1)))
   .catch( err => {
     throw err;
-  });
-};
+  })
+}
+
 
 module.exports = seed;
