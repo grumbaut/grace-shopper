@@ -38,6 +38,15 @@ export const updateOrder = (userId, orderId, updatedShippingInfo, history) => {
   };
 };
 
+export const cancelOrder = (userId, orderId) => {
+  return dispatch => {
+    return axios.delete(`/api/users/${userId}/orders/${orderId}`)
+      .then(res => res.data)
+      .then(order => dispatch(gotUpdatedOrder(order)))
+      .catch(err => console.error(err));
+  };
+};
+
 const reducer = (state = [], action) => {
   switch (action.type) {
   case GOT_ORDERS:

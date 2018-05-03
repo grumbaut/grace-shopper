@@ -142,4 +142,16 @@ Order.prototype.checkout = function(userId, shippingInfo) {
     });
 };
 
+Order.prototype.cancelOrder = function() {
+  return this.update({
+    status: 'cancelled'
+  })
+    .then(order => Order.findById(order.id, {
+      include: [{
+        model: LineItem,
+        include: [Product]
+      }]
+    }));
+};
+
 module.exports = Order;

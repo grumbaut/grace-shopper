@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { cancelOrder } from '../store';
 
-const OrderInfo = ({ orders }) => {
+const OrderInfo = ({ orders, cancel }) => {
   return (
     <div>
       {
@@ -12,7 +14,7 @@ const OrderInfo = ({ orders }) => {
               order.status === 'processing' ?
                 <div>
                   <Link to={ `/edit-order/${order.id}`}><button className='btn btn-primary btn-sm'>Edit Shipping Info</button></Link>
-                  <button className='btn btn-danger btm-sm'>Cancel Order</button>
+                  <button className='btn btn-danger btn-sm' onClick={ () => cancel(order.userId, order.id) }>Cancel Order</button>
                 </div>
                 :
                 null
@@ -56,4 +58,12 @@ const OrderInfo = ({ orders }) => {
   );
 };
 
-export default OrderInfo;
+const mapState = null;
+
+const mapDispatch = dispatch => ({
+  cancel(userId, orderId) {
+    dispatch(cancelOrder(userId, orderId))
+  }
+});
+
+export default connect(mapState, mapDispatch)(OrderInfo);

@@ -58,10 +58,8 @@ router.post('/:id/orders', (req, res, next)=> {
 
 router.delete('/:id/orders/:orderId', (req, res, next)=> {
   Order.findById(req.params.orderId)
-    .then( order => {
-      order.destroy();
-    })
-    .then( ()=> res.sendStatus(204))
+    .then(order => order.cancelOrder())
+    .then(order => res.send(order))
     .catch(next);
 });
 

@@ -8,7 +8,7 @@ class ManageOrders extends React.Component {
   }
 
   render() {
-    const { pastOrders, shippedOrders, inProcess } = this.props;
+    const { pastOrders, shippedOrders, inProcess, cancelled } = this.props;
     if(!inProcess || !shippedOrders || !pastOrders ) return <h2>You have not placed any orders.</h2>
     return (
       <div>
@@ -40,6 +40,15 @@ class ManageOrders extends React.Component {
             :
             null
         }
+        {
+          cancelled && cancelled.length ?
+            <div>
+              <h3>Cancelled Orders</h3>
+              <OrderInfo orders={ cancelled } />
+            </div>
+            :
+            null
+        }
       </div>
     );
   }
@@ -50,7 +59,8 @@ const mapState = state => {
   const pastOrders = state.orders.filter(order => order.userId === userId && order.status === 'delivered');
   const shippedOrders = state.orders.filter(order => order.userId === userId && order.status === 'shipped');
   const inProcess = state.orders.filter(order => order.userId === userId && order.status === 'processing');
-  return { pastOrders, shippedOrders, inProcess };
+  const cancelled = state.orders.filter(order => order.userId === userId && order.status === 'cancelled');
+  return { pastOrders, shippedOrders, inProcess, cancelled };
 };
 
 export default connect(mapState)(ManageOrders);
