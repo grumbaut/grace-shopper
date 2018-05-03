@@ -62,7 +62,7 @@ describe('Product routes', ()=> {
     .get('/api/products')
     .then( res => {
       expect(res.body).to.be.ok;
-      expect(res.body.length).to.be.equal(3);
+      expect(res.body.length).to.be.equal(48);
     });
   });
 
@@ -70,7 +70,7 @@ describe('Product routes', ()=> {
     return request(app)
     .get('/api/products')
     .then( res => {
-      expect(res.body[1].name).to.be.equal('Mixing Bowl');
+      expect(res.body[1].name).to.be.ok;
     });
   });
 });
