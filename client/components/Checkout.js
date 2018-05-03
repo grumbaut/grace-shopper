@@ -1,7 +1,7 @@
 import React from 'react';
-import ProductCard from './ProductCard';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { checkout } from '../store';
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -11,7 +11,8 @@ class Checkout extends React.Component {
       address: '',
       city: '',
       state: '',
-      zip: ''
+      zip: '',
+      email: ''
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -21,8 +22,8 @@ class Checkout extends React.Component {
   }
 
   render() {
-    const { name, address, city, state, zip } = this.state;
-    const { cart } = this.props;
+    const { name, address, city, state, zip, email } = this.state;
+    const { cart, checkoutCart, userId } = this.props;
     if(!cart.id) return null;
     return (
       <div>
@@ -41,10 +42,14 @@ class Checkout extends React.Component {
         ))}
         <p><Link to='/cart'>Edit Cart</Link></p>
         <p><strong>Total: </strong>{ '$' + cart.total }</p>
-        <form>
+        <form onSubmit={ event => checkoutCart(event, userId, cart.id, this.state) }>
           <div className='form-group'>
             <label htmlFor='name'>Recipient Name: </label>
             <input name='name' value={ name } onChange={ this.handleChange } />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='email'>Recipient Email: </label>
+            <input name='email' value={ email } onChange={ this.handleChange } />
           </div>
           <div className='form-group'>
             <label htmlFor='address'>Shipping Address: </label>
@@ -70,9 +75,15 @@ class Checkout extends React.Component {
 }
 
 const mapState = state => ({
-  cart: state.cart
+  cart: state.cart,
+  userId: state.user.id
 });
 
-const mapDispatch = null;
+const mapDispatch = (dispatch, { history }) => ({
+  checkoutCart(event, userId, orderId, shippingInfo) {
+    event.preventDefault();
+    dispatch(checkout(userId, orderId, shippingInfo, history));
+  }
+});
 
 export default connect(mapState, mapDispatch)(Checkout);

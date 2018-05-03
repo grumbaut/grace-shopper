@@ -46,8 +46,7 @@ router.get('/:id/orders', (req, res, next)=> {
 });
 
 router.post('/:id/orders', (req, res, next)=> {
-  User.findById(req.params.id)
-    .then(user => Order.findOrCreateCart(user))
+  Order.findOrCreateCart(req.params.id)
     .then(cart => res.send(cart))
     .catch(next);
 });
@@ -87,9 +86,14 @@ router.put('/:id/orders/:orderId/quantity', (req, res, next) => {
 });
 
 router.put('/:id/orders/:orderId/checkout', (req, res, next)=> {
-  Order.findById(req.params.orderId)
-    .then(order => order.checkout())
-    .then(order => res.send(order))
+  Order.findById(req.params.orderId, {
+    include: [{
+      model: LineItem,
+      include: [Product]
+    }]
+  })
+    .then(order => order.checkout(req.params.id, req.body))
+    .then(() => res.sendStatus(200))
     .catch(next);
 });
 

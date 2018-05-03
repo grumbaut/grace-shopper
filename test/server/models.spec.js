@@ -138,7 +138,7 @@ describe('cart', () => {
     })
       .then(_user => {
         user = _user;
-        return Order.findOrCreateCart(user);
+        return Order.findOrCreateCart(user.id);
       })
       .then(_cart => cart = _cart);
   });
@@ -161,12 +161,12 @@ describe('cart', () => {
         });
     });
     it('checkout method sets cart status to false', () => {
-      cart.checkout()
+      cart.checkout(cart.id)
         .then(_cart => cart = _cart);
       expect(cart.cart).to.equal(false);
     });
     it('only generates a cart once', () => {
-      Order.findOrCreateCart(user)
+      Order.findOrCreateCart(user.id)
         .then(_cart => {
           expect(_cart.id).to.equal(cart.id);
         });
