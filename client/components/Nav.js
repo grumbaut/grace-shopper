@@ -26,11 +26,14 @@ const Nav = ({ user, logout, cart }) => {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             {
-              user && user.id ? (
-                <NavLink to='/' className='nav-link' onClick={ logout }>Logout { user.firstName }</NavLink>
-              ) : (
-                <NavLink className="nav-link" to="/login" activeClassName='active'>Log In</NavLink>
-              )
+              user && user.id ? <NavLink className="nav-link" to="/cart" activeClassName='active'>Cart {`(${totalItemsInCart})`}</NavLink> : null }
+          </li>
+          <li className='nav-item'>
+            {
+              user && user.id ?
+                <NavLink className='nav-link' to='/account' activeClassName='active'>Manage Account</NavLink>
+                :
+                null
             }
           </li>
           <li className='nav-item'>
@@ -42,7 +45,12 @@ const Nav = ({ user, logout, cart }) => {
           </li>
           <li className="nav-item">
             {
-              user && user.id ? <NavLink className="nav-link" to="/cart" activeClassName='active'>Cart {`(${totalItemsInCart})`}</NavLink> : null }
+              user && user.id ? (
+                <NavLink to='/' className='nav-link' onClick={ logout }>Logout { user.firstName }</NavLink>
+              ) : (
+                <NavLink className="nav-link" to="/login" activeClassName='active'>Log In</NavLink>
+              )
+            }
           </li>
         </ul>
       </div>

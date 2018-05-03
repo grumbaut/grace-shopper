@@ -36,10 +36,15 @@ router.put('/:id', (req, res, next) => {
     .catch(next);
 });
 
-//CART ROUTES
+//USER ORDER ROUTES
 router.get('/:id/orders', (req, res, next)=> {
   Order.findAll({
-    include: [{ model: LineItem }]
+    where: {
+      userId: req.params.id
+    }, include: [{
+      model: LineItem,
+      include: [Product]
+    }]
   })
     .then( orders => res.send(orders))
     .catch(next);
@@ -57,6 +62,26 @@ router.delete('/:id/orders/:orderId', (req, res, next)=> {
       order.destroy();
     })
     .then( ()=> res.sendStatus(204))
+    .catch(next);
+});
+
+router.delete('/:id/orders/:orderId/lineitems/:lineItemId', (req, res, next) => {
+  LineItem.findById(req.params.id)
+    .then(lineItem => lineItem.destroy())
+    .then(() => res.sendStatus(200))
+    .catch(next);
+});
+
+router.put('/:id/orders/:orderId', (req, res, next) => {
+  Order.findById(req.params.orderId)
+    .then(order => order.update(req.body))
+    .then(() => Order.findById(req.params.orderId, {
+      include: [{
+        model: LineItem,
+        include: [Product]
+      }]
+    }))
+    .then(order => res.send(order))
     .catch(next);
 });
 
@@ -93,7 +118,7 @@ router.put('/:id/orders/:orderId/checkout', (req, res, next)=> {
     }]
   })
     .then(order => order.checkout(req.params.id, req.body))
-    .then(() => res.sendStatus(200))
+    .then(order => res.send(order))
     .catch(next);
 });
 
