@@ -77,7 +77,7 @@ class Product extends React.Component {
   }
   render(){
     const { user, product, categories, addToCart } = this.props;
-    const { name, price, categoryId } = this.state;
+    const { name, price, description, categoryId } = this.state;
     const { onChangeInput, onSelectCategory, onSaveCategory, onSave, onDelete } = this;
     const quantity = [];
     for (let i = 1; i <= 50; i++) {
@@ -103,6 +103,9 @@ class Product extends React.Component {
                 <h3>Admin: you may update this product </h3>
                 <p>Name:<br />
                 <input value={ name } name="name" onChange={ onChangeInput } />
+                </p>
+                <p>Description:<br />
+                <input value={ description } name="description" onChange = { onChangeInput } />
                 </p>
                 <p>Price:<br />
                 <input value={ price } name="price" onChange = { onChangeInput } />
