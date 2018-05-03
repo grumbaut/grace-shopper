@@ -6,11 +6,7 @@ const Order = require('./Order');
 const LineItem = require('./LineItem');
 const Review = require('./Review');
 const fake = require('faker');
-<<<<<<< HEAD
 const seed = require('./seed');
-=======
-const productArray = require('./seedProducts');
->>>>>>> 35b89fe09c07cd126b3877034fc776a17e3fab19
 
 Product.belongsTo(Category);
 Product.hasMany(LineItem);
