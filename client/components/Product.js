@@ -6,7 +6,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveProduct, deleteProduct } from '../store/products';
-import { addToCart } from '../store';
+// import { addToCart } from '../store';
+import ProductCardDetail from './ProductCardDetail';
 
 class Product extends React.Component {
   constructor(props){
@@ -17,14 +18,14 @@ class Product extends React.Component {
       price: this.props.product ? this.props.product.price : 0,
       imageUrl: this.props.product ? this.props.product.imageUrl : '',
       categoryId: -1,
-      quantity: 1
+      // quantity: 1
     };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSelectCategory = this.onSelectCategory.bind(this);
     this.onSaveCategory = this.onSaveCategory.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.product) {
@@ -76,7 +77,7 @@ class Product extends React.Component {
     this.setState({ quantity: event.target.value });
   }
   render(){
-    const { user, product, categories, addToCart } = this.props;
+    const { user, product, categories } = this.props;
     const { name, price, description, categoryId } = this.state;
     const { onChangeInput, onSelectCategory, onSaveCategory, onSave, onDelete } = this;
     const quantity = [];
@@ -91,14 +92,15 @@ class Product extends React.Component {
 
     return (
       <div>
-        <h1>{ product.name }</h1>
-        <img src = { product.imageUrl } width={400} />
-        <h2>{`$${product.price}`}</h2>
-        <p>{ product.description }</p>   
-        <p>{ product.name } is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>
+
         {
           user.isAdmin ? (
             <div>
+            <h1>{ product.name }</h1>
+            <img src = { product.imageUrl } width={400} />
+            <h2>{`$${product.price}`}</h2>
+            <p>{ product.description }</p>   
+            <p>{ product.name } is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>
               <form onSubmit= { onSave }>
                 <h3>Admin: you may update this product </h3>
                 <p>Name:<br />
@@ -135,12 +137,8 @@ class Product extends React.Component {
             <div>
             { 
               !user.id ? null :
-              <form onSubmit={ event => addToCart(event, user.id, cart.id, this.state.quantity, product)}>
-                <select value={ this.state.quantity } onChange={ this.handleChange }>
-                  { quantity.map(num => <option key={ num } value={ num }>{ num }</option>)}
-                </select>
-                <button className='btn btn-primary btn-sm'>Add to Cart</button>
-              </form>
+              <ProductCardDetail product={ product } />
+
             }
             </div>
           )
