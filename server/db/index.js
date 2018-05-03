@@ -20,8 +20,6 @@ Product.hasMany(Review);
 Review.belongsTo(User);
 User.hasMany(Review);
 
-
-
 const syncAndSeed = ()=>{
   return conn.sync({ force: true })
     .then(() => {
@@ -45,7 +43,7 @@ const syncAndSeed = ()=>{
         product1.setCategory(category1),
         product2.setCategory(category2),
         product3.setCategory(category2),
-        Order.findOrCreateCart(user1),
+        Order.findOrCreateCart(user1.id),
         rev1.setUser(user1),
         rev1.setProduct(product1),
         rev2.setUser(user2),

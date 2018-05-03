@@ -38,9 +38,9 @@ export const getUserFromToken = token => {
     return axios.get(`/api/sessions/${token}`)
       .then( result => {
         dispatch(setUser(result.data));
-        dispatch(getCart(result.data));
+        dispatch(getCart(result.data.id));
       })
-      .catch(err => console.error(err));
+      .catch(() => window.localStorage.removeItem('token'));
   };
 };
 

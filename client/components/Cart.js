@@ -50,14 +50,14 @@ class Cart extends React.Component {
               { lineItem.product.name }
             </div>
             <div className='col-3'>
-              <p>Subtotal: { lineItem.subtotal }</p>
+              <p>Subtotal: ${ lineItem.subtotal.toFixed(2) }</p>
             </div>
             <div className='col-2'>
               <button className='btn btn-danger btn-sm' onClick={ () => deleteItem(lineItem.id)}>X</button>
             </div>
           </div>
         ))}
-        <p><strong>Total:</strong> { total }</p>
+        <p><strong>Total:</strong> ${ total }</p>
         <Link to='/checkout'><button className='btn btn-primary btn-sm'>Checkout</button></Link>
       </div>
     );

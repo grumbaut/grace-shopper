@@ -19,13 +19,11 @@ const deletedItem = id => {
   return action;
 };
 
-export const getCart = user => (
+export const getCart = userId => (
   dispatch => (
-    axios.post(`/api/users/${user.id}/orders`)
+    axios.post(`/api/users/${userId}/orders`)
       .then(res => res.data)
-      .then(cart => {
-        dispatch(gotCart(cart));
-      })
+      .then(cart => dispatch(gotCart(cart)))
       .catch(err => console.error(err))
   )
 );
@@ -54,6 +52,14 @@ export const deleteItem = id => (
     axios.delete(`/api/lineitems/${id}`)
       .then(() => dispatch(deletedItem(id)))
       .catch( err => console.error(err))
+  )
+);
+
+export const checkout = (userId, orderId, shippingInfo, history) => (
+  dispatch => (
+    axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, shippingInfo)
+      .then(() => dispatch(getCart(userId)))
+      .then(() => history.push('/'))
   )
 );
 
