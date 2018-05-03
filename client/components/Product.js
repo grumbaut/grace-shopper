@@ -1,12 +1,7 @@
-//ADD:
-// 2) ADDING TO CART ABILITY;
-// 3) ADD PRODUCT
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveProduct, deleteProduct } from '../store/products';
-// import { addToCart } from '../store';
 import ProductCardDetail from './ProductCardDetail';
 
 class Product extends React.Component {
@@ -18,14 +13,12 @@ class Product extends React.Component {
       price: this.props.product ? this.props.product.price : 0,
       imageUrl: this.props.product ? this.props.product.imageUrl : '',
       categoryId: -1,
-      // quantity: 1
     };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSelectCategory = this.onSelectCategory.bind(this);
     this.onSaveCategory = this.onSaveCategory.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.product) {
@@ -72,9 +65,6 @@ class Product extends React.Component {
   }
   onDelete(){
     this.props.deleteProduct({ id: this.props.id });
-  }
-  handleChange(event) {
-    this.setState({ quantity: event.target.value });
   }
   render(){
     const { user, product, categories } = this.props;
