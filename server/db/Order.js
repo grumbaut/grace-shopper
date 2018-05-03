@@ -17,8 +17,8 @@ const generateEmail = (order, user) => {
   const total = '$' + order.total;
   return `
     <div>
-    <h1>${user.name}, your Williams-Pomona order has been received!</h1>
-    <p>Hello, ${user.name},</p>
+    <h2>${user.firstName}, your Williams-Pomona order has been received!</h2>
+    <p>Hello, ${user.firstName},</p>
     <p>Thank you for shopping Williams-Pomona! We've received your order and will let you know as soon as it's shipped.</p>
     <table>
     <tr>
@@ -43,6 +43,15 @@ const generateEmail = (order, user) => {
       <td></td>
     </tr>
     </table>
+    <p>Your order will be shipped to:</p>
+    <blockquote>
+      <p>${ order.name }</p>
+      <p>${ order.address }</p>
+      <p>${ order.city }, ${ order.state } ${ order.zip }</p>
+      <p>${ order.email }</p>
+    </blockquote>
+    <p>Best wishes,</p>
+    <p>Williams-Pomona</p>
     </div>
   `;
 };

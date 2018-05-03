@@ -15,6 +15,7 @@ import Cart from './Cart';
 import Checkout from './Checkout';
 import Account from './Account';
 import ManageOrders from './ManageOrders';
+import EditOrder from './EditOrder';
 
 class Main extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class Main extends React.Component {
             <Switch>
               <Route path='/products/:id' exact render={({match})=> <Product id={ match.params.id * 1 } /> } />
               <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
+              <Route path='/edit-order/:id' component={ EditOrder } />
               <Route path='/manage-orders' component={ ManageOrders} />
               <Route path='/products' component={ Products } />
               <Route path='/account' component={ Account } />

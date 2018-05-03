@@ -65,10 +65,23 @@ router.delete('/:id/orders/:orderId', (req, res, next)=> {
     .catch(next);
 });
 
-router.delete('/:id/orders/:orderId/lineitems/:lineItemId', (req, res,next) => {
+router.delete('/:id/orders/:orderId/lineitems/:lineItemId', (req, res, next) => {
   LineItem.findById(req.params.id)
     .then(lineItem => lineItem.destroy())
     .then(() => res.sendStatus(200))
+    .catch(next);
+});
+
+router.put('/:id/orders/:orderId', (req, res, next) => {
+  Order.findById(req.params.orderId)
+    .then(order => order.update(req.body))
+    .then(() => Order.findById(req.params.orderId, {
+      include: [{
+        model: LineItem,
+        include: [Product]
+      }]
+    }))
+    .then(order => res.send(order))
     .catch(next);
 });
 
