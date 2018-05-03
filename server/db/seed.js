@@ -103,12 +103,12 @@ const seed = () => {
     return Promise.all(reviews.map( review => Review.create(review)))
   })
   .then(() => User.findById(1))
-  .then( user => Order.findOrCreateCart(user))
-  .then( order => order.addToCart(1, () => Product.findById(3))) 
-  // .then( order => order.addToCart(3, () => Product.findById(1)))
-  .catch( err => {
-    throw err;
-  })
+  .then( user => Promise.all([
+    Order.findOrCreateCart(user.id),
+    Product.findById(3)
+  ]))
+  .then(([order, product])=> order.addToCart(1, product))
+  .catch( err => {throw err})
 }
 
 
