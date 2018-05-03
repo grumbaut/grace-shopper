@@ -6,6 +6,7 @@ const Order = require('./Order');
 const LineItem = require('./LineItem');
 const Review = require('./Review');
 const fake = require('faker');
+const productArray = require('./seedProducts');
 
 Product.belongsTo(Category);
 Product.hasMany(LineItem);
@@ -19,6 +20,7 @@ Review.belongsTo(Product);
 Product.hasMany(Review);
 Review.belongsTo(User);
 User.hasMany(Review);
+
 
 const syncAndSeed = ()=>{
   return conn.sync({ force: true })
@@ -57,6 +59,11 @@ const syncAndSeed = ()=>{
     .then(([product1, product2, product3, order]) => {
       order.addToCart(4, product3);
       order.addToCart(3, product1);
+    })
+    .then(()=>{
+      return Promise.all(productArray.map((product)=>{
+        Product.create(product);
+      }));
     })
     .catch(err => {
       throw err;
