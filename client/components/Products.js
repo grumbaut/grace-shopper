@@ -32,7 +32,7 @@ class Products extends React.Component {
           ))}
         </select>
         <div className="row">
-        { products.map(product => <ProductCard key={ product.id } className="col-sm" product={ product } history={ this.props.history } />)}
+        { products.map(product => <ProductCard key={ product.id } className="col" product={ product } history={ this.props.history } />)}
         </div>
       </div>
     );
