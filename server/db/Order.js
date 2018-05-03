@@ -52,7 +52,7 @@ const Order = conn.define('order', {
     type: Sequelize.STRING,
     defaultValue: 'cart'
   },
-  date: Sequelize.STRING,
+  date: Sequelize.DATE,
   address: Sequelize.STRING,
   name: Sequelize.STRING,
   city: Sequelize.STRING,
@@ -106,7 +106,7 @@ Order.prototype.checkout = function(userId, shippingInfo) {
   const { name, address, city, state, zip, email } = shippingInfo;
   return this.update({
     status: 'processing',
-    date: `${new Date().getMonth()}/${new Date().getDate()}/${new Date().getFullYear()}`,
+    date: new Date(),
     name,
     address,
     city,

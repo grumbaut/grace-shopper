@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import OrderInfo from './OrderInfo';
 
 class ManageOrders extends React.Component {
   constructor(props) {
@@ -7,44 +8,38 @@ class ManageOrders extends React.Component {
   }
 
   render() {
-    const { orders } = this.props;
-    if(!orders || !orders.length) return <h2>You have no prior orders.</h2>
+    const { pastOrders, shippedOrders, inProcess } = this.props;
+    if(!inProcess || !shippedOrders || !pastOrders ) return <h2>You have not placed any orders.</h2>
     return (
       <div>
         <h2>Manage Orders</h2>
-        <div>
-          {
-            orders.map(order => (
-              <div key={ order.id }>
-                <h3>Order #{ order.id }</h3>
-                <div className='row'>
-                  <div className='col-2'>
-                    <p><strong>Quantity</strong></p>
-                  </div>
-                  <div className='col-5'>
-                    <p><strong>Product</strong></p>
-                  </div>
-                  <div className='col-5'>
-                    <p><strong>Subtotal</strong></p>
-                  </div>
-                </div>
-                { order.lineitems.map(item => (
-                  <div className='row' key={ item.id } >
-                    <div className='col-2'>
-                      { item.quantity }
-                    </div>
-                    <div className='col-5'>
-                      { item.product.name }
-                    </div>
-                    <div className='col-5'>
-                      ${ item.subtotal }
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))
-          }
-        </div>
+        {
+          inProcess && inProcess.length ?
+            <div>
+              <h3>Not Yet Shipped</h3>
+              <OrderInfo orders={ inProcess } />
+            </div>
+            :
+            null
+        }
+        {
+          shippedOrders && shippedOrders.length ?
+            <div>
+              <h3>On Its Way</h3>
+              <OrderInfo orders={ shippedOrders } />
+            </div>
+            :
+            null
+        }
+        {
+          pastOrders && pastOrders.length ?
+            <div>
+              <h3>Past Orders</h3>
+              <OrderInfo orders={ pastOrders } />
+            </div>
+            :
+            null
+        }
       </div>
     );
   }
@@ -52,8 +47,10 @@ class ManageOrders extends React.Component {
 
 const mapState = state => {
   const userId = state.user.id;
-  const orders = state.orders.filter(order => order.userId === userId && order.status !== 'cart');
-  return { orders };
+  const pastOrders = state.orders.filter(order => order.userId === userId && order.status === 'delivered');
+  const shippedOrders = state.orders.filter(order => order.userId === userId && order.status === 'shipped');
+  const inProcess = state.orders.filter(order => order.userId === userId && order.status === 'processing');
+  return { pastOrders, shippedOrders, inProcess };
 };
 
 export default connect(mapState)(ManageOrders);
