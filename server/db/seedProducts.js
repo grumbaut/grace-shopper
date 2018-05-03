@@ -226,6 +226,66 @@ const productArray = [
     description: 'Sugar and creamer container for your breakfast coffee.',
     imageUrl: '/images/sugarcreamer.jpg',
     price: 18.65
+  },
+  {
+    name: '3 Tier Dessert Platter',
+    description: 'Decorate this platter with three layers of assorted desserts.',
+    imageUrl: '/images/tiereddessertplatter.jpg',
+    price: 19.65
+  },
+  {
+    name: 'Toaster',
+    description: 'Toast two slices of bread at the same time.',
+    imageUrl: '/images/toaster.jpg',
+    price: 28.65
+  },
+  {
+    name: 'Towel Set',
+    description: 'Soft and absorbant towel set.',
+    imageUrl: '/images/towelset.jpg',
+    price: 30.65
+  },
+  {
+    name: 'Vitomix',
+    description: `This is the world's best blender.`,
+    imageUrl: '/images/vitomix.jpg',
+    price: 28.65
+  },
+  {
+    name: 'Wine Glass',
+    description: 'The perfect wine glass.',
+    imageUrl: '/images/wineglass.jpg',
+    price: 12.00
+  },
+  {
+    name: 'Wine Tumbler',
+    description: 'Enjoy your favorite wine in this low-key wine glass tumbler.',
+    imageUrl: '/images/winetumbler.jpg',
+    price: 28.65
+  },
+  {
+    name: 'Wood Mixing Bowl',
+    description: 'Wood mixing bowl perfect for baking.',
+    imageUrl: '/images/woodmixingbowl.jpg',
+    price: 22.65
+  },
+  {
+    name: 'Wood Pizza Peel',
+    description: 'Pull your pizza out of the oven like a pro with this pizza peel.',
+    imageUrl: '/images/woodpizzapeel.jpg',
+    price: 32.65
+  },
+  {
+    name: 'Wood Spoon Set',
+    description: 'Wooden spoons for a more rustic table setting.',
+    imageUrl: '/images/woodspoonset.jpg',
+    price: 25.00
+  },
+  {
+    name: 'Woven Place Mat',
+    description: 'Complete your table setting with this woven place mat.',
+    imageUrl: '/images/wovenplacemat.jpg',
+    price: 15.00
   }
 ];
 
