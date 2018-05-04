@@ -13,9 +13,9 @@ import Category from './Category';
 import Categories from './Categories';
 import Cart from './Cart';
 import Checkout from './Checkout';
-import Account from './Account';
 import ManageOrders from './ManageOrders';
 import EditOrder from './EditOrder';
+import LoggedOut from './LoggedOut';
 
 class Main extends React.Component {
   constructor(props) {
@@ -46,8 +46,8 @@ class Main extends React.Component {
               <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
               <Route path='/edit-order/:id' component={ EditOrder } />
               <Route path='/manage-orders' component={ ManageOrders} />
+              <Route path='/logged-out' component={ LoggedOut } />
               <Route path='/products' component={ Products } />
-              <Route path='/account' component={ Account } />
               <Route path='/checkout' component={ Checkout } />
               <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
