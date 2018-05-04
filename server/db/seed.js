@@ -1,9 +1,7 @@
-const conn = require('./conn');
 const Category = require('./Category');
 const Product = require('./Product');
 const User = require('./User');
 const Order = require('./Order');
-const LineItem = require('./LineItem');
 const Review = require('./Review');
 const fake = require('faker');
 
@@ -377,8 +375,7 @@ const seed = () => {
     Product.findById(3)
   ]))
   .then(([order, product])=> order.addToCart(1, product))
-  .catch( err => {throw err} )
+  .catch( err => { throw err } )
 }
-
 
 module.exports = seed;
