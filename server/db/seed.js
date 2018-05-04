@@ -374,7 +374,7 @@ const seed = () => {
     Order.findOrCreateCart(user.id),
     Product.findById(3)
   ]))
-  .then(([order, product])=> order.addToCart(1, product))
+  .then(([order, product]) => order.addToCart(1, product))
   .catch( err => { throw err } )
 }
 
