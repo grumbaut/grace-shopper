@@ -21,22 +21,19 @@ const products = [
     name: 'Mixing Bowl',
     description: 'Hand carved wooden mixing bowl.',
     price: 28.00,
-    imageUrl: '/images/redmixingbowlset.jpg',
-    categoryId: 1
+    imageUrl: '/images/redmixingbowlset.jpg'
   },
   {
     name: 'Vase',
     description: 'Porcelain longnecked vase, ideal for roses.',     
     price: 31.95,
-    imageUrl: '/images/vase.jpg',
-    categoryId: 2
+    imageUrl: '/images/vase.jpg'
   },
   {
     name: 'Vanilla Diffuser',
     description: 'A room diffuser with reeds and vanilla oil',    
     price: 6.85,
-    imageUrl: '/images/vanilladiffuser.jpg',
-    categoryId: 2
+    imageUrl: '/images/vanilladiffuser.jpg'
   },
   {
     name: '4 Slice Toaster',
@@ -315,21 +312,21 @@ const users = [
     firstName: 'Alice',
     lastName: 'Buyer',
     email: 'alice@wonderland.com',
-    isAdmin: 'false',
+    isAdmin: true,
     password: 'ALICE'
   },
   {
     firstName: 'Bob',
     lastName: 'Bill',
     email: 'bob@wonderland.com',
-    isAdmin: 'false',
+    isAdmin: false,
     password: 'BOB'
   },
   {
     firstName: 'Cat',
     lastName: 'Purchase',
     email: 'cat@wonderland.com',
-    isAdmin: 'false',
+    isAdmin: false,
     password: 'CAT'
   }
 ];
@@ -361,10 +358,12 @@ const reviews = [
   }
 ];
 
+const randomCategoryId = () => Math.ceil(Math.random() * categories.length);
+
 const seed = () => {
   return Promise.all(categories.map( category => Category.create(category)))
   .then(() => {
-    return Promise.all(products.map( product => Product.create(product)))
+    return Promise.all(products.map( product => Product.create(Object.assign(product, {categoryId: randomCategoryId()}))))
   })
   .then(() => {
     return Promise.all(users.map( user => User.create(user)))
@@ -378,7 +377,7 @@ const seed = () => {
     Product.findById(3)
   ]))
   .then(([order, product])=> order.addToCart(1, product))
-  .catch( err => {throw err})
+  .catch( err => {throw err} )
 }
 
 
