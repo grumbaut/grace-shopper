@@ -54,10 +54,10 @@ class Product extends React.Component {
     ev.preventDefault();
     const product =
       {
-        id: this.props.id, 
-        name: this.state.name, 
+        id: this.props.id,
+        name: this.state.name,
         description: this.state.description,
-        price: this.state.price, 
+        price: this.state.price,
         imageUrl: this.state.imageUrl,
       };
     console.log('product in onSave is', product);
@@ -152,7 +152,7 @@ const mapDispatch = (dispatch, { history }) => {
   return {
     saveProduct: (product) => dispatch(saveProduct(product)),
     deleteProduct: (product) => dispatch(deleteProduct(product, history))
-  }
-}
+  };
+};
 
 export default connect(mapState, mapDispatch)(Product);
