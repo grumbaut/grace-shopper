@@ -5,7 +5,6 @@ const User = require('./User');
 const Order = require('./Order');
 const LineItem = require('./LineItem');
 const Review = require('./Review');
-const fake = require('faker');
 const seed = require('./seed');
 
 Product.belongsTo(Category);
