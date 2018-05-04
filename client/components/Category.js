@@ -55,7 +55,7 @@ const mapStateToProps = ({ categories, products }, { id })=> {
     categories,
     products,
     productsOfThisCategory
-  }
+  };
 };
 
 export default connect(mapStateToProps)(Category);
