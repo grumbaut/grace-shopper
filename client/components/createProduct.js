@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { saveProduct } from '../store/products';
 
 class createProduct extends Component {
     constructor(product){
         super()
+        this.onChange = this.onChange.bind(this)
+        this.onSave = this.onSave.bind(this)
         this.state = {
             name: product.name ? product.name: 'placeholder',
             description: product.description ? product.description: 'placeholder',
@@ -11,6 +14,16 @@ class createProduct extends Component {
             categoryId: product.categoryId ? product.categoryId: 1,
             imageUrl: product.imageUrl ? product.imageUrl: '/images/noImage.jpg'
           }
+    }
+    onSave(ev){
+        console.log('hit?', this.state)
+        
+        ev.preventDefault()
+        const product = this.state;
+        saveProduct(product)
+    }
+    onChange(ev){
+        this.setState({ [ev.target.name]: ev.target.value });
     }
     render(){
         return (
@@ -23,11 +36,15 @@ class createProduct extends Component {
                     </li>        
                     
                     <li> 
-                        Price: <input name = 'price' onChange = { this.onChangeLast }></input> 
+                        Price: <input name = 'price' onChange = { this.onChange }></input> 
                     </li>  
                     
                     <li> 
-                        Image <input name = 'imageUrl' onChange = { this.onChangeImage }></input> 
+                        Description <input name = 'description' onChange = { this.onChange }></input> 
+                    </li>  
+
+                    <li> 
+                        Image <input name = 'imageUrl' onChange = { this.onChange }></input> 
                     </li>  
     
                     <li> 
@@ -56,7 +73,8 @@ const mapState = ({ categories, products })=> {
 
 const mapDispatch = (dispatch, { history }) => {
     return {
-        updateProduct: (product) => dispatch(updateProduct(product, history))
+        updateProduct: (product) => dispatch(updateProduct(product, history)),
+        saveProduct: (product) => dispatch(saveProduct(product)),
     }
   }
 

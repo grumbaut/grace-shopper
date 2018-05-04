@@ -64,7 +64,7 @@ export const saveReview = review => (
     )
   ) : (
   dispatch => (
-    axios.post(`api/reveiws`, review)
+    axios.post(`api/reviews`, review)
       .then(res => res.data)
       .then( newReview => dispatch(createReviewInStore(newReview)))
   ))
