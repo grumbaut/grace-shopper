@@ -82,15 +82,20 @@ class Product extends React.Component {
 
     return (
       <div>
-
+        {
+          productCategory ? (
+            <p>{ product.name } is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>
+          ) : (
+            <p>{ product.name } is not in any category yet.</p>
+          )
+        }
         {
           user.isAdmin ? (
             <div>
             <h1>{ product.name }</h1>
             <img src = { product.imageUrl } width={400} />
             <h2>{`$${product.price}`}</h2>
-            <p>{ product.description }</p>   
-            <p>{ product.name } is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>
+            <p>{ product.description }</p>
               <form onSubmit= { onSave }>
                 <h3>Admin: you may update this product </h3>
                 <p>Name:<br />
@@ -119,20 +124,16 @@ class Product extends React.Component {
                   }
                 </select>
                 <button disabled={ categoryId * 1 === -1}>Change</button>
-              </form>   
+              </form>
               <button onClick={ onDelete }>Delete</button>
             </div>
           )
           : (
             <div>
-            { 
-              !user.id ? null :
               <ProductCardDetail product={ product } />
-
-            }
             </div>
           )
-        }        
+        }
       </div>
       );
     }
