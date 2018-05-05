@@ -361,10 +361,10 @@ const randomCategoryId = () => Math.ceil(Math.random() * categories.length);
 const seed = () => {
   return Promise.all(categories.map( category => Category.create(category)))
   .then(() => {
-    return Promise.all(products.map( product => Product.create(Object.assign(product, {categoryId: randomCategoryId()}))))
+    return products.map( product => Product.create(Object.assign(product, {categoryId: randomCategoryId()})))
   })
   .then(() => {
-    return Promise.all(users.map( user => User.create(user)))
+    return users.map( user => User.create(user))
   })
   .then(() => {
     return Promise.all(reviews.map( review => Review.create(review)))
