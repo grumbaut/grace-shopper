@@ -8,9 +8,9 @@ class Category extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.category ? this.props.category.name: '',  
+      name: this.props.category ? this.props.category.name : '',
       newCategoryIdForProduct: -1    
-    }
+    };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -44,7 +44,21 @@ class Category extends React.Component {
   }
   onAddProduct(ev){
     ev.preventDefault();
-    //this.props.saveProduct(product);
+    this.props.saveProduct(this.state.newCategoryIdForProduct)
+    .then(() => this.setState({ newCategoryIdForProduct: -1 }));
+  }
+  render() {
+    const { categoy, id } = this.props;
+    const { newCategoryIdForProduct } = this.state;
+    const { onChangeInput, onSave, onDelete, onSelectProduct, onAddProduct } = this;
+    if (!category) {
+      return null;
+    }
+    const nextCategoryIndex = categories.indexOf(category) + 1;
+    const nextCategoryId = nextCategoryIndex < categories.length ? categories[nextCategoryIndex].id : categories[0].id;
+    const priorCategoryIndex = categories.indexOf(category) - 1;
+    const lastCategoryIndex = categories.length - 1;
+    const priorCategoryId = priorCategoryIndex !== -1 ? categories[priorCategoryIndex].id : categories[lastCategoryIndex].id;
   }
 } 
   
@@ -54,14 +68,7 @@ class Category extends React.Component {
   
   
   
-  if (!category) {
-    return null;
-  }
-  const nextCategoryIndex = categories.indexOf(category) + 1;
-  const nextCategoryId = nextCategoryIndex < categories.length ? categories[nextCategoryIndex].id : categories[0].id;
-  const priorCategoryIndex = categories.indexOf(category) - 1;
-  const lastCategoryIndex = categories.length - 1;
-  const priorCategoryId = priorCategoryIndex !== -1 ? categories[priorCategoryIndex].id : categories[lastCategoryIndex].id;
+
 
   /* return (
     <div className="container">
