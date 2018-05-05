@@ -48,9 +48,12 @@ class Category extends React.Component {
     .then(() => this.setState({ newCategoryIdForProduct: -1 }));
   }
   render() {
-    const { user, categoy, id } = this.props;
+    const { products, user, category, categories, id, productsOfThisCategory } = this.props;
     const { newCategoryIdForProduct } = this.state;
     const { onChangeInput, onSave, onDelete, onSelectProduct, onAddProduct } = this;
+
+    const availableProducts = products.filter( product => product.categoryId !== id);
+    
     const nextCategoryIndex = categories.indexOf(category) + 1;
     const nextCategoryId = nextCategoryIndex < categories.length ? categories[nextCategoryIndex].id : categories[0].id;
     const priorCategoryIndex = categories.indexOf(category) - 1;
@@ -65,60 +68,60 @@ class Category extends React.Component {
       <div>
         {
           user.isAdmin ? (
-
+            <div>
+              <form onSubmit= { onSave }>
+                <h3>Admin: you may update this category</h3>
+                <p>Name:<br />
+                <input value={ name } name="name" onChange={ onChangeInput } />
+                </p>
+                <button type="submit"> Update </button>
+              </form>
+              <form onSubmit={ onAddProduct }>
+                <select value={ newCategoryIdForProduct } name="newCategoryIdForProduct" onChange={ onSelectProduct }>
+                  <option value="-1">Select New Product</option>
+                  {
+                    availableProducts.map( product => {
+                      return (
+                        <option key={ product.id } value={ product.id }>
+                          { product.name }
+                        </option>
+                      );
+                    })
+                  }
+                </select>
+                <button disabled={ id * 1 === -1}>Change</button>
+              </form>
+              <button onClick={ onDelete }>Delete</button>
+            </div>
           ) : (
-            
-          );
+            <div>
+              <h1>{ category.name }</h1>
+              <p>Number of products in {category.name}: {productsOfThisCategory.length}</p>
+              <p>Products:</p>
+              {productsOfThisCategory.length === 0 ?
+                <p>There are no products in this category yet</p>
+                :
+                <div className="row">
+                  {
+                    productsOfThisCategory.map(product => {
+                      return (
+                        <ProductCard product={product} key={ product.id } />
+                      );
+                    })
+                  }
+                </div>
+              }              
+            </div>
+          )
         }
-
+        <Link to={`/categories/${priorCategoryId}`}><button>Prior</button></Link>
+        <Link to={`/categories/${nextCategoryId}`}><button>Next</button></Link>
       </div>
     );
   }
 }
-  
-  
-  
-  
-  
-  
-  
 
-
-  /* return (
-    <div className="container">
-      <div className="row">
-        <div className="col">
-          <h1>{ category.name }</h1>
-          <p>Number of products in {category.name}: {productsOfThisCategory.length}</p>
-          <p>Products:</p>
-          {
-            productsOfThisCategory.length === 0 ? (
-              <p>There are no products in this category yet</p>
-            ) : (
-            <div>
-              {
-                productsOfThisCategory.map(product => {
-                  return (
-                    <div key={product.id}>
-                      <ProductCard product={product} />
-                    </div>
-                  );
-                })
-              }
-            </div>
-          )
-          }
-        </div>
-        <div className="col">
-            <Link to={`/categories/${priorCategoryId}`}><button>Prior</button></Link>
-            <Link to={`/categories/${nextCategoryId}`}><button>Next</button></Link>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const mapStateToProps = ({ categories, products }, { id })=> {
+const mapState = ({ categories, products }, { id })=> {
   const category = categories.find( category => category.id === id );
   const productsOfThisCategory = products.filter( product => product.categoryId === id);
   return {
@@ -128,6 +131,13 @@ const mapStateToProps = ({ categories, products }, { id })=> {
     productsOfThisCategory
   };
 };
-*/
 
-export default connect(mapStateToProps)(Category);
+const mapDispatch = (dispatch, { history }) => {
+  return {
+    saveCategory: (category) => dispatch(saveCategory(category)),
+    deleteCategory: (category) => dispatch(deleteCategory(category, history)),
+    saveProduct: (product) => dispatch(saveProduct(product))
+  };
+};
+
+export default connect(mapState, mapDispatch)(Category);
