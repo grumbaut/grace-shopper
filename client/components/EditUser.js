@@ -9,8 +9,7 @@ class editUser extends Component {
     this.onSave = this.onSave.bind(this);
     
     this.state = {
-      password: this.props.user.password ? this.props.user.password: '',
-      isAdmin: this.props.user.isAdmin ? this.props.user.isAdmin: false
+      isAdmin: false
     };
   }
 
@@ -21,31 +20,36 @@ class editUser extends Component {
       firstName: this.props.user.firstName,
       lastName: this.props.user.lastName,
       email: this.props.user.email,
-      password: this.state.password,
+      password: this.props.user.password,
       isAdmin: this.state.isAdmin
     };
     saveUser(user);
   }
 
   onChange(ev){
+    ev.preventDefault();
+    console.log(ev.target.name, ev.target.value)
     this.setState({ [ev.target.name]: ev.target.value });
+    this.onSave(ev);
   }
 
   render(){
+    const { onChange } = this
     const { user } = this.props
+    if (!user) {
+      return null;
+    }
     return (
       <div>
         <ul>
-          <h3> { user.firstName } </h3>
-          <form onSubmit ={ this.onSave }>
+          <h3> { user.firstName } {user.lastName }</h3>
+          <h3> { user.email } </h3>
           {
-            user.isAdmin ? <button button type='submit' className="btn btn-primary btn-sm" value = {false} name = 'isAdmin'> Deactivate Admin Function</button> : <button type='submit' className="btn btn-primary btn-sm"> Make Admin </button>
+            user.isAdmin ? <button onClick={ onChange } name = 'isAdmin' value = { false } className="btn btn-primary btn-sm"> Deactivate Admin Function</button> : <button onClick={ onChange } className="btn btn-primary btn-sm" name = 'isAdmin' value = { true }> Make Admin </button>
           }
-            <div className='form-group'>
-              <label htmlFor='password'> Reset Password: </label>
-              <input name = 'password' onChange = { this.onChange } />
-            </div>
-          </form>
+        </ul>
+        <ul>
+            <button button onClick={ onChange } className="btn btn-primary btn-sm"> Require Password Reset</button> 
         </ul>
       </div>
     );
