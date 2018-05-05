@@ -18,6 +18,10 @@ const Product = conn.define('product', {
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue: '/images/noImage.jpg'
+  },
+  displayItem: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 });
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import ProductCard from './ProductCard';
 import Review from './Review';
 
 const Product = ({ product, categories, reviews, id }) => {
@@ -17,7 +16,7 @@ const Product = ({ product, categories, reviews, id }) => {
         <h2>{`$${product.price}`}</h2>
         <p>{ product.description }</p>
       </div>
-      <p>{product.name} is in our <Link to={`/categories/${categoryOfThisProduct.id}`}>{categoryOfThisProduct.name}</Link> category</p>
+      { product.categoryId ? <p>{product.name} is in our <Link to={`/categories/${categoryOfThisProduct.id}`}>{categoryOfThisProduct.name}</Link> category</p> : null }
       <h4>Reviews:</h4>
       {
         reviews.map(review =>  {
@@ -28,7 +27,8 @@ const Product = ({ product, categories, reviews, id }) => {
   )
 }
 
-const mapStateToProps = ({ products, categories, reviews }, { id })=> {
+const mapStateToProps = ({ products, categories, reviews }, { match })=> {
+  const id = match.params.id * 1;
   const product = products.find( product => product.id === id );
   return {
     product,

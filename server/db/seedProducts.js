@@ -21,7 +21,8 @@ const productArray = [
     name: '4 Slice Toaster',
     description: 'Toast up to four slices at once.',
     imageUrl: '/images/4slicetoaster.jpg',
-    price: 35.00
+    price: 35.00,
+    displayItem: true
   },
   {
     name: 'Cake Pan',
@@ -87,7 +88,8 @@ const productArray = [
     name: 'Dragon Wine Glass',
     description: 'One of a kind Dragon wine glass will impress your guests.',
     imageUrl: '/images/dragonwineglass.jpg',
-    price: 26.25
+    price: 26.25,
+    displayItem: true
   },
   {
     name: 'Floral Place Mat',
@@ -153,7 +155,8 @@ const productArray = [
     name: 'Pizza Maker',
     description: 'This pizza maker takes the headache out of making pizzas.',
     imageUrl: '/images/pizzamaker.jpg',
-    price: 42.65
+    price: 42.65,
+    displayItem: true
   },
   {
     name: 'Pizza Pan',
@@ -195,7 +198,8 @@ const productArray = [
     name: 'Blue Serving Bowls',
     description: 'Serve up your favorite soup in these lovely bowls.',
     imageUrl: '/images/servingbowlsetblue.jpg',
-    price: 25.65
+    price: 25.65,
+    displayItem: true
   },
   {
     name: 'Soup Pot',
@@ -255,7 +259,8 @@ const productArray = [
     name: 'Wine Glass',
     description: 'The perfect wine glass.',
     imageUrl: '/images/wineglass.jpg',
-    price: 12.00
+    price: 12.00,
+    displayItem: true
   },
   {
     name: 'Wine Tumbler',

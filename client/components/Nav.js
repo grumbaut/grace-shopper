@@ -7,7 +7,7 @@ const Nav = ({ user, logout, cart }) => {
   const totalItemsInCart = cart && cart.lineitems ? cart.lineitems.reduce((acc, item) => acc + item.quantity, 0) : 0;
   return (
     <nav className="navbar navbar-expand-lg navbar-light navbar-background">
-      <NavLink className="navbar-brand" to='/'>Williams-Pomona</NavLink>
+      <NavLink className="navbar-brand header" to='/'>Williams-Pomona</NavLink>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon" />
       </button>

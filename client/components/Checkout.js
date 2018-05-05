@@ -15,6 +15,12 @@ class Checkout extends React.Component {
       email: ''
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event, userId, orderId, shippingInfo) {
+    event.preventDefault();
+    this.props.checkoutCart(userId, orderId, shippingInfo);
   }
 
   handleChange(event) {
@@ -23,7 +29,7 @@ class Checkout extends React.Component {
 
   render() {
     const { name, address, city, state, zip, email } = this.state;
-    const { cart, checkoutCart, userId } = this.props;
+    const { cart, userId } = this.props;
     if(!cart.id) return null;
     return (
       <div>
@@ -42,7 +48,7 @@ class Checkout extends React.Component {
         ))}
         <p><Link to='/cart'>Edit Cart</Link></p>
         <p><strong>Total: </strong>{ '$' + cart.total }</p>
-        <form onSubmit={ event => checkoutCart(event, userId, cart.id, this.state) }>
+        <form onSubmit={ event => this.handleSubmit(event, userId, cart.id, this.state) }>
           <div className='form-group'>
             <label htmlFor='name'>Recipient Name: </label>
             <input name='name' value={ name } onChange={ this.handleChange } />
@@ -80,8 +86,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = (dispatch, { history }) => ({
-  checkoutCart(event, userId, orderId, shippingInfo) {
-    event.preventDefault();
+  checkoutCart(userId, orderId, shippingInfo) {
     dispatch(checkout(userId, orderId, shippingInfo, history));
   }
 });

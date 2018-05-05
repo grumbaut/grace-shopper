@@ -16,6 +16,7 @@ import Checkout from './Checkout';
 import ManageOrders from './ManageOrders';
 import EditOrder from './EditOrder';
 import LoggedOut from './LoggedOut';
+import Footer from './Footer';
 
 class Main extends React.Component {
   constructor(props) {
@@ -42,8 +43,8 @@ class Main extends React.Component {
           <Nav />
           <div className='container-fluid'>
             <Switch>
-              <Route path='/products/:id' exact render={({match})=> <Product id={ match.params.id * 1 } /> } />
-              <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
+              <Route path='/products/:id' component={ Product } />
+              <Route path='/categories/:id' component={ Category } />
               <Route path='/edit-order/:id' component={ EditOrder } />
               <Route path='/manage-orders' component={ ManageOrders} />
               <Route path='/logged-out' component={ LoggedOut } />
@@ -56,6 +57,7 @@ class Main extends React.Component {
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>
+          <Footer />
         </div>
       </HashRouter>
     );
