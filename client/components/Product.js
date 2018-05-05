@@ -44,7 +44,6 @@ class Product extends React.Component {
       imageUrl: this.state.imageUrl,
       categoryId: this.state.categoryId
     };
-    console.log('product in onSaveCategory is', product);
     this.props.saveProduct(product);
   }
   onSelectCategory(ev){
@@ -60,7 +59,6 @@ class Product extends React.Component {
         price: this.state.price,
         imageUrl: this.state.imageUrl,
       };
-    console.log('product in onSave is', product);
     this.props.saveProduct(product);
   }
   onDelete(){

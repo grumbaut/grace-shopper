@@ -2,8 +2,58 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
+import { saveCategory, deleteCategory, saveProduct } from '../store/categories';
 
-const Category = ({ category, categories, productsOfThisCategory }) => {
+class Category extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: this.props.category ? this.props.category.name: '',  
+      newCategoryIdForProduct: -1    
+    }
+    this.onChangeInput = this.onChangeInput.bind(this);
+    this.onSave = this.onSave.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+    this.onSelectProduct = this.onSelectProduct.bind(this);
+    this.onAddProduct = this.onAddProduct.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.category) {
+      this.setState({
+        name: nextProps.category.name,
+      });
+    }
+  }
+  onChangeInput(ev){
+    this.setState({ [ev.target.name]: ev.target.value });
+  }
+  onSave(ev){
+    ev.preventDefault();
+    const category =
+      {
+        id: this.props.id,
+        name: this.state.name
+      };
+    this.props.saveCategory(category);
+  }
+  onDelete(){
+    this.props.deleteCategory({ id: this.props.id });
+  }
+  onSelectProduct(ev){
+    this.setState({ [ev.target.name]: ev.target.value * 1 });
+  }
+  onAddProduct(ev){
+    ev.preventDefault();
+    //this.props.saveProduct(product);
+  }
+} 
+  
+  
+  
+  
+  
+  
+  
   if (!category) {
     return null;
   }
