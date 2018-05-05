@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
 
-const Category = ({ category, categories, products, id, productsOfThisCategory })=> {
+const Category = ({ category, categories, productsOfThisCategory }) => {
   if (!category) {
     return null;
   }
   const nextCategoryIndex = categories.indexOf(category) + 1;
   const nextCategoryId = nextCategoryIndex < categories.length ? categories[nextCategoryIndex].id : categories[0].id;
-  const priorCategoryIndex = categories.indexOf(category) -1;
+  const priorCategoryIndex = categories.indexOf(category) - 1;
   const lastCategoryIndex = categories.length - 1;
   const priorCategoryId = priorCategoryIndex !== -1 ? categories[priorCategoryIndex].id : categories[lastCategoryIndex].id;
 
@@ -21,7 +21,7 @@ const Category = ({ category, categories, products, id, productsOfThisCategory }
       {productsOfThisCategory.length === 0 ?
         <p>There are no products in this category yet</p>
         :
-        <div className='row'>
+        <div className="row">
           {
             productsOfThisCategory.map(product => {
               return (
@@ -37,8 +37,7 @@ const Category = ({ category, categories, products, id, productsOfThisCategory }
   )
 }
 
-const mapStateToProps = ({ categories, products }, { match })=> {
-  const id = match.params.id * 1;
+const mapStateToProps = ({ categories, products }, { id })=> {
   const category = categories.find( category => category.id === id );
   const productsOfThisCategory = products.filter( product => product.categoryId === id);
   return {
@@ -46,7 +45,7 @@ const mapStateToProps = ({ categories, products }, { match })=> {
     categories,
     products,
     productsOfThisCategory
-  }
+  };
 };
 
 export default connect(mapStateToProps)(Category);
