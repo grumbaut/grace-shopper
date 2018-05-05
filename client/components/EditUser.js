@@ -3,24 +3,24 @@ import { connect } from 'react-redux';
 import { saveUser } from '../store/users';
 
 class editUser extends Component {
-  constructor(user){
-    super();
+  constructor(props){
+    super(props);
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
     
     this.state = {
-      password: user.password ? user.password: '',
-      isAdmin: user.isAdmin ? user.isAdmin: false
+      password: this.props.user.password ? this.props.user.password: '',
+      isAdmin: this.props.user.isAdmin ? this.props.user.isAdmin: false
     };
   }
 
   onSave(ev){
     ev.preventDefault();
     const user =  {
-      id: this.props.id,
-      firstName: this.props.firstName,
-      lastName: this.props.lastName,
-      email: this.props.email,
+      id: this.props.user.id,
+      firstName: this.props.user.firstName,
+      lastName: this.props.user.lastName,
+      email: this.props.user.email,
       password: this.state.password,
       isAdmin: this.state.isAdmin
     };
@@ -36,11 +36,11 @@ class editUser extends Component {
     return (
       <div>
         <ul>
-          <h3> Edit { user.firstName } </h3>
-          {
-            user.isAdmin ? <button button type='submit' className="btn btn-primary btn-sm"> Deactivate Admin Function</button> : <button type='submit' className="btn btn-primary btn-sm"> Make Admin </button>
-          }
+          <h3> { user.firstName } </h3>
           <form onSubmit ={ this.onSave }>
+          {
+            user.isAdmin ? <button button type='submit' className="btn btn-primary btn-sm" value = {false} name = 'isAdmin'> Deactivate Admin Function</button> : <button type='submit' className="btn btn-primary btn-sm"> Make Admin </button>
+          }
             <div className='form-group'>
               <label htmlFor='password'> Reset Password: </label>
               <input name = 'password' onChange = { this.onChange } />
