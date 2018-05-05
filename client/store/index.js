@@ -4,10 +4,11 @@ import thunk from 'redux-thunk';
 import categories from './categories';
 import products from './products';
 import user from './sessions';
+import users from './users'
 import cart from './cart';
 import reviews from './reviews';
 
-const reducers = combineReducers({ categories, products, user, cart, reviews });
+const reducers = combineReducers({ categories, products, user, users, cart, reviews });
 const middleware = applyMiddleware(thunk, logger);
 
 const store = createStore(reducers, middleware);
@@ -18,3 +19,4 @@ export * from './products';
 export * from './sessions';
 export * from './reviews';
 export * from './cart';
+export * from './users'

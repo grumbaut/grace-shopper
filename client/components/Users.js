@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class Users extends React.Component {
-    constructor(){
-        super()
+    constructor(user){
+        super(user)
         
         this.onSave = this.onSave.bind(this)
         this.onChange = this.onChange.bind(this)
@@ -17,8 +17,8 @@ class Users extends React.Component {
     }
     onSave(ev){
         ev.preventDefault()
-        const product = { productId: this.props.id, name: this.state.name, description: this.state.description, price: this.state.price, imageURL: this.state.imageURL, categoryId: this.state.categoryId }
-        updateProduct(product)
+        const user = { userId: this.props.id, firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, password: this.state.password }
+        saveUser(user)
       }
     onChange(ev){
         const change = {};

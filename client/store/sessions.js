@@ -2,20 +2,11 @@ import axios from 'axios';
 import { getCart } from './cart';
 
 const SET_USER = 'SET_USER';
-const GOT_USERS = 'GOT_USERS';
 
 const addUsersToStore = users => {
   const action = { type: GOT_USERS, users };
   return action;
 };
-
-export const getUsers = () => (
-  dispatch => (
-    axios.get('/api/users')
-      .then(res => res.data)
-      .then(users => dispatch(addUsersToStore(users)))
-  )
-);
 
 const setUser = user => {
   const action = { type: SET_USER, user};
@@ -67,8 +58,6 @@ const reducer = (state = {}, action) => {
   switch (action.type) {
   case SET_USER:
     return action.user;
-  case GOT_USERS:
-    return action.users;
   default:
     return state;
   }
