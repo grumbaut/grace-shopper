@@ -7,6 +7,7 @@ const Home = ({ firstProduct, products }) => {
 
   return (
     <div>
+      <h2 className='header' id='featured'>Featured Products</h2>
       <div id="carousel" className="carousel" data-ride="carousel">
         <div className="carousel-inner">
           <div className="carousel-item active">
@@ -42,7 +43,7 @@ const Home = ({ firstProduct, products }) => {
         </div>
       </div>
       <div id='home-text'>
-        <h1><strong>Welcome to <span className='header'>Williams-Pomona</span></strong>: <br />Simple designs for an elegant life.</h1>
+        <h1>Welcome to <span className='header'>Williams-Pomona</span>: <br />Simple designs for an elegant life.</h1>
         <Link to='/products'><button className='btn btn-primary btn-sm' id='home-btn'>Shop Our Proudcts</button></Link>
       </div>
     </div>
