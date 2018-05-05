@@ -55,8 +55,23 @@ body {
   margin: 30px auto;
 }
 
+/* PRODUCT STYLES */
+
+.product-card {
+  border-radius: 30px;
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(236, 236, 236);
+}
+
+.product-card > form {
+  margin-top: 10px;
+}
+
 /* FOOTER STYLES */
 #footer {
   text-align: center;
   height: 30px;
+  margin-top: 30px;
 }

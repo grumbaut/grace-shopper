@@ -283,7 +283,7 @@ const productArray = [
   {
     name: 'Wood Spoon Set',
     description: 'Wooden spoons for a more rustic table setting.',
-    imageUrl: '/images/woodspoonset.jpg',
+    imageUrl: '/images/woodspoonsset.jpg',
     price: 25.00
   },
   {

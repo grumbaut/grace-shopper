@@ -64,7 +64,7 @@ router.delete('/:id/orders/:orderId', (req, res, next)=> {
 });
 
 router.delete('/:id/orders/:orderId/lineitems/:lineItemId', (req, res, next) => {
-  LineItem.findById(req.params.id)
+  LineItem.findById(req.params.lineItemId)
     .then(lineItem => lineItem.destroy())
     .then(() => res.sendStatus(200))
     .catch(next);

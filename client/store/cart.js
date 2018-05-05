@@ -39,12 +39,11 @@ export const updateCart = (userId, orderId, lineItems) => (
   )
 );
 
-export const addToCart = (userId, orderId, quantity, product, history) => (
+export const addToCart = (userId, orderId, quantity, product) => (
   dispatch => (
     axios.put(`/api/users/${userId}/orders/${orderId}/add`, { quantity, product })
       .then(res => res.data)
       .then(cart => dispatch(gotUpdatedCart(cart)))
-      .then(() => history.push('/cart'))
       .catch(err => console.error(err))
   )
 );
