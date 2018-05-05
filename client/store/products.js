@@ -59,16 +59,17 @@ export const deleteProduct = (product, history) => (
 export const saveProduct = (product) => (
   product.id ? (
     dispatch => (
-      axios.put(`/api/products/${product.id}`, product)
+      axios.put(`api/products/${product.id}`, product)
         .then(result => result.data)
         .then(product => dispatch(updateProductInStore(product))))
       ) : (
       dispatch => (
         axios.post(`api/products`, product)
-          .then(res => res.data)
+          .then(result => result.data)
           .then(product => dispatch(createProductInStore(product)))
       )
     )
-  );
+);
+
 
 export default reducer;

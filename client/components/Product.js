@@ -68,10 +68,6 @@ class Product extends React.Component {
     const { user, product, categories } = this.props;
     const { name, price, description, categoryId } = this.state;
     const { onChangeInput, onSelectCategory, onSaveCategory, onSave, onDelete } = this;
-    const quantity = [];
-    for (let i = 1; i <= 50; i++) {
-      quantity.push(i);
-    }
     if (!product) {
       return null;
     }

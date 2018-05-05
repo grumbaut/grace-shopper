@@ -5,7 +5,6 @@ import { getCategories, getProducts, getUsers, getUserFromToken, getReviews } fr
 
 import Nav from './Nav';
 import Home from './Home';
-import createProduct from './createProduct';
 import Product from './Product';
 import Products from './Products';
 import Login from './Login';
@@ -45,7 +44,6 @@ class Main extends React.Component {
             <Switch>
               <Route path='/admin' exact component = { AdminIndex } />
               <Route path='/users' exact component = { Users } />
-              <Route path='/createProduct' exact component = { createProduct } />
               <Route path='/products/:id' exact render={({match, history})=> <Product id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
               <Route path='/products' component={ Products } />
