@@ -20,19 +20,19 @@ const Nav = ({ user, logout, cart }) => {
                   Account
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <NavLink className="dropdown-item" to='/manage-orders'>Manage Orders</NavLink>
-                  <NavLink className="dropdown-item" to='/account-settings'>Account Settings</NavLink>
-                  <NavLink className="dropdown-item" to='/logged-out' onClick={ logout }>Logout { user.firstName }</NavLink>
+                  <NavLink className="dropdown-item" to='/manage-orders' activeClassName='active'>Manage Orders</NavLink>
+                  <NavLink className="dropdown-item" to='/account-settings' activeClassName='active'>Account Settings</NavLink>
+                  <NavLink className="dropdown-item" to='/logged-out' activeClassName='active' onClick={ logout }>Logout { user.firstName }</NavLink>
                 </div>
               </li>
               :
               null
           }
           <li className="nav-item">
-            <NavLink className="nav-link" to='/categories'>Categories</NavLink>
+            <NavLink className="nav-link" to='/categories' activeClassName='active'>Categories</NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to='/products'>Products</NavLink>
+            <NavLink className="nav-link" to='/products' activeClassName='active'>Products</NavLink>
           </li>
           <li className="nav-item">
             {
