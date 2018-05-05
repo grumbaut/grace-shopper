@@ -8,7 +8,7 @@ const Review = conn.define('review', {
   },
   rating: {
     type: Sequelize.INTEGER,
-    validate: {min:1, max: 5}
+    validate: {min: 1, max: 5}
   }
 }, {
     defaultScope: {

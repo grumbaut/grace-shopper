@@ -63,7 +63,7 @@ class Category extends React.Component {
   const lastCategoryIndex = categories.length - 1;
   const priorCategoryId = priorCategoryIndex !== -1 ? categories[priorCategoryIndex].id : categories[lastCategoryIndex].id;
 
-  return (
+  /* return (
     <div className="container">
       <div className="row">
         <div className="col">
@@ -107,5 +107,6 @@ const mapStateToProps = ({ categories, products }, { id })=> {
     productsOfThisCategory
   };
 };
+*/
 
 export default connect(mapStateToProps)(Category);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts, getUsers, getUserFromToken, getReviews } from '../store';
+import { getCategories, getProducts, getUserFromToken, getReviews, getOrders } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -15,6 +15,9 @@ import AdminIndex from './AdminIndex';
 import Users from './Users';
 import Cart from './Cart';
 import Checkout from './Checkout';
+import Account from './Account';
+import ManageOrders from './ManageOrders';
+import EditOrder from './EditOrder';
 
 class Main extends React.Component {
   constructor(props) {
@@ -46,7 +49,10 @@ class Main extends React.Component {
               <Route path='/users' exact component = { Users } />
               <Route path='/products/:id' exact render={({match, history})=> <Product id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
+              <Route path='/edit-order/:id' component={ EditOrder } />
+              <Route path='/manage-orders' component={ ManageOrders} />
               <Route path='/products' component={ Products } />
+              <Route path='/account' component={ Account } />
               <Route path='/checkout' component={ Checkout } />
               <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
@@ -68,6 +74,7 @@ const mapDispatch = dispatch => ({
     dispatch(getProducts());
     dispatch(getUsers());
     dispatch(getReviews());
+    dispatch(getOrders());
   },
   getUser(token) {
     dispatch(getUserFromToken(token));
