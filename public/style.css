@@ -1,3 +1,127 @@
 body {
-  background-color: beige;
+  background-color: white;
+  font-family: Crimson Text, serif;
+  height: 100vh;
+}
+
+/* NAV STYLES */
+
+.navbar-background {
+  background-color: white;
+}
+
+.header {
+  font-family: Allura, cursive;
+  font-size: 2.5rem;
+}
+
+.dropdown-item:active {
+  background-color: white;
+}
+
+/* HOME STYLES */
+.carousel-inner {
+  margin: 10px auto;
+  width: 90%;
+}
+
+.carousel-item > a, .carousel-item > a:active, .carousel-item > a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.slide {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0;
+}
+
+.slide-text {
+  text-align: center;
+}
+
+.background {
+  background-color: rgb(231, 231, 231);
+  margin: 0;
+}
+
+#home-text {
+  text-align: center;
+  margin-top: 50px;
+}
+
+#home-btn {
+  margin: 30px auto;
+}
+
+#featured {
+  margin: 30px auto;
+  text-align:center;
+}
+
+/* PRODUCT STYLES */
+
+#product {
+  text-align: center;
+}
+
+.product-card {
+  border-radius: 30px;
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(236, 236, 236);
+}
+
+.product-card > form {
+  margin-top: 10px;
+}
+
+.product-name {
+  margin: 30px auto;
+}
+
+/* CART STYLES */
+#cart {
+  width: 75%;
+  border-radius: 30px;
+  background-color: rgb(238, 238, 238);
+  margin: 0 auto;
+  padding: 30px;
+}
+
+hr.style-eight {
+  overflow: visible; /* For IE */
+  padding: 0;
+  border: none;
+  border-top: medium double rgb(212, 211, 211);
+  color: rgb(212, 211, 211);
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+hr.style-eight:after {
+  content: "§";
+  display: inline-block;
+  position: relative;
+  top: -0.7em;
+  font-size: 1.5em;
+  padding: 0 0.25em;
+  background: rgb(238, 238, 238);
+}
+
+/* FOOTER STYLES */
+#footer {
+  text-align: center;
+  height: 30px;
+  margin-top: 30px;
+}
+
+/* LOG OUT PAGE STYLES */
+#logged-out {
+  text-align: center;
+  margin-top: 30px;
 }

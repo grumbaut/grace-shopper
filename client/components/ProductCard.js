@@ -24,7 +24,7 @@ class ProductCard extends React.Component {
     }
     if(!product) return null;
     return (
-      <div>
+      <div className='col-md-3 col-sm-5 col-xs-12 product-card'>
         <h1>{ product.name }</h1>
         <img src = {product.imageUrl} width={200} />
         <h2>{`$${product.price}`}</h2>
@@ -48,10 +48,10 @@ const mapState = state => ({
   cart: state.cart
 });
 
-const mapDispatch = (dispatch, { history }) => ({
+const mapDispatch = dispatch => ({
   addToCart(event, userId, orderId, quantity, product) {
     event.preventDefault();
-    dispatch(addToCart(userId, orderId, quantity, product, history));
+    dispatch(addToCart(userId, orderId, quantity, product));
   }
 });
 

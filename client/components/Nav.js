@@ -6,32 +6,37 @@ import { logout } from '../store/sessions';
 const Nav = ({ user, logout, cart }) => {
   const totalItemsInCart = cart && cart.lineitems ? cart.lineitems.reduce((acc, item) => acc + item.quantity, 0) : 0;
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <NavLink className="navbar-brand" to='/'>Williams-Pomona</NavLink>
+    <nav className="navbar navbar-expand-lg navbar-light navbar-background">
+      <NavLink className="navbar-brand header" to='/'>Williams-Pomona</NavLink>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon" />
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav">
-          <li className="nav-item active">
-            <NavLink className="nav-link" to='/'>Home <span className="sr-only">(current)</span></NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to='/categories'>Categories</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to='/products'>Products</NavLink>
-          </li>
-        </ul>
         <ul className="navbar-nav ml-auto">
+          {
+            user && user.id ?
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Account
+                </a>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <NavLink className="dropdown-item" to='/manage-orders' activeClassName='active'>Manage Orders</NavLink>
+                  <NavLink className="dropdown-item" to='/account-settings' activeClassName='active'>Account Settings</NavLink>
+                  <NavLink className="dropdown-item" to='/logged-out' activeClassName='active' onClick={ logout }>Logout { user.firstName }</NavLink>
+                </div>
+              </li>
+              :
+              null
+          }
+          <li className="nav-item">
+            <NavLink className="nav-link" to='/categories' activeClassName='active'>Categories</NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to='/products' activeClassName='active'>Products</NavLink>
+          </li>
           <li className="nav-item">
             {
-              user && user.id ? (
-                <NavLink to='/' className='nav-link' onClick={ logout }>Logout { user.firstName }</NavLink>
-              ) : (
-                <NavLink className="nav-link" to="/login" activeClassName='active'>Log In</NavLink>
-              )
-            }
+              user && user.id ? <NavLink className="nav-link" to="/cart" activeClassName='active'>Cart {`(${totalItemsInCart})`}</NavLink> : null }
           </li>
           <li>
           {
@@ -47,10 +52,15 @@ const Nav = ({ user, logout, cart }) => {
               )
             }
           </li>
-          <li className="nav-item">
-            {
-              user && user.id ? <NavLink className="nav-link" to="/cart" activeClassName='active'>Cart {`(${totalItemsInCart})`}</NavLink> : null }
-          </li>
+          {
+            user && user.id ? (
+              null
+            ) : (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/login" activeClassName='active'>Log In</NavLink>
+              </li>
+            )
+          }
         </ul>
       </div>
     </nav>

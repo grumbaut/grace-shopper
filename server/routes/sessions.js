@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('../db');
-const { User } = db.models;
+const { User, Order, LineItem, Product } = db.models;
 
 router.post('/', (req, res, next) => {
   User.authenticate(req.body)

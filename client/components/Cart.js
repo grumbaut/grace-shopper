@@ -20,7 +20,7 @@ class Cart extends React.Component {
   }
 
   render() {
-    const { lineItems, deleteItem, userId } = this.props;
+    const { lineItems, deleteItem, userId, cart } = this.props;
     if(!userId) {
       return (
         <h1>
@@ -35,8 +35,9 @@ class Cart extends React.Component {
       quantityNum.push(i);
     }
     return (
-      <div>
-        <h1>Cart</h1>
+      <div id='cart'>
+        <hr className='style-eight' />
+        <h1 className='header' >Cart</h1>
         { lineItems.map(lineItem => (
           <div className='row' key={ lineItem.id }>
             <div className='col-2'>
@@ -53,12 +54,13 @@ class Cart extends React.Component {
               <p>Subtotal: ${ lineItem.subtotal.toFixed(2) }</p>
             </div>
             <div className='col-2'>
-              <button className='btn btn-danger btn-sm' onClick={ () => deleteItem(lineItem.id)}>X</button>
+              <button className='btn btn-danger btn-sm' onClick={ () => deleteItem(userId, cart.id, lineItem.id)}>X</button>
             </div>
           </div>
         ))}
         <p><strong>Total:</strong> ${ total }</p>
         <Link to='/checkout'><button className='btn btn-primary btn-sm'>Checkout</button></Link>
+        <hr className='style-eight' />
       </div>
     );
   }

@@ -24,7 +24,7 @@ class SignUp extends React.Component {
 
     return (
       <div>
-        <h1>Sign Up</h1>
+        <h1 className='header'>Sign Up</h1>
         <form onSubmit={ event => signUp(event, this.state) }>
           <div className='form-group'>
             <label htmlFor='firstName'>First Name:</label>
@@ -40,7 +40,7 @@ class SignUp extends React.Component {
           </div>
           <div className='form-group'>
             <label htmlFor='password'>Password:</label>
-            <input name='password' onChange={ this.handleChange } />
+            <input type='password' name='password' onChange={ this.handleChange } />
           </div>
           <button type='submit' className='btn btn-primary'>Sign Up</button>
         </form>
