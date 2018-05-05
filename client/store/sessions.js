@@ -13,7 +13,7 @@ export const getUsers = () => (
   dispatch => (
     axios.get('/api/users')
       .then(res => res.data)
-      .then(categories => dispatch(addUsersToStore(users)))
+      .then(users => dispatch(addUsersToStore(users)))
   )
 );
 
@@ -67,10 +67,8 @@ const reducer = (state = {}, action) => {
   switch (action.type) {
   case SET_USER:
     return action.user;
-    break;
   case GOT_USERS:
     return action.users;
-    break;
   default:
     return state;
   }

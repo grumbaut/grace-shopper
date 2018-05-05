@@ -13,7 +13,16 @@ const Product = conn.define('product', {
   },
   price: {
     type: Sequelize.FLOAT,
-    allowNull: false
+    allowNull: false,
+    set(value) {
+      let price;
+      if(value[0] === '$') {
+        price = Number(value.slice(1));
+      } else {
+        price = Number(value);
+      }
+      this.setDataValue('price', price);
+    }
   },
   imageUrl: {
     type: Sequelize.STRING,
