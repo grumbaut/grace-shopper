@@ -1,22 +1,38 @@
-const productArray = [
-  // {
-  //   name: 'Mixing Bowl',
-  //   description: 'Hand carved wooden mixing bowl.',
-  //   price: 28.00,
-  //   imageUrl: '/images/redmixingbowlset.jpg'
-  // },
-  // {
-  //   name: 'Vase',
-  //   description: 'Porcelain longnecked vase, ideal for roses.',
-  //   imageUrl: '/images/vase.jpg',
-  //   price: 31.95
-  // },
-  // {
-  //   name: 'Vanilla Diffuser',
-  //   description: 'A room diffuser with reeds and vanilla oil.',
-  //   imageUrl: '/images/vanilladiffuser.jpg',
-  //   price: 6.85
-  // },
+const Category = require('./Category');
+const Product = require('./Product');
+const User = require('./User');
+const Order = require('./Order');
+const Review = require('./Review');
+const fake = require('faker');
+
+const categories = [
+  {
+    name: 'Kitchen Supplies'
+  },
+  {
+    name: 'Decorative'
+  }
+];
+
+const products = [
+  {
+    name: 'Mixing Bowl',
+    description: 'Hand carved wooden mixing bowl.',
+    price: 28.00,
+    imageUrl: '/images/redmixingbowlset.jpg'
+  },
+  {
+    name: 'Vase',
+    description: 'Porcelain longnecked vase, ideal for roses.',     
+    price: 31.95,
+    imageUrl: '/images/vase.jpg'
+  },
+  {
+    name: 'Vanilla Diffuser',
+    description: 'A room diffuser with reeds and vanilla oil',    
+    price: 6.85,
+    imageUrl: '/images/vanilladiffuser.jpg'
+  },
   {
     name: '4 Slice Toaster',
     description: 'Toast up to four slices at once.',
@@ -294,4 +310,77 @@ const productArray = [
   }
 ];
 
-module.exports = productArray;
+const users = [
+  {
+    firstName: 'Alice',
+    lastName: 'Buyer',
+    email: 'alice@wonderland.com',
+    isAdmin: true,
+    password: 'ALICE'
+  },
+  {
+    firstName: 'Bob',
+    lastName: 'Bill',
+    email: 'bob@wonderland.com',
+    isAdmin: false,
+    password: 'BOB'
+  },
+  {
+    firstName: 'Cat',
+    lastName: 'Purchase',
+    email: 'cat@wonderland.com',
+    isAdmin: false,
+    password: 'CAT'
+  }
+];
+
+const reviews = [
+  {
+    content: fake.lorem.paragraph(),
+    rating: 5,
+    productId: 1,
+    userId: 1
+  },
+  {
+    content: fake.lorem.paragraph(),
+    rating: 4,
+    productId: 1,
+    userId: 2
+  },
+  {
+    content: fake.lorem.paragraph(),
+    rating: 3,
+    productId: 2,
+    userId: 3
+  },
+  {
+    content: fake.lorem.paragraph(),
+    rating: 1,
+    productId: 3,
+    userId: 1
+  }
+];
+
+const randomCategoryId = () => Math.ceil(Math.random() * categories.length);
+
+const seed = () => {
+  return Promise.all(categories.map( category => Category.create(category)))
+  .then(() => {
+    return products.map( product => Product.create(Object.assign(product, {categoryId: randomCategoryId()})))
+  })
+  .then(() => {
+    return Promise.all(users.map( user => User.create(user)))
+  })
+  .then(() => {
+    return Promise.all(reviews.map( review => Review.create(review)))
+  })
+  .then(() => User.findById(1))
+  .then( user => Promise.all([
+    Order.findOrCreateCart(user.id),
+    Product.findById(3)
+  ]))
+  .then(([order, product]) => order.addToCart(1, product))
+  .catch( err => { throw err } )
+}
+
+module.exports = seed;
