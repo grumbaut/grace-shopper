@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveProduct, deleteProduct } from '../store/products';
 import ProductCardDetail from './ProductCardDetail';
+import Review from './Review';
 
 class Product extends React.Component {
   constructor(props){
@@ -65,7 +66,7 @@ class Product extends React.Component {
     this.props.deleteProduct({ id: this.props.id });
   }
   render(){
-    const { user, product, categories } = this.props;
+    const { user, product, categories, reviews, id } = this.props;
     const { name, price, description, categoryId } = this.state;
     const { onChangeInput, onSelectCategory, onSaveCategory, onSave, onDelete } = this;
     if (!product) {
@@ -90,6 +91,11 @@ class Product extends React.Component {
             <img src = { product.imageUrl } width={400} />
             <h2>{`$${product.price}`}</h2>
             <p>{ product.description }</p>
+            {
+              reviews.map(review =>  {
+                if (review.productId === id) return <Review review={review} key={review.id} />;
+              })
+            }
               <form onSubmit= { onSave }>
                 <h3>Admin: you may update this product </h3>
                 <p>Name:<br />
@@ -125,6 +131,12 @@ class Product extends React.Component {
           : (
             <div>
               <ProductCardDetail product={ product } />
+              <h3>Reviews:</h3>
+              {
+                reviews.map(review =>  {
+                  if (review.productId === id) return <Review review={review} key={review.id} />;
+                })
+              }
             </div>
           )
         }
@@ -133,12 +145,14 @@ class Product extends React.Component {
     }
 }
 
-const mapState = ({ products, categories, user }, { id })=> {
+const mapState = ({ products, categories, user, reviews }, { id }) => {
   const product = products.find( product => product.id === id );
   return {
     product,
     categories,
-    user
+    user,
+    reviews,
+    id
   };
 };
 

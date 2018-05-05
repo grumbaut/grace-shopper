@@ -15,9 +15,10 @@ import AdminIndex from './AdminIndex';
 import Users from './Users';
 import Cart from './Cart';
 import Checkout from './Checkout';
-import Account from './Account';
 import ManageOrders from './ManageOrders';
 import EditOrder from './EditOrder';
+import LoggedOut from './LoggedOut';
+import Footer from './Footer';
 
 class Main extends React.Component {
   constructor(props) {
@@ -51,8 +52,8 @@ class Main extends React.Component {
               <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/edit-order/:id' component={ EditOrder } />
               <Route path='/manage-orders' component={ ManageOrders} />
+              <Route path='/logged-out' component={ LoggedOut } />
               <Route path='/products' component={ Products } />
-              <Route path='/account' component={ Account } />
               <Route path='/checkout' component={ Checkout } />
               <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
@@ -61,6 +62,7 @@ class Main extends React.Component {
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>
+          <Footer />
         </div>
       </HashRouter>
     );
@@ -72,7 +74,6 @@ const mapDispatch = dispatch => ({
   fetch() {
     dispatch(getCategories());
     dispatch(getProducts());
-    dispatch(getUsers());
     dispatch(getReviews());
     dispatch(getOrders());
   },

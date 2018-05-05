@@ -32,8 +32,8 @@ class Products extends React.Component {
             </option>
           ))}
         </select>
-        <div className="row">
-        { products.map(product => <ProductCard key={ product.id } className="col" product={ product } history={ this.props.history } />)}
+        <div className="row justify-content-center">
+          { products.map(product => <ProductCard key={ product.id } product={ product } history={ this.props.history } />)}
         </div>
       </div>
     );

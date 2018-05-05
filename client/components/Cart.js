@@ -35,8 +35,9 @@ class Cart extends React.Component {
       quantityNum.push(i);
     }
     return (
-      <div>
-        <h1>Cart</h1>
+      <div id='cart'>
+        <hr className='style-eight' />
+        <h1 className='header' >Cart</h1>
         { lineItems.map(lineItem => (
           <div className='row' key={ lineItem.id }>
             <div className='col-2'>
@@ -59,6 +60,7 @@ class Cart extends React.Component {
         ))}
         <p><strong>Total:</strong> ${ total }</p>
         <Link to='/checkout'><button className='btn btn-primary btn-sm'>Checkout</button></Link>
+        <hr className='style-eight' />
       </div>
     );
   }

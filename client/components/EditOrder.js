@@ -15,6 +15,7 @@ class EditOrder extends React.Component {
       zip: order ? order.zip : ''
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,18 +25,23 @@ class EditOrder extends React.Component {
     }
   }
 
+  handleSubmit(event, userId, orderId, shippingInfo) {
+    event.preventDefault();
+    this.props.updateOrder(userId, orderId, shippingInfo);
+  }
+
   handleChange(event) {
     this.setState({ [ event.target.name ]: event.target.value });
   }
 
   render() {
-    const { order, updateOrder } = this.props;
+    const { order } = this.props;
     const { name, address, city, state, zip, email } = this.state;
     if(!order) return null;
     return (
       <div>
         <h2>Edit Shipping Info for Order#{ order.id }</h2>
-        <form onSubmit={ event => updateOrder(event, order.userId, order.id, this.state) }>
+        <form onSubmit={ event => this.handleSubmit(event, order.userId, order.id, this.state) }>
           <div className='form-group'>
             <label htmlFor='name'>Name: </label>
             <input name='name' value={ name } onChange={ this.handleChange } />
@@ -72,8 +78,7 @@ const mapState = (state, { match }) => ({
 });
 
 const mapDispatch = (dispatch, { history }) => ({
-  updateOrder(event, userId, orderId, updatedShippingInfo) {
-    event.preventDefault();
+  updateOrder(userId, orderId, updatedShippingInfo) {
     dispatch(updateOrder(userId, orderId, updatedShippingInfo, history));
   }
 });

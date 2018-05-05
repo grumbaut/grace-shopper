@@ -9,7 +9,7 @@ class ManageOrders extends React.Component {
 
   render() {
     const { pastOrders, shippedOrders, inProcess, cancelled } = this.props;
-    if(!inProcess || !shippedOrders || !pastOrders ) return <h2>You have not placed any orders.</h2>
+    if(!inProcess.length || !shippedOrders.length || !pastOrders.length || !cancelled.length ) return <h2>You have not placed any orders.</h2>;
     return (
       <div>
         <h2>Manage Orders</h2>
