@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts, getUserFromToken, getReviews, getOrders } from '../store';
+import { getCategories, getProducts, getUserFromToken, getReviews, getOrders, getUser } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -74,7 +74,7 @@ const mapDispatch = dispatch => ({
   fetch() {
     dispatch(getCategories());
     dispatch(getProducts());
-    dispatch(getUsers());
+    dispatch(getUser());
     dispatch(getReviews());
     dispatch(getOrders());
   },
