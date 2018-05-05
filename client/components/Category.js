@@ -48,19 +48,33 @@ class Category extends React.Component {
     .then(() => this.setState({ newCategoryIdForProduct: -1 }));
   }
   render() {
-    const { categoy, id } = this.props;
+    const { user, categoy, id } = this.props;
     const { newCategoryIdForProduct } = this.state;
     const { onChangeInput, onSave, onDelete, onSelectProduct, onAddProduct } = this;
-    if (!category) {
-      return null;
-    }
     const nextCategoryIndex = categories.indexOf(category) + 1;
     const nextCategoryId = nextCategoryIndex < categories.length ? categories[nextCategoryIndex].id : categories[0].id;
     const priorCategoryIndex = categories.indexOf(category) - 1;
     const lastCategoryIndex = categories.length - 1;
     const priorCategoryId = priorCategoryIndex !== -1 ? categories[priorCategoryIndex].id : categories[lastCategoryIndex].id;
+    
+    if (!category) {
+      return null;
+    }
+
+    return (
+      <div>
+        {
+          user.isAdmin ? (
+
+          ) : (
+            
+          );
+        }
+
+      </div>
+    );
   }
-} 
+}
   
   
   
