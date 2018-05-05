@@ -35,6 +35,7 @@ export const getUsers = () => (
 );
 
 export const saveUser = (user) => (
+    console.log(user, 'saveUser'),
     user.id ? (
       dispatch => (
         axios.put(`api/users/${user.id}`, user)

@@ -13,6 +13,7 @@ import SignUp from './SignUp';
 import Category from './Category';
 import Categories from './Categories';
 import AdminIndex from './AdminIndex';
+import EditUser from './EditUser'
 import Users from './Users';
 import Cart from './Cart';
 import Checkout from './Checkout';
@@ -45,6 +46,7 @@ class Main extends React.Component {
             <Switch>
               <Route path='/admin' exact component = { AdminIndex } />
               <Route path='/users' exact component = { Users } />
+              <Route path='/users/:id' exact render={({match})=> <EditUser id={ match.params.id * 1 } /> } />
               <Route path='/createProduct' exact component = { createProduct } />
               <Route path='/products/:id' exact render={({match, history})=> <Product id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
