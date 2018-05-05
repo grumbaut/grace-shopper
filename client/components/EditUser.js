@@ -38,18 +38,13 @@ class editUser extends Component {
         <ul>
           <h3> Edit { user.firstName } </h3>
           {
-            user.isAdmin ? <button> Deactivate Admin Function</button> : <button> Make Admin </button>
+            user.isAdmin ? <button button type='submit' className="btn btn-primary btn-sm"> Deactivate Admin Function</button> : <button type='submit' className="btn btn-primary btn-sm"> Make Admin </button>
           }
           <form onSubmit ={ this.onSave }>
             <div className='form-group'>
               <label htmlFor='password'> Reset Password: </label>
               <input name = 'password' onChange = { this.onChange } />
             </div>
-            <div className='form-group'>
-            <label htmlFor='isAdmin'>Admin Status: </label>
-            <input name = 'isAdmin' onChange = { this.onChange } />
-          </div>
-            <button type='submit' className="btn btn-primary btn-sm"> Create </button>
           </form>
         </ul>
       </div>
