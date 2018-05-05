@@ -364,7 +364,7 @@ const seed = () => {
     return products.map( product => Product.create(Object.assign(product, {categoryId: randomCategoryId()})))
   })
   .then(() => {
-    return users.map( user => User.create(user))
+    return Promise.all(users.map( user => User.create(user)))
   })
   .then(() => {
     return Promise.all(reviews.map( review => Review.create(review)))
