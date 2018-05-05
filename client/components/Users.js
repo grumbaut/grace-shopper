@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { saveUser, deleteUser } from '../store'
 
 class Users extends React.Component {
     constructor(user){
@@ -17,7 +18,7 @@ class Users extends React.Component {
     }
     onSave(ev){
         ev.preventDefault()
-        const user = { userId: this.props.id, firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, password: this.state.password }
+        const user = { firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, password: this.state.password }
         saveUser(user)
       }
     onChange(ev){
@@ -30,9 +31,14 @@ class Users extends React.Component {
         const { onSave, onChange } = this
         return (
             <div>
-            {
-                users.map(user => <option> { user.firstName } </option>)
-            }
+            <select value={ this.state.filter } onChange={ onChange }>
+            <option value={ 0 }>Current Users</option>
+            { users.map(user => (
+              <option key={ user.id } value={ user.id }>
+                { user.firstName }
+              </option>
+            ))}
+          </select>
 
             <ul>
             <form onSubmit= { onSave }>
@@ -40,7 +46,7 @@ class Users extends React.Component {
                 <li> Last Name <input onChange = { this.onChange } name = 'lastName'></input> </li>
                 <li> Email <input onChange = { this.onChange } name = 'email'></input> </li>
                 <li> Password <input onChange = { this.onChange } name = 'password'></input> </li>
-                <button type='submit'> Update </button>
+                <button type='submit'> Create </button>
             </form>
             </ul>   
             </div>
