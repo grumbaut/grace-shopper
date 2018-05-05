@@ -133,6 +133,7 @@ class Product extends React.Component {
           : (
             <div>
               <ProductCardDetail product={ product } />
+              <h3>Reviews:</h3>
               {
                 reviews.map(review =>  {
                   if (review.productId === id) return <Review review={review} key={review.id} />;
@@ -146,7 +147,7 @@ class Product extends React.Component {
     }
 }
 
-const mapState = ({ products, categories, user, reviews }, { id })=> {
+const mapState = ({ products, categories, user, reviews }, { id }) => {
   const product = products.find( product => product.id === id );
   return {
     product,
