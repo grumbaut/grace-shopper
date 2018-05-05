@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { saveUser } from '../store/users';
+import { saveUser, deleteUser } from '../store/users';
 
 class editUser extends Component {
   constructor(props){
     super(props);
+    
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.onDelete = this.onDelete.bind(this);
     
     this.state = {
       isAdmin: false
@@ -25,16 +27,18 @@ class editUser extends Component {
     };
     saveUser(user);
   }
-
+  onDelete(){
+    deleteUser(this.props.id)
+  }
   onChange(ev){
-    ev.preventDefault();
+
     console.log(ev.target.name, ev.target.value)
     this.setState({ [ev.target.name]: ev.target.value });
     this.onSave(ev);
   }
 
   render(){
-    const { onChange } = this
+    const { onChange, onDelete } = this
     const { user } = this.props
     if (!user) {
       return null;
@@ -45,12 +49,19 @@ class editUser extends Component {
           <h3> { user.firstName } {user.lastName }</h3>
           <h3> { user.email } </h3>
           {
-            user.isAdmin ? <button onClick={ onChange } name = 'isAdmin' value = { false } className="btn btn-primary btn-sm"> Deactivate Admin Function</button> : <button onClick={ onChange } className="btn btn-primary btn-sm" name = 'isAdmin' value = { true }> Make Admin </button>
+            user.isAdmin ? (
+              <button onClick={ onChange }  value = { false } name = 'isAdmin' className="btn btn-primary btn-sm"> Deactivate Admin Function</button> 
+            ) : (
+             <button onClick={ onChange } value = { true } name = 'isAdmin' className="btn btn-primary btn-sm"> Make Admin </button>
+            )
           }
         </ul>
         <ul>
-            <button button onClick={ onChange } className="btn btn-primary btn-sm"> Require Password Reset</button> 
+            <button onClick={ onChange } className="btn btn-primary btn-sm"> Require Password Reset</button> 
         </ul>
+        <ul>
+        <button onClick={ onDelete } className="btn btn-primary btn-sm">Delete User</button> 
+    </ul>
       </div>
     );
   }
@@ -66,7 +77,8 @@ const mapState = ({ users }, { id })=> {
 const mapDispatch = dispatch => {
   return {
     save: (user) => dispatch(saveUser(user)),
-  };
+    deleteUser: (user) => dispatch(deleteUser(user))
+  }
 };
 
-export default connect(mapState, mapDispatch)(editUser);
+export default connect(mapState, mapDispatch)(editUser)

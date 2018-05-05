@@ -2,16 +2,10 @@ import axios from 'axios';
 
 const GOT_USERS = 'GOT_USERS';
 const UPDATE_USER = 'UDPATE_USER';
-const CREATE_USER = 'CREATE_USER';
 const DELETE_USER = 'DELETE_USER';
 
 const addUsersToStore = users => {
   const action = { type: GOT_USERS, users };
-  return action;
-};
-
-const createUserInStore = user => {
-  const action = { type: CREATE_USER, user };
   return action;
 };
 
@@ -36,26 +30,24 @@ export const getUsers = () => (
 
 export const saveUser = (user) => (
     console.log(user, 'saveUser'),
-    user.id ? (
-      dispatch => (
-        axios.put(`api/users/${user.id}`, user)
-          .then(result => result.data)
-          .then(user => dispatch(updateUserInStore(user))))
-    ) : (
-      dispatch => (
-        axios.post(`api/users`, user)
-          .then(result => result.data)
-          .then(user => dispatch(createUserInStore(user)))
-      )
-    )
+        dispatch => (
+            axios.put(`api/users/${user.id}`, user)
+              .then(result => result.data)
+              .then(user => dispatch(updateUserInStore(user))))
 );
+
+export const deleteUser = (user) => (
+    console.log('delete', user),
+    dispatch => (
+      axios.delete(`api/users/${user.id}`)
+        .then( () => dispatch(deleteProductInStore(user)))
+    )
+  );
 
 const reducer = (state = [], action) => {
     switch (action.type) {
     case GOT_USERS:
       return action.users;
-    case CREATE_USER:
-      return [... state, action.user];
     case DELETE_USER:
       return state.filter(user => user.id !== action.user.id);
     case UPDATE_USER:
