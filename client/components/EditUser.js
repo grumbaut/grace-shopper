@@ -24,6 +24,7 @@ class editUser extends Component {
       lastName: this.props.user.lastName,
       email: this.props.user.email,
       password: this.props.user.password,
+      passwordPrompt: this.state.passwordPrompt,
       isAdmin: this.state.isAdmin
     };
     saveUser(user);
