@@ -47,6 +47,7 @@ class Main extends React.Component {
           <div className='container-fluid'>
             <Switch>
               <Route path='/users' exact component = { Users } />
+              <Route path='/createcategory' exact render={({history}) => <CategoryCreate history={history} /> } />
               <Route path='/products/:id' exact render={({match, history}) => <Product id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/edit-order/:id' component={ EditOrder } />
@@ -57,7 +58,7 @@ class Main extends React.Component {
               <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
               <Route path='/cart' component={ Cart } />
-              <Route path='/categories' component={ Categories } />
+              <Route path='/categories' component={ Categories } />              
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>

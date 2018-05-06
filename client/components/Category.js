@@ -68,6 +68,8 @@ class Category extends React.Component {
       <div>
         <h1>{ category.name }</h1>
         <p>Number of products in {category.name}: {productsOfThisCategory.length}</p>
+        <Link to={`/categories/${priorCategoryId}`}><button>Prior Category</button></Link>
+        <Link to={`/categories/${nextCategoryId}`}><button>Next Category</button></Link>
         {
           user.isAdmin ? (
             <div>
@@ -96,6 +98,22 @@ class Category extends React.Component {
                 <button disabled={ id * 1 === -1 }>Change</button>
                 </form>
               <button onClick={ onDelete }>Delete</button>
+              <div>
+              <p>Products:</p>
+                {productsOfThisCategory.length === 0 ?
+                  <p>There are no products in this category yet</p>
+                  :
+                  <div className="row">
+                    {
+                      productsOfThisCategory.map(product => {
+                        return (
+                          <ProductCard product={product} key={ product.id } />
+                        );
+                      })
+                    }
+                  </div>
+                }
+              </div>
             </div>
           ) : (
             <div>
@@ -116,8 +134,6 @@ class Category extends React.Component {
             </div>
           )
         }
-        <Link to={`/categories/${priorCategoryId}`}><button>Prior</button></Link>
-        <Link to={`/categories/${nextCategoryId}`}><button>Next</button></Link>
       </div>
     );
   }
@@ -137,7 +153,6 @@ const mapState = ({ categories, products, user }, { id }) => {
 };
 
 const mapDispatch = (dispatch, { history, id }) => {
-  console.log('history in mapDispatch is:', history);
   return {
     saveCategory: (category) => dispatch(saveCategory(category)),
     deleteCategory: (category) => dispatch(deleteCategory(category, history)),

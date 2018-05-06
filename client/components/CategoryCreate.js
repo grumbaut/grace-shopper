@@ -12,10 +12,10 @@ class CategoryCreate extends React.Component {
     this.onSave = this.onSave.bind(this);
   }
   onChangeInfo(ev) {
-    this.setState({ [ev.target.name]: ev.target.value });
+    this.setState({ name: ev.target.value });
   }
   onSave(ev) {
-    ev.preventDefalut();
+    ev.preventDefault();
     const category = { name: this.state.name };
     this.props.saveCategory(category);
   }
@@ -27,12 +27,12 @@ class CategoryCreate extends React.Component {
         <h2>Add A New Category</h2>
         <form onSubmit={ onSave }>
           <p>Name:<br />
-          <input value={ name } name="name" onChange={ onChangeInfo } />
+          <input value={ name } onChange={ onChangeInfo } />
           </p>
-          <button>Add</button>
+          <button type="submit">Add</button>
         </form>
       </div>
-    )
+    );
   }
 }
 

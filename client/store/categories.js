@@ -30,7 +30,7 @@ const reducer = (state = [], action) => {
   case GOT_CATEGORIES:
     return action.categories;
   case CREATE_CATEGORY:
-    return [... state, action.category];
+    return [...state, action.category];
   case DELETE_CATEGORY:
     return state.filter(category => category.id !== action.category.id);
   case UPDATE_CATEGORY:
@@ -51,14 +51,12 @@ export const getCategories = () => (
 export const deleteCategory = (category, history) => (
   dispatch => (
     axios.delete(`api/categories/${category.id}`)
-      // .then( () => console.log('history in store is:', history))
       .then( () => dispatch(deleteCategoryInStore(category)))
-      // .then( () => console.log('history after dispatch is: ', history))
       .then( () => history.push('/categories'))
   )
 );
 
-export const saveCategory = (category) => (
+export const saveCategory = (category, history) => (
   category.id ? (
     dispatch => (
       axios.put(`/api/categories/${category.id}`, category)
@@ -69,6 +67,7 @@ export const saveCategory = (category) => (
         axios.post(`api/categories`, category)
           .then(result => result.data)
           .then(category => dispatch(createCategoryInStore(category)))
+          .then( () => history.push('/categories'))
       )
     )
   );
