@@ -13,7 +13,7 @@ class Product extends React.Component {
       description: this.props.product ? this.props.product.description : '',
       price: this.props.product ? this.props.product.price : 0,
       imageUrl: this.props.product ? this.props.product.imageUrl : '',
-      categoryId: -1,
+      categoryId: -1
     };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSelectCategory = this.onSelectCategory.bind(this);
@@ -110,7 +110,7 @@ class Product extends React.Component {
                 <button type="submit"> Update </button>
               </form>
               <form onSubmit={ onSaveCategory }>
-                <p>Current category: {productCategory.name}</p>
+                {/*<p>Current category: {productCategory.name}</p>*/}
                 <select value={ categoryId } name="categoryId" onChange={ onSelectCategory }>
                   <option value="-1">Select New Category</option>
                   {

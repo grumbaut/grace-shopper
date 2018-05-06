@@ -51,7 +51,9 @@ export const getCategories = () => (
 export const deleteCategory = (category, history) => (
   dispatch => (
     axios.delete(`api/categories/${category.id}`)
+      // .then( () => console.log('history in store is:', history))
       .then( () => dispatch(deleteCategoryInStore(category)))
+      // .then( () => console.log('history after dispatch is: ', history))
       .then( () => history.push('/categories'))
   )
 );
@@ -65,7 +67,7 @@ export const saveCategory = (category) => (
       ) : (
       dispatch => (
         axios.post(`api/categories`, category)
-          .then(res => res.data)
+          .then(result => result.data)
           .then(category => dispatch(createCategoryInStore(category)))
       )
     )

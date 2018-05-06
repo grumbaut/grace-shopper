@@ -2,30 +2,31 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
-import { saveCategory, deleteCategory, saveProduct } from '../store/categories';
+import { saveCategory, deleteCategory } from '../store/categories';
+import { saveProduct } from '../store/products';
 
 class Category extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: this.props.category ? this.props.category.name : '',
-      newCategoryIdForProduct: -1    
+      // newId: -1
     };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.onSelectProduct = this.onSelectProduct.bind(this);
-    this.onAddProduct = this.onAddProduct.bind(this);
+    // this.onSelectProduct = this.onSelectProduct.bind(this);
+    // this.onAddProduct = this.onAddProduct.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.category) {
       this.setState({
-        name: nextProps.category.name,
+        name: nextProps.category.name
       });
     }
   }
   onChangeInput(ev){
-    this.setState({ [ev.target.name]: ev.target.value });
+    this.setState({ name: ev.target.value });
   }
   onSave(ev){
     ev.preventDefault();
@@ -44,40 +45,41 @@ class Category extends React.Component {
   }
   onAddProduct(ev){
     ev.preventDefault();
-    this.props.saveProduct(this.state.newCategoryIdForProduct)
-    .then(() => this.setState({ newCategoryIdForProduct: -1 }));
+    const product = this.props.products.find( product => product.id === this.state.newId)
+    this.props.saveProduct(product)
+    .then(() => this.setState({ newId: -1 }));
   }
   render() {
     const { products, user, category, categories, id, productsOfThisCategory } = this.props;
-    const { newCategoryIdForProduct } = this.state;
+    const { name } = this.state;
     const { onChangeInput, onSave, onDelete, onSelectProduct, onAddProduct } = this;
 
-    const availableProducts = products.filter( product => product.categoryId !== id);
-    
+    if (!category) {
+      return null;
+    }
     const nextCategoryIndex = categories.indexOf(category) + 1;
     const nextCategoryId = nextCategoryIndex < categories.length ? categories[nextCategoryIndex].id : categories[0].id;
     const priorCategoryIndex = categories.indexOf(category) - 1;
     const lastCategoryIndex = categories.length - 1;
     const priorCategoryId = priorCategoryIndex !== -1 ? categories[priorCategoryIndex].id : categories[lastCategoryIndex].id;
-    
-    if (!category) {
-      return null;
-    }
+    const availableProducts = products.filter( product => product.categoryId !== id);
 
     return (
       <div>
+        <h1>{ category.name }</h1>
+        <p>Number of products in {category.name}: {productsOfThisCategory.length}</p>
         {
           user.isAdmin ? (
             <div>
-              <form onSubmit= { onSave }>
+              <form onSubmit={ onSave }>
                 <h3>Admin: you may update this category</h3>
                 <p>Name:<br />
-                <input value={ name } name="name" onChange={ onChangeInput } />
+                <input value={ name } onChange={ onChangeInput } />
                 </p>
                 <button type="submit"> Update </button>
               </form>
-              <form onSubmit={ onAddProduct }>
-                <select value={ newCategoryIdForProduct } name="newCategoryIdForProduct" onChange={ onSelectProduct }>
+              {/*<form onSubmit={ onAddProduct }>
+                <select value={ newId } name="newId" onChange={ onSelectProduct }>
                   <option value="-1">Select New Product</option>
                   {
                     availableProducts.map( product => {
@@ -90,13 +92,11 @@ class Category extends React.Component {
                   }
                 </select>
                 <button disabled={ id * 1 === -1}>Change</button>
-              </form>
+                </form>*/}
               <button onClick={ onDelete }>Delete</button>
             </div>
           ) : (
             <div>
-              <h1>{ category.name }</h1>
-              <p>Number of products in {category.name}: {productsOfThisCategory.length}</p>
               <p>Products:</p>
               {productsOfThisCategory.length === 0 ?
                 <p>There are no products in this category yet</p>
@@ -110,7 +110,7 @@ class Category extends React.Component {
                     })
                   }
                 </div>
-              }              
+              }
             </div>
           )
         }
@@ -121,22 +121,25 @@ class Category extends React.Component {
   }
 }
 
-const mapState = ({ categories, products }, { id })=> {
+const mapState = ({ categories, products, user }, { id }) => {
   const category = categories.find( category => category.id === id );
   const productsOfThisCategory = products.filter( product => product.categoryId === id);
   return {
     category,
     categories,
     products,
-    productsOfThisCategory
+    productsOfThisCategory,
+    user,
+    id
   };
 };
 
-const mapDispatch = (dispatch, { history }) => {
+const mapDispatch = (dispatch, { history, id }) => {
+  console.log('history in mapDispatch is:', history);
   return {
     saveCategory: (category) => dispatch(saveCategory(category)),
     deleteCategory: (category) => dispatch(deleteCategory(category, history)),
-    saveProduct: (product) => dispatch(saveProduct(product))
+    saveProduct: (product) => dispatch(saveProduct(Object.assign(product, { categoryId: id })))
   };
 };
 
