@@ -13,7 +13,7 @@ export const getUsers = () => (
   dispatch => (
     axios.get('/api/users')
       .then(res => res.data)
-      .then(categories => dispatch(addUsersToStore(users)))
+      .then(users => dispatch(addUsersToStore(users)))
   )
 );
 
