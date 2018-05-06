@@ -68,7 +68,7 @@ class Product extends React.Component {
     this.props.deleteProduct({ id: this.props.id });
   }
   render(){
-    const { user, product, categories, reviews, id, purchased } = this.props;
+    const { user, product, categories, reviews, id, purchased, reviewed } = this.props;
     const { name, price, description, categoryId } = this.state;
     const { onChangeInput, onSelectCategory, onSaveCategory, onSave, onDelete } = this;
     if (!product) {
@@ -134,7 +134,9 @@ class Product extends React.Component {
             <div>
               <ProductCardDetail product={ product } />
               <h3>Reviews:</h3>
-              { purchased ? <button>Add Review</button> : null}
+              { purchased ?
+              (reviewed ? <Link to={ `/reviews/create`} review={reviewed} product= {product}>Edit Your Review</Link> : <Link to={ `/reviews/create`} product= {product}>Add Review</Link>) : null
+              }
               {
                 reviews.map(review =>  {
                   if (review.productId === id) return <Review review={review} key={review.id} />;
@@ -155,6 +157,7 @@ const mapState = ({ products, categories, user, reviews, orders }, { id }) => {
     memo = memo.concat(current.lineitems);
     return memo;
   }, []).find(item => item.productId === id) ? true : false;
+  const reviewed = reviews.find( review => review.userId === user.id);
 
   return {
     product,
@@ -162,7 +165,8 @@ const mapState = ({ products, categories, user, reviews, orders }, { id }) => {
     user,
     reviews,
     id,
-    purchased
+    purchased,
+    reviewed
   };
 };
 

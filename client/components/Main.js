@@ -19,6 +19,7 @@ import ManageOrders from './ManageOrders';
 import EditOrder from './EditOrder';
 import LoggedOut from './LoggedOut';
 import Footer from './Footer';
+import EditReview from './EditReview';
 
 class Main extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class Main extends React.Component {
       reviews: []
     };
   }
-  
+
   componentDidMount() {
     this.props.fetch();
     if(window.localStorage.getItem('token')) {
@@ -52,6 +53,7 @@ class Main extends React.Component {
               <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
               <Route path='/edit-order/:id' component={ EditOrder } />
               <Route path='/manage-orders' component={ ManageOrders} />
+              <Route path='/reviews/create' component={ EditReview } />
               <Route path='/logged-out' component={ LoggedOut } />
               <Route path='/products' component={ Products } />
               <Route path='/checkout' component={ Checkout } />
