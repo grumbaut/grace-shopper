@@ -41,16 +41,26 @@ class EditReview extends React.Component {
   render() {
     const { product } = this.props;
     console.log(product);
-    const { review } = this.state;
-    if(!product) return null;
-    if(review) return (<div>review exists</div>);
+    const { id, rating, content } = this.state;
+   // if(!product) return null;
+    if(id) return (<div>review exists</div>);
     return (
       <div>
-        <h2>Review your { product.name }</h2>
-        <form onSubmit={ ev => this.handleSubmit(ev) }>
+        {/* <h2>Review your { product.name }</h2> */}
+        <form onSubmit={ ev => this.onSubmit(ev) }>
           <div className='form-group'>
-            <label htmlFor='name'>Name: </label>
-            <input name='name' value={ name } onChange={ this.onChange } />
+            <label htmlFor='rating'>Rating: </label>
+            <select name='rating' value={ rating } onChange={ this.onChange }>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div className='form-group'>
+            <label htmlFor='name'>Content: </label>
+            <textarea rows="4" cols="50" name='content' value={ content } onChange={ this.onChange } />
           </div>
           <button className='btn btn-primary btn-sm'>Add Review</button>
         </form>
@@ -65,8 +75,8 @@ const mapState = ({reviews, user}, { match }) => ({
 });
 
 const mapDispatch = (dispatch, { history }) => ({
-  updateReview(userId, productId, reviewInfo) {
-    dispatch(saveReview(userId, productId, reviewInfo, history));
+  saveReview(review) {
+    dispatch(saveReview(review));
   }
 });
 
