@@ -36,7 +36,7 @@ class Home extends React.Component{
   render(){
     const { onChange, onSave } = this
     const { user, password } = this.props
-    if(!user.passwordPrompt){
+    if(user.passwordPrompt === false){
       return (
         <h1> Welcome to a fantastic shopping experience! </h1>
       )
