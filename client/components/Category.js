@@ -10,13 +10,13 @@ class Category extends React.Component {
     super(props);
     this.state = {
       name: this.props.category ? this.props.category.name : '',
-      // newId: -1
+      productId: -1
     };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    // this.onSelectProduct = this.onSelectProduct.bind(this);
-    // this.onAddProduct = this.onAddProduct.bind(this);
+    this.onSelectProduct = this.onSelectProduct.bind(this);
+    this.onAddProduct = this.onAddProduct.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.category) {
@@ -45,13 +45,13 @@ class Category extends React.Component {
   }
   onAddProduct(ev){
     ev.preventDefault();
-    const product = this.props.products.find( product => product.id === this.state.newId)
+    const product = this.props.products.find( product => product.id === this.state.productId);
     this.props.saveProduct(product)
-    .then(() => this.setState({ newId: -1 }));
+    .then(() => this.setState({ productId: -1 }));
   }
   render() {
     const { products, user, category, categories, id, productsOfThisCategory } = this.props;
-    const { name } = this.state;
+    const { name, productId } = this.state;
     const { onChangeInput, onSave, onDelete, onSelectProduct, onAddProduct } = this;
 
     if (!category) {
@@ -78,8 +78,9 @@ class Category extends React.Component {
                 </p>
                 <button type="submit"> Update </button>
               </form>
-              {/*<form onSubmit={ onAddProduct }>
-                <select value={ newId } name="newId" onChange={ onSelectProduct }>
+
+              <form onSubmit={ onAddProduct }>
+                <select value={ productId } name="productId" onChange={ onSelectProduct }>
                   <option value="-1">Select New Product</option>
                   {
                     availableProducts.map( product => {
@@ -91,8 +92,9 @@ class Category extends React.Component {
                     })
                   }
                 </select>
+
                 <button disabled={ id * 1 === -1}>Change</button>
-                </form>*/}
+                </form>
               <button onClick={ onDelete }>Delete</button>
             </div>
           ) : (
