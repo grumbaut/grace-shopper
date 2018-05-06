@@ -29,7 +29,7 @@ const Nav = ({ user, logout, cart }) => {
               null
           }
           {
-            user && user.id ?
+            user && user.isAdmin ?
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Admin
