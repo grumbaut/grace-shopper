@@ -51,7 +51,7 @@ const reducer = (state = [], action) => {
     case DELETE_USER:
       return state.filter(user => user.id !== action.user.id);
     case UPDATE_USER:
-      return state.map( user => user.id === action.user.id ? action.user : user);
+      return state.map(user => user.id === action.user.id ? action.user : user);
     default:
       return state;
     }

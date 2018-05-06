@@ -36,25 +36,26 @@ class Home extends React.Component{
   render(){
     const { onChange, onSave } = this
     const { user, password } = this.props
-    if(user.passwordPrompt === false){
+    if(user.passwordPrompt === true){
       return (
-        <h1> Welcome to a fantastic shopping experience! </h1>
+        <div>
+          <h1> What fun . . . it's time to change your password! </h1>
+          <form onSubmit={ onSave }>
+            Password: <input value = { password } name = 'password' onChange ={ onChange }/>
+            <button type = 'submit' className="btn btn-primary btn-sm"> Change password </button>
+          </form>
+        </div>
       )
     }
-    return(
-      <div>
-        <h1> What fun . . . it's time to change your password! </h1>
-        <form onSubmit={ onSave }>
-          Password: <input value = { password } name = 'password' onChange ={ onChange }/>
-          <button type = 'submit' className="btn btn-primary btn-sm"> Change password </button>
-        </form>
-      </div>
+    return (
+      <h1> Welcome to a fantastic shopping experience! </h1>
     )
   }
 }
 
 
 const mapState = ({ user })=> {
+  console.log(user)
   return {
     user
   };
