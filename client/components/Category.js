@@ -93,7 +93,7 @@ class Category extends React.Component {
                   }
                 </select>
 
-                <button disabled={ id * 1 === -1}>Change</button>
+                <button disabled={ id * 1 === -1 }>Change</button>
                 </form>
               <button onClick={ onDelete }>Delete</button>
             </div>

@@ -10,6 +10,7 @@ import Products from './Products';
 import Login from './Login';
 import SignUp from './SignUp';
 import Category from './Category';
+import CategoryCreate from './CategoryCreate';
 import Categories from './Categories';
 import AdminIndex from './AdminIndex';
 import Users from './Users';
