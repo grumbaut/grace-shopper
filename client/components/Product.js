@@ -134,9 +134,9 @@ class Product extends React.Component {
             <div>
               <ProductCardDetail product={ product } />
               <h3>Reviews:</h3>
-              { purchased ?
-              (reviewed ? <Link to={ `/reviews/create`} review={reviewed} product= {product}>Edit Your Review</Link> : <Link to={ `/reviews/create`} product= {product}>Add Review</Link>) : null
+              { purchased ? (<Link to={ `/reviews/create`} product= {product}>Add Review</Link>) : null
               }
+              {/* (reviewed ? <Link to={ `/edit-reviews/${reviewed.id}`} review={reviewed} >Edit Your Review</Link> : <Link to={ `/reviews/create`} product= {product}>Add Review</Link>) : null */}
               {
                 reviews.map(review =>  {
                   if (review.productId === id) return <Review review={review} key={review.id} />;

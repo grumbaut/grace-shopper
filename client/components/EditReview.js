@@ -84,7 +84,7 @@ const mapState = ({reviews, user}, { match }) => ({
 
 const mapDispatch = (dispatch, { history }) => ({
   saveReview(review) {
-    dispatch(saveReview(review));
+    dispatch(saveReview(review, history));
   }
 });
 
