@@ -38,7 +38,6 @@ class editUser extends Component {
     if (ev.target.value === 'true'){
       bool = true
     }
-    console.log(ev.target.name, ev.target.value)
     this.setState({ [ev.target.name]: bool });
     this.onSave(ev);
   }
