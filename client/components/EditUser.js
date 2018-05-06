@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { saveUser, deleteUser } from '../store/users';
+import { variableDeclarator } from 'babel-types';
 
 class editUser extends Component {
   constructor(props){
@@ -33,9 +34,12 @@ class editUser extends Component {
     deleteUser(this.props.user)
   }
   onChange(ev){
-
+    var bool = false;
+    if (ev.target.value === 'true'){
+      bool = true
+    }
     console.log(ev.target.name, ev.target.value)
-    this.setState({ [ev.target.name]: ev.target.value });
+    this.setState({ [ev.target.name]: bool });
     this.onSave(ev);
   }
 
