@@ -48,11 +48,12 @@ export const saveUser = (user) => (
       .then(user => dispatch(updateUserInStore(user))))
 );
 
-export const deleteUser = (user) => (
+export const deleteUser = (user, history) => (
     // console.log('delete', user),
     dispatch => (
       axios.delete(`api/users/${user.id}`)
         .then( () => dispatch(deleteUserInStore(user)))
+        .then( () => history.push('/users'))
     )
   );
 
