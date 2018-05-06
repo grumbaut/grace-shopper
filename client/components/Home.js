@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { saveUser } from '../store'
+import { Link } from 'react-router-dom';
 
 class Home extends React.Component{
   constructor(props){
@@ -41,9 +42,17 @@ class Home extends React.Component{
         <div>
           <h1> What fun . . . it's time to change your password! </h1>
           <form onSubmit={ onSave }>
-            Password: <input value = { password } name = 'password' onChange ={ onChange }/>
-            <button type = 'submit' className="btn btn-primary btn-sm"> Change password </button>
+             Password: <input value = { password } name = 'password' onChange ={ onChange }/>
+             <button type='submit' className='btn btn-primary btn-sm'> Change password </button>
           </form>
+        </div>
+      )
+    }
+    if(user.isAdmin === true){
+      return (
+        <div>
+        <h4><Link to={'/admin'}>ADMINS: Go to the admin portal </Link> </h4>
+        <h1> Welcome to a fantastic shopping experience! </h1>
         </div>
       )
     }
