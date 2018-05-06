@@ -8,7 +8,7 @@ class EditReview extends React.Component {
     const review = this.props.review;
     this.state = {
       id: review ? review.id : null,
-      rating: review ? review.rating : null,
+      rating: review ? review.rating : 5,
       content: review ? review.content : ''
     };
     this.onChange = this.onChange.bind(this);
@@ -42,6 +42,14 @@ class EditReview extends React.Component {
     const { product } = this.props;
     console.log(product);
     const { id, rating, content } = this.state;
+    const star = '/images/star.png';
+    const stars = (num)=> {
+    let starray = [];
+    for(var i = 0; i < num; i++){
+      starray.push(<img src={star} key={i} />);
+    }
+    return starray;
+    };
    // if(!product) return null;
     if(id) return (<div>review exists</div>);
     return (
@@ -49,7 +57,7 @@ class EditReview extends React.Component {
         {/* <h2>Review your { product.name }</h2> */}
         <form onSubmit={ ev => this.onSubmit(ev) }>
           <div className='form-group'>
-            <label htmlFor='rating'>Rating: </label>
+            <label><strong>Rating:</strong> {stars(rating).map(star => star)} </label>
             <select name='rating' value={ rating } onChange={ this.onChange }>
               <option value="1">1</option>
               <option value="2">2</option>
