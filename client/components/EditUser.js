@@ -39,34 +39,35 @@ class editUser extends Component {
       bool = true
     }
     this.setState({ [ev.target.name]: bool });
-    this.onSave(ev);
   }
 
   render(){
-    const { onChange, onDelete } = this
+    const { onSave, onChange, onDelete } = this
     const { user } = this.props
     if (!user) {
       return null;
     }
     return (
       <div>
+        <form onSubmit = { onSave } >
         <ul>
           <h3> { user.firstName } {user.lastName }</h3>
           <h3> { user.email } </h3>
           {
             user.isAdmin ? (
-              <button onClick={ onChange }  value = { false } name = 'isAdmin' className="btn btn-primary btn-sm"> Deactivate Admin Function</button> 
+              <button type = 'submit' onClick={ onChange }  value = { false } name = 'isAdmin' className="btn btn-primary btn-sm"> Deactivate Admin Function</button> 
             ) : (
-             <button onClick={ onChange } value = { true } name = 'isAdmin' className="btn btn-primary btn-sm"> Make Admin </button>
+             <button type = 'submit' onClick={ onChange } value = { true } name = 'isAdmin' className="btn btn-primary btn-sm"> Make Admin </button>
             )
           }
         </ul>
         <ul>
-            <button onClick={ onChange } className="btn btn-primary btn-sm"  value = { true } name = 'passwordPrompt'> Require Password Reset</button> 
+            <button  type = 'submit' onClick={ onChange } className="btn btn-primary btn-sm"  value = { true } name = 'passwordPrompt'> Require Password Reset</button> 
         </ul>
         <ul>
-        <button onClick={ onDelete } className="btn btn-primary btn-sm">Delete User</button> 
+        <button  type = 'submit' onClick={ onDelete } className="btn btn-primary btn-sm">Delete User</button> 
         </ul>
+        </form>
       </div>
     );
   }
