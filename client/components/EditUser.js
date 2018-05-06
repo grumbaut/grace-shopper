@@ -11,6 +11,7 @@ class editUser extends Component {
     this.onDelete = this.onDelete.bind(this);
     
     this.state = {
+      passwordPrompt: false,
       isAdmin: false
     };
   }
@@ -28,7 +29,7 @@ class editUser extends Component {
     saveUser(user);
   }
   onDelete(){
-    deleteUser(this.props.id)
+    deleteUser(this.props.user)
   }
   onChange(ev){
 
@@ -57,11 +58,11 @@ class editUser extends Component {
           }
         </ul>
         <ul>
-            <button onClick={ onChange } className="btn btn-primary btn-sm"> Require Password Reset</button> 
+            <button onClick={ onChange } className="btn btn-primary btn-sm"  value = { true } name = 'passwordPrompt'> Require Password Reset</button> 
         </ul>
         <ul>
         <button onClick={ onDelete } className="btn btn-primary btn-sm">Delete User</button> 
-    </ul>
+        </ul>
       </div>
     );
   }

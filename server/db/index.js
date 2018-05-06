@@ -34,7 +34,7 @@ const syncAndSeed = ()=>{
         Review.create({ content: fake.lorem.paragraph(), rating: 4 }),
         Review.create({ content: fake.lorem.paragraph(), rating: 3 }),
         Review.create({ content: fake.lorem.paragraph(), rating: 1 }),
-        User.create({firstName: 'Bob', lastName: 'Bill', email: 'bob@wonderland.com', isAdmin: 'false', password: 'BOB'}),
+        User.create({firstName: 'Bob', lastName: 'Bill', email: 'bob@wonderland.com', isAdmin: 'false', password: 'BOB', passwordPrompt: true}),
         User.create({firstName: 'Cat', lastName: 'Purchase', email: 'cat@wonderland.com', isAdmin: 'false', password: 'CAT'}),
       ]);
     })

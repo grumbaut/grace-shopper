@@ -24,6 +24,9 @@ const User = conn.define('user', {
   },
   password: {
     type: Sequelize.STRING
+  },
+  passwordPrompt: {
+    type: Sequelize.BOOLEAN
   }
 },{
   getterMethods: {
