@@ -38,13 +38,11 @@ const Nav = ({ user, logout, cart }) => {
             {
               user && user.id ? <NavLink className="nav-link" to="/cart" activeClassName='active'>Cart {`(${totalItemsInCart})`}</NavLink> : null }
           </li>
-          <li>
           {
-            user.isAdmin === true ?        
+            user.isAdmin === true ?
               <li className="nav-item"><NavLink className="nav-link" to='/admin'>Admin portal</NavLink></li>
-            :  <li className="nav-item"><NavLink className="nav-link" to='/support'>Contact Support</NavLink></li>
+              :  <li className="nav-item"><NavLink className="nav-link" to='/support'>Contact Support</NavLink></li>
           }
-          </li>
           <li className='nav-item'>
             {
               user && user.id ? null : (

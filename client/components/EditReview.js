@@ -28,8 +28,7 @@ class EditReview extends React.Component {
       rating: this.state.rating,
       content: this.state.content,
       productId: this.props.product.id,
-      userId: this.props.user.id,
-      user: this.props.user
+      userId: this.props.user.id
     };
     ev.preventDefault();
     this.props.saveReview(newReview);
