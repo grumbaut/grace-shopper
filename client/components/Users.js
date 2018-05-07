@@ -6,11 +6,11 @@ const Users = ({ users })=> {
     return (
         <div>
         <h3> Users </h3>
-        <ul>
+        <div>
          {
              users.map(user => <li key = {user.id}><Link to={`/users/${user.id}`}>{ user.firstName } { user.lastName }</Link>   </li>)
          }
-        </ul>
+        </div>
         </div>
     )   
 }

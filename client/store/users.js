@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const GOT_USERS = 'GOT_USERS';
-const UPDATE_USER = 'UDPATE_USER';
+const UPDATE_USER = 'UPDATE_USER';
 const DELETE_USER = 'DELETE_USER';
 
 const addUsersToStore = users => {
@@ -41,11 +41,10 @@ export const getUsers = () => (
 );
 
 export const saveUser = (user) => (
-    // console.log(user, 'saveUser'),
   dispatch => (
     axios.put(`api/users/${user.id}`, user)
       .then(result => result.data)
-      .then(user => dispatch(updateUserInStore(user))))
+      .then(user => dispatch(updateUserInStore(user))))      
 );
 
 export const deleteUser = (user, history) => (

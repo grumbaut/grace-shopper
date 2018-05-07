@@ -6,48 +6,39 @@ import { variableDeclarator } from 'babel-types';
 class EditUser extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      // firstName: this.props.user ? this.props.user.firstName : '',
-      // lastName: this.props.user ? this.props.user.lastName : '',
-      // email: this.props.user ? this.props.user.email : '',
-      isAdmin: this.props.user ? this.props.user.isAdmin : '',
-      password: this.props.user ? this.props.user.password : '',
-      passwordPrompt: this.props.user ? this.props.user.passwordPrompt : ''
-    };
-    this.onChange = this.onChange.bind(this);
+    // this.state = {
+    //   isAdmin: this.props.user ? this.props.user.isAdmin : false,
+    //   // password: this.props.user ? this.props.user.password : '',
+    //   // passwordPrompt: this.props.user ? this.props.user.passwordPrompt : ''
+    // };
+    // this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.user) {
-      this.setState({
-        // firstName: nextProps.user.firstName,
-        // lastName: nextProps.user.lastName,
-        // email: nextProps.user.email,
-        isAdmin: nextProps.user.isAdmin,
-        password: nextProps.user.password,
-        passwordPrompt: nextProps.user.passwordPrompt  
-      });
-    }
-  }
-  onChange(ev){
-    var bool = false;
-    if (ev.target.value === 'true'){
-      bool = true;
-    }
-    this.setState({ [ev.target.name]: bool });
-  }
-  onSave(ev){
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.user) {
+  //     this.setState({
+  //       isAdmin: nextProps.user.isAdmin
+  //       // password: nextProps.user.password,
+  //       // passwordPrompt: nextProps.user.passwordPrompt
+  //     });
+  //   }
+  // }
+  // onChange(ev){
+  //   let bool;
+  //   if (ev.target.value === 'true') {
+  //     bool = false;
+  //   }
+  //   else if (ev.target.value === 'false') {
+  //     bool = true;
+  //   }
+  //   this.setState({ [ev.target.name]: bool });
+  // }
+  onSave(ev) {
     ev.preventDefault();
-    const user =  {
-      id: this.props.user.id,
-      firstName: this.props.user.firstName,
-      lastName: this.props.user.lastName,
-      email: this.props.user.email,
-      isAdmin: this.state.isAdmin,
-      password: this.state.password,
-      passwordPrompt: this.state.passwordPrompt      
-    };
+    let user = this.props.user;
+    user = { isAdmin: !user.isAdmin };
+    console.log('user in onSave is:', user);
     this.props.saveUser(user);
   }
   onDelete(){
@@ -55,35 +46,30 @@ class EditUser extends Component {
   }
 
   render(){
-    const { onSave, onChange, onDelete } = this;
+    const { onSave, onDelete } = this;
     const { user } = this.props;
     if (!user) {
       return null;
     }
+    const changeStatus = user.isAdmin ? 'Remove Admin Status' : 'Give Admin Status';
     return (
       <div>
         <form onSubmit = { onSave } >
        
           <h3> { user.firstName } {user.lastName }</h3>
           <h3> { user.email } </h3>
-          <div>
-          {
-            user.isAdmin ? (
-              <button type="submit" onClick={ onChange }  value = { false } name ="isAdmin" className="btn btn-primary btn-sm"> Deactivate Admin Function</button> 
-            ) : (
-             <button type="submit" onClick={ onChange } value = { true } name="isAdmin" className="btn btn-primary btn-sm"> Make Admin </button>
-            )
-          }
-          </div>
-          <br />
+          <button>{changeStatus}</button>
+        </form>
+
+          {/*
           <div>
             <button  type ="submit" onClick={ onChange } className="btn btn-primary btn-sm"  value = { true } name ="passwordPrompt"> Require Password Reset</button>
-          </div>
+          </div>*/}
           <br />
           <div>
-            <button type="submit" onClick={ onDelete } className="btn btn-primary btn-sm">Delete User</button> 
+            <button type="submit" onClick={ onDelete } className="btn btn-primary btn-sm">Delete User</button>
           </div>
-        </form>
+        
       </div>
     );
   }
