@@ -69,7 +69,7 @@ export const saveReview = (review, history) => (
     axios.post(`api/reviews`, review)
       .then(res => res.data)
       .then( newReview => dispatch(createReviewInStore(newReview)))
-      .then( () => history.push(`/products/${review.productId}`))
+      .then( () => history.back())
   ))
 );
 

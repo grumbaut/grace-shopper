@@ -9,7 +9,7 @@ class EditReview extends React.Component {
     this.state = {
       id: review ? review.id : null,
       rating: review ? review.rating : 5,
-      content: review ? review.content : ''
+      content: review ? review.content : '',
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -17,8 +17,8 @@ class EditReview extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(!this.state.content) {
-      const { id, rating, content } = nextProps.review;
-      this.setState({ id, rating, content });
+      const { id, rating, content, productId, userId, user} = nextProps.review;
+      this.setState({ id, rating, content, productId, userId, user });
     }
   }
 
