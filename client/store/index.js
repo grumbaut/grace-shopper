@@ -7,8 +7,9 @@ import user from './sessions';
 import cart from './cart';
 import reviews from './reviews';
 import orders from './orders';
+import users from './users';
 
-const reducers = combineReducers({ categories, products, user, cart, reviews, orders });
+const reducers = combineReducers({ categories, products, user, cart, reviews, orders, users });
 const middleware = applyMiddleware(thunk, logger);
 
 const store = createStore(reducers, middleware);
@@ -20,3 +21,4 @@ export * from './sessions';
 export * from './reviews';
 export * from './cart';
 export * from './orders';
+export * from './users';
