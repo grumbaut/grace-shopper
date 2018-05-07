@@ -53,8 +53,7 @@ class Main extends React.Component {
               <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
               <Route path='/edit-order/:id' component={ EditOrder } />
               <Route path='/manage-orders' component={ ManageOrders} />
-              <Route path='/edit-reviews/:id' exact render={({match, reviewed, history})=> <EditReview id={ match.params.id * 1 } reviewed={ reviewed } history={ history } /> } />
-              <Route path='/reviews/create' component={ EditReview } />
+              <Route path='/edit-reviews/:id' exact render={({match, history})=> <EditReview id={ match.params.id * 1 }  history={ history } /> } />
               <Route path='/logged-out' component={ LoggedOut } />
               <Route path='/products' component={ Products } />
               <Route path='/checkout' component={ Checkout } />

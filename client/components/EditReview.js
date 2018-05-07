@@ -15,20 +15,21 @@ class EditReview extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if(!this.state.content) {
-  //     const { rating, content } = nextProps.review;
-  //     this.setState({ rating, content });
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if(!this.state.content) {
+      const { id, rating, content } = nextProps.review;
+      this.setState({ id, rating, content });
+    }
+  }
 
   onSubmit(ev) {
     const newReview = {
       id: this.state.id,
       rating: this.state.rating,
       content: this.state.content,
-      productId: this.props.productId,
-      userId: this.props.userId
+      productId: this.props.product.id,
+      userId: this.props.user.id,
+      user: this.props.user
     };
     ev.preventDefault();
     this.props.saveReview(newReview);
@@ -40,7 +41,6 @@ class EditReview extends React.Component {
 
   render() {
     const { product } = this.props;
-    console.log(product);
     const { id, rating, content } = this.state;
     const star = '/images/star.png';
     const stars = (num)=> {
@@ -54,7 +54,7 @@ class EditReview extends React.Component {
     if(id) return (<div>review exists</div>);
     return (
       <div>
-        {/* <h2>Review your { product.name }</h2> */}
+        <h2>Review your { product.name }</h2>
         <form onSubmit={ ev => this.onSubmit(ev) }>
           <div className='form-group'>
             <label><strong>Rating:</strong> {stars(rating).map(star => star)} </label>
@@ -77,10 +77,12 @@ class EditReview extends React.Component {
   }
 }
 
-const mapState = ({reviews, user}, { match }) => ({
-  review: reviews.find(review => review.id === (match.params.id)*1),
-  user: user
-});
+const mapState = ({reviews, user}, { match, product }) => ({
+  review: match ? reviews.find(review => review.id === (match.params.id)*1) : null,
+  user: user,
+  product: product
+})
+;
 
 const mapDispatch = (dispatch, { history }) => ({
   saveReview(review) {
