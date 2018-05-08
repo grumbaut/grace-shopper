@@ -15,31 +15,11 @@ class EditUser extends Component {
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
   }
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.user) {
-  //     this.setState({
-  //       isAdmin: nextProps.user.isAdmin
-  //       // password: nextProps.user.password,
-  //       // passwordPrompt: nextProps.user.passwordPrompt
-  //     });
-  //   }
-  // }
-  // onChange(ev){
-  //   let bool;
-  //   if (ev.target.value === 'true') {
-  //     bool = false;
-  //   }
-  //   else if (ev.target.value === 'false') {
-  //     bool = true;
-  //   }
-  //   this.setState({ [ev.target.name]: bool });
-  // }
+
   onSave(ev) {
     ev.preventDefault();
-    let user = this.props.user;
-    user = { isAdmin: !user.isAdmin };
-    console.log('user in onSave is:', user);
-    this.props.saveUser(user);
+    let userToken = { id: this.props.user.id, isAdmin: !this.props.user.isAdmin };
+    this.props.saveUser(userToken);
   }
   onDelete(){
     this.props.deleteUser({ id: this.props.id });
@@ -84,7 +64,7 @@ const mapState = ({ users }, { id })=> {
 
 const mapDispatch = (dispatch, { history }) => {
   return {
-    saveUser: (user) => dispatch(saveUser(user)),
+    saveUser: (userToken) => dispatch(saveUser(userToken)),
     deleteUser: (user) => dispatch(deleteUser(user, history))
   }
 };
