@@ -10,6 +10,7 @@ const OrderInfo = ({ orders, cancel }) => {
         orders.map(order => (
           <div key={ order.id }>
             <h3>Order #{ order.id }</h3>
+            <h4>Status: { order.status }</h4>
             {
               order.status === 'processing' ?
                 <div>

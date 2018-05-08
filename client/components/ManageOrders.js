@@ -7,9 +7,19 @@ class ManageOrders extends React.Component {
     super(props);
   }
 
+  checkIfEmpty(obj) {
+    for(let key in obj) {
+      if(obj[key].length) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   render() {
-    const { pastOrders, shippedOrders, inProcess, cancelled } = this.props;
-    if(!inProcess.length || !shippedOrders.length || !pastOrders.length || !cancelled.length ) return <h2>You have not placed any orders.</h2>;
+    const { orders } = this.props;
+    if(this.checkIfEmpty(orders)) return <h2>You have no orders in your history.</h2>;
+    const { pastOrders, shippedOrders, inProcess, cancelled } = orders;
     return (
       <div>
         <h2>Manage Orders</h2>
@@ -56,11 +66,12 @@ class ManageOrders extends React.Component {
 
 const mapState = state => {
   const userId = state.user.id;
-  const pastOrders = state.orders.filter(order => order.userId === userId && order.status === 'delivered');
-  const shippedOrders = state.orders.filter(order => order.userId === userId && order.status === 'shipped');
-  const inProcess = state.orders.filter(order => order.userId === userId && order.status === 'processing');
-  const cancelled = state.orders.filter(order => order.userId === userId && order.status === 'cancelled');
-  return { pastOrders, shippedOrders, inProcess, cancelled };
+  const orders = state.orders;
+  const pastOrders = orders.filter(order => order.userId === userId && order.status === 'delivered');
+  const shippedOrders = orders.filter(order => order.userId === userId && order.status === 'shipped');
+  const inProcess = orders.filter(order => order.userId === userId && order.status === 'processing');
+  const cancelled = orders.filter(order => order.userId === userId && order.status === 'cancelled');
+  return { orders: { pastOrders, shippedOrders, inProcess, cancelled } };
 };
 
 export default connect(mapState)(ManageOrders);
