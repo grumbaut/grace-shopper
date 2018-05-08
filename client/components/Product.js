@@ -136,7 +136,7 @@ class Product extends React.Component {
                 <ProductCardDetail product={product} />
                 <h3>Reviews:</h3>
                 {purchased ? (reviewed ?
-                  <Link to={`/edit-reviews/${reviewed.id}`} product={product}>Edit Your Review</Link>
+                  <Link to={`/edit-reviews/${reviewed.id}`} >Edit Your Review</Link>
                   :
                   <EditReview product={product} history={history}>Add Review</EditReview>) : null
                 }
