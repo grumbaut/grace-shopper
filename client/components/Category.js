@@ -97,7 +97,7 @@ class Category extends React.Component {
 
                 <button disabled={ id * 1 === -1 }>Add Product</button>
                 </form>
-              <button onClick={ onDelete }>Delete</button>
+              <button onClick={ onDelete }>Delete Category</button>
               <div>
               <p>Products:</p>
                 {productsOfThisCategory.length === 0 ?

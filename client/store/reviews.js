@@ -48,25 +48,28 @@ export const getReviews = () => (
   )
 );
 
-export const deleteReview = review => (
+export const deleteReview = (review, history) => (
   dispatch => (
     axios.delete(`api/reviews/${review.id}`)
       .then( () => dispatch(deleteReviewInStore(review)))
+      .then( () => history.push(`/products/${review.productId}`))
   )
 );
 
-export const saveReview = review => (
+export const saveReview = (review, history) => (
   review.id ? (
     dispatch => (
       axios.put(`api/reviews/${review.id}`, review)
         .then( res => res.data)
         .then( updatedReview => dispatch(updateReviewInStore(updatedReview)))
+        .then( () => history.push(`/products/${review.productId}`))
     )
   ) : (
   dispatch => (
     axios.post(`api/reviews`, review)
       .then(res => res.data)
       .then( newReview => dispatch(createReviewInStore(newReview)))
+      .then( () => history.push(`/products/${review.productId}`))
   ))
 );
 

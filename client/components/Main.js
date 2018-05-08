@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts, getUserFromToken, getReviews, getOrders } from '../store';
+import { getCategories, getProducts, getUserFromToken, getReviews, getOrders, getUsers } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -16,9 +16,11 @@ import Users from './Users';
 import Cart from './Cart';
 import Checkout from './Checkout';
 import ManageOrders from './ManageOrders';
+import AdminOrderStatus from './AdminOrderStatus';
 import EditOrder from './EditOrder';
 import LoggedOut from './LoggedOut';
 import Footer from './Footer';
+import EditReview from './EditReview';
 
 class Main extends React.Component {
   constructor(props) {
@@ -51,7 +53,9 @@ class Main extends React.Component {
               <Route path='/products/:id' exact render={({match, history}) => <Product id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/edit-order/:id' component={ EditOrder } />
+              <Route path='/orders' component={ AdminOrderStatus } />
               <Route path='/manage-orders' component={ ManageOrders} />
+              <Route path='/edit-reviews/:id' exact render={({match, history})=> <EditReview id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/logged-out' component={ LoggedOut } />
               <Route path='/products' component={ Products } />
               <Route path='/checkout' component={ Checkout } />
@@ -76,6 +80,7 @@ const mapDispatch = dispatch => ({
     dispatch(getProducts());
     dispatch(getReviews());
     dispatch(getOrders());
+    dispatch(getUsers());
   },
   getUser(token) {
     dispatch(getUserFromToken(token));

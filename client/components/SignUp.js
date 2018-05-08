@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { signUp } from '../store';
+import { signUpAddUser } from '../store';
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -52,7 +52,7 @@ class SignUp extends React.Component {
 const mapDispatch = (dispatch, { history }) => ({
   signUp(event, userInfo) {
     event.preventDefault();
-    dispatch(signUp(userInfo, history));
+    dispatch(signUpAddUser(userInfo, history));
   }
 });
 
