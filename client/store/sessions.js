@@ -3,24 +3,18 @@ import { getCart } from './cart';
 
 const SET_USER = 'SET_USER';
 
-const addUsersToStore = users => {
-  const action = { type: GOT_USERS, users };
-  return action;
-};
-
 const setUser = user => {
   const action = { type: SET_USER, user};
   return action;
 };
 
-export const signUp = (userInfo, history) => {
+export const signUp = userInfo => {
   return dispatch => {
     return axios.post('/api/sessions/signup', userInfo)
       .then(result => {
         window.localStorage.setItem('token', result.data);
       })
-      .then(() => dispatch(getUserFromToken(window.localStorage.getItem('token'))))
-      .then(() => history.push('/'));
+      .then(() => dispatch(getUserFromToken(window.localStorage.getItem('token'))));
   };
 };
 
@@ -30,6 +24,7 @@ export const getUserFromToken = token => {
       .then( result => {
         dispatch(setUser(result.data));
         dispatch(getCart(result.data.id));
+        return result.data;
       })
       .catch(() => window.localStorage.removeItem('token'));
   };

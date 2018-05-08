@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCategories, getProducts, getUsers, saveUser, getUserFromToken, getReviews } from '../store';
+
+import { getCategories, getProducts, getUserFromToken, getReviews, saveUser, getOrders, getUsers } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
-import createProduct from './createProduct';
 import Product from './Product';
 import Products from './Products';
 import Login from './Login';
@@ -17,6 +17,13 @@ import EditUser from './EditUser';
 import Users from './Users';
 import Cart from './Cart';
 import Checkout from './Checkout';
+import ManageOrders from './ManageOrders';
+import AdminOrderStatus from './AdminOrderStatus';
+import EditOrder from './EditOrder';
+import LoggedOut from './LoggedOut';
+import Footer from './Footer';
+import EditReview from './EditReview';
+import createProduct from './createProduct'
 
 class Main extends React.Component {
   constructor(props) {
@@ -28,7 +35,7 @@ class Main extends React.Component {
       reviews: []
     };
   }
-  
+
   componentDidMount() {
     this.props.fetch();
     if(window.localStorage.getItem('token')) {
@@ -50,15 +57,22 @@ class Main extends React.Component {
               <Route path='/createProduct' exact component = { createProduct } />
               <Route path='/products/:id' exact render={({match, history})=> <Product id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
+              <Route path='/edit-order/:id' component={ EditOrder } />
+              <Route path='/orders' component={ AdminOrderStatus } />
+              <Route path='/manage-orders' component={ ManageOrders} />
+              <Route path='/edit-reviews/:id' exact render={({match, history})=> <EditReview id={ match.params.id * 1 } history={ history } /> } />
+              <Route path='/logged-out' component={ LoggedOut } />
               <Route path='/products' component={ Products } />
               <Route path='/checkout' component={ Checkout } />
               <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
               <Route path='/cart' component={ Cart } />
               <Route path='/categories' component={ Categories } />
+              <Route path='/users' exact component = { Users } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>
+          <Footer />
         </div>
       </HashRouter>
     );
@@ -70,8 +84,9 @@ const mapDispatch = dispatch => ({
   fetch() {
     dispatch(getCategories());
     dispatch(getProducts());
-    dispatch(getUsers());
     dispatch(getReviews());
+    dispatch(getOrders());
+    dispatch(getUsers());
   },
   getUser(token) {
     dispatch(getUserFromToken(token));

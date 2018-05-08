@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 const GOT_USERS = 'GOT_USERS';
-const UPDATE_USER = 'UPDATE_USER';
 const DELETE_USER = 'DELETE_USER';
+const GOT_USER = 'GOT_USER';
+const UPDATE_USER = 'UPDATE_USER';
 
 const addUsersToStore = users => {
   const action = { type: GOT_USERS, users };
@@ -18,6 +19,10 @@ const updateUserInStore = user => {
     const action = { type: UPDATE_USER, user };
     return action;
 };
+export const addUser = user => {
+  const action = { type: GOT_USER, user };
+  return action;
+};
 
 const reducer = (state = [], action) => {
   switch (action.type) {
@@ -27,6 +32,8 @@ const reducer = (state = [], action) => {
     return state.filter(user => user.id !== action.user.id);
   case UPDATE_USER:
     return state.map(user => user.id === action.user.id ? action.user : user);
+  case GOT_USER:
+    return [...state, action.user];
   default:
     return state;
   }
@@ -54,6 +61,6 @@ export const deleteUser = (user, history) => (
         .then( () => dispatch(deleteUserInStore(user)))
         .then( () => history.push('/users'))
     )
-  );
+);
 
 export default reducer;

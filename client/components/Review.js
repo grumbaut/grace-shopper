@@ -5,17 +5,17 @@ const Review = ({review}) => {
   const stars = (num)=> {
     let starray = [];
     for(var i = 0; i < num; i++){
-       starray.push(<img src={star} key={i} />);
+      starray.push(<img src={star} key={i} />);
     }
-  return starray;
+    return starray;
   };
 
   if(!review) return null;
   return (
     <div>
-      <div>Rating: {stars(review.rating).map(star => star)}</div>
+      <p><strong>Rating:</strong> {stars(review.rating).map(star => star)}</p>
       {review.content}
-      <p>Reviewer: {review.user.name}</p>
+      <p><strong>Reviewer: {review.user.name}</strong></p>
     </div>
   );
 };

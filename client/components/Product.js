@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveProduct, deleteProduct } from '../store/products';
 import ProductCardDetail from './ProductCardDetail';
+import Review from './Review';
+import EditReview from './EditReview';
 
 class Product extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       name: this.props.product ? this.props.product.name : '',
@@ -31,10 +33,10 @@ class Product extends React.Component {
       });
     }
   }
-  onChangeInput(ev){
+  onChangeInput(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
   }
-  onSaveCategory(ev){
+  onSaveCategory(ev) {
     ev.preventDefault();
     const product = {
       id: this.props.id,
@@ -47,10 +49,10 @@ class Product extends React.Component {
     console.log('product in onSaveCategory is', product);
     this.props.saveProduct(product);
   }
-  onSelectCategory(ev){
+  onSelectCategory(ev) {
     this.setState({ [ev.target.name]: ev.target.value * 1 });
   }
-  onSave(ev){
+  onSave(ev) {
     ev.preventDefault();
     const product =
       {
@@ -63,88 +65,113 @@ class Product extends React.Component {
     console.log('product in onSave is', product);
     this.props.saveProduct(product);
   }
-  onDelete(){
+  onDelete() {
     this.props.deleteProduct({ id: this.props.id });
   }
-  render(){
-    const { user, product, categories } = this.props;
+  render() {
+    const { user, product, categories, reviews, id, purchased, history, reviewed } = this.props;
     const { name, price, description, categoryId } = this.state;
     const { onChangeInput, onSelectCategory, onSaveCategory, onSave, onDelete } = this;
-    const quantity = [];
-    for (let i = 1; i <= 50; i++) {
-      quantity.push(i);
-    }
     if (!product) {
       return null;
     }
-    const availableCategories = categories.filter( category => category.id !== product.categoryId);
+    const availableCategories = categories.filter(category => category.id !== product.categoryId);
     const productCategory = categories.find(category => category.id === product.categoryId);
 
     return (
       <div>
         {
           productCategory ? (
-            <p>{ product.name } is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>
+            <p>{product.name} is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>
           ) : (
-            <p>{ product.name } is not in any category yet.</p>
-          )
+              <p>{product.name} is not in any category yet.</p>
+            )
         }
         {
           user.isAdmin ? (
             <div>
-            <h1>{ product.name }</h1>
-            <img src = { product.imageUrl } width={400} />
-            <h2>{`$${product.price}`}</h2>
-            <p>{ product.description }</p>
-              <form onSubmit= { onSave }>
+              <h1>{product.name}</h1>
+              <img src={product.imageUrl} width={400} />
+              <h2>{`$${product.price}`}</h2>
+              <p>{product.description}</p>
+              {
+                reviews.map(review => {
+                  if (review.productId === id) return <Review review={review} key={review.id} />;
+                })
+              }
+              <form onSubmit={onSave}>
                 <h3>Admin: you may update this product </h3>
                 <p>Name:<br />
-                <input value={ name } name="name" onChange={ onChangeInput } />
+                  <input value={name} name="name" onChange={onChangeInput} />
                 </p>
                 <p>Description:<br />
-                <input value={ description } name="description" onChange = { onChangeInput } />
+                  <input value={description} name="description" onChange={onChangeInput} />
                 </p>
                 <p>Price:<br />
-                <input value={ price } name="price" onChange = { onChangeInput } />
+                  <input value={price} name="price" onChange={onChangeInput} />
                 </p>
                 <button type="submit"> Update </button>
               </form>
-              <form onSubmit={ onSaveCategory }>
+              <form onSubmit={onSaveCategory}>
                 <p>Current category: {productCategory.name}</p>
-                <select value={ categoryId } name="categoryId" onChange={ onSelectCategory }>
+                <select value={categoryId} name="categoryId" onChange={onSelectCategory}>
                   <option value="-1">Select New Category</option>
                   {
-                    availableCategories.map( category => {
+                    availableCategories.map(category => {
                       return (
-                        <option key={ category.id } value={ category.id }>
-                          { category.name }
+                        <option key={category.id} value={category.id}>
+                          {category.name}
                         </option>
                       );
                     })
                   }
                 </select>
-                <button disabled={ categoryId * 1 === -1}>Change</button>
+                <button disabled={categoryId * 1 === -1}>Change</button>
               </form>
-              <button onClick={ onDelete }>Delete</button>
+              <button onClick={onDelete}>Delete</button>
             </div>
           )
-          : (
-            <div>
-              <ProductCardDetail product={ product } />
-            </div>
-          )
+            : (
+              <div>
+                <ProductCardDetail product={product} />
+                <h3>Reviews:</h3>
+                {purchased ? (reviewed ?
+                  <Link to={`/edit-reviews/${reviewed.id}`} >Edit Your Review</Link>
+                  :
+                  <EditReview product={product} history={history}>Add Review</EditReview>) : null
+                }
+                {/* (reviewed ? <Link to={ `/edit-reviews/${reviewed.id}`} review={reviewed} >Edit Your Review</Link> : <Link to={ `/reviews/create`} product= {product}>Add Review</Link>) : null */}
+                {
+                  reviews.map(review => {
+                    if (review.productId === id) return <Review review={review} key={review.id} />;
+                  })
+                }
+              </div>
+            )
         }
       </div>
-      );
-    }
+    );
+  }
 }
 
-const mapState = ({ products, categories, user }, { id })=> {
-  const product = products.find( product => product.id === id );
+const mapState = ({ products, categories, user, reviews, orders }, { id, history }) => {
+  const product = products.find(product => product.id === id);
+  const purchasedOrder = orders.filter(order => order.status === 'processing');
+  const purchased = purchasedOrder.reduce((memo, current) => {
+    memo = memo.concat(current.lineitems);
+    return memo;
+  }, []).find(item => item.productId === id) ? true : false;
+  const reviewed = reviews.filter(review => review.productId === product.id).find(review => review.userId === user.id);
+
   return {
     product,
     categories,
-    user
+    user,
+    reviews,
+    id,
+    purchased,
+    history,
+    reviewed
   };
 };
 

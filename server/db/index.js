@@ -5,7 +5,7 @@ const User = require('./User');
 const Order = require('./Order');
 const LineItem = require('./LineItem');
 const Review = require('./Review');
-const fake = require('faker');
+const seed = require('./seed');
 
 Product.belongsTo(Category);
 Product.hasMany(LineItem);
@@ -20,47 +20,12 @@ Product.hasMany(Review);
 Review.belongsTo(User);
 User.hasMany(Review);
 
-const syncAndSeed = ()=>{
+const syncAndSeed = () => {
   return conn.sync({ force: true })
-    .then(() => {
-      return Promise.all([
-        Category.create({ name:'Kitchen Supplies'}),
-        Category.create({ name: 'Decorative'}),
-        Product.create({ name: 'Mixing Bowl', description: 'Hand carved wooden mixing bowl.', price: 28.00, imageUrl: '/images/redmixingbowlset.jpg' }),
-        Product.create({ name: 'Vase', description: 'Porcelain longnecked vase, ideal for roses.', imageUrl: '/images/vase.jpg', price: 31.95 }),
-        Product.create({ name: 'Vanilla Diffuser', description: 'A room diffuser with reeds and vanilla oil', imageUrl: '/images/vanilladiffuser.jpg', price: 6.85 }),
-        User.create({firstName: 'Alice', lastName: 'Buyer', email: 'alice@wonderland.com', isAdmin: 'true', password: 'ALICE', passwordPrompt: false}),
-        Review.create({ content: fake.lorem.paragraph(), rating: 5 }),
-        Review.create({ content: fake.lorem.paragraph(), rating: 4 }),
-        Review.create({ content: fake.lorem.paragraph(), rating: 3 }),
-        Review.create({ content: fake.lorem.paragraph(), rating: 1 }),
-        User.create({firstName: 'Bob', lastName: 'Bill', email: 'bob@wonderland.com', isAdmin: 'false', password: 'BOB', passwordPrompt: true}),
-        User.create({firstName: 'Cat', lastName: 'Purchase', email: 'cat@wonderland.com', isAdmin: 'false', password: 'CAT', passwordPrompt: false}),
-      ]);
-    })
-    .then(([ category1, category2, product1, product2, product3, user1, rev1, rev2, rev3, rev4, user2, user3])=>{
-      return Promise.all([
-        product1.setCategory(category1),
-        product2.setCategory(category2),
-        product3.setCategory(category2),
-        Order.findOrCreateCart(user1.id),
-        rev1.setUser(user1),
-        rev1.setProduct(product1),
-        rev2.setUser(user2),
-        rev2.setProduct(product1),
-        rev3.setUser(user3),
-        rev3.setProduct(product1),
-        rev4.setUser(user3),
-        rev4.setProduct(product2)
-      ]);
-    })
-    .then(([product1, product2, product3, order]) => {
-      order.addToCart(4, product3);
-      order.addToCart(3, product1);
-    })
-    .catch(err => {
-      throw err;
-    });
+  .then(() => seed())
+  .catch(err => {
+    throw err;
+  });
 };
 
 module.exports = {

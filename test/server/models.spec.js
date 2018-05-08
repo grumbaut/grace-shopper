@@ -29,8 +29,8 @@ describe('seeded data', () => {
       return Product.findAll({})
         .then(_products => products = _products);
     });
-    it('there are 3 products in the database.', () => {
-      expect(products.length).to.equal(3);
+    it('there are 48 products in the database.', () => {
+      expect(products.length).to.equal(48);
     });
   });
   let categories;
