@@ -19,6 +19,7 @@ import AdminOrderStatus from './AdminOrderStatus';
 import EditOrder from './EditOrder';
 import LoggedOut from './LoggedOut';
 import Footer from './Footer';
+import EditReview from './EditReview';
 
 class Main extends React.Component {
   constructor(props) {
@@ -51,6 +52,7 @@ class Main extends React.Component {
               <Route path='/edit-order/:id' component={ EditOrder } />
               <Route path='/orders' component={ AdminOrderStatus } />
               <Route path='/manage-orders' component={ ManageOrders} />
+              <Route path='/edit-reviews/:id' exact render={({match, history})=> <EditReview id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/logged-out' component={ LoggedOut } />
               <Route path='/products' component={ Products } />
               <Route path='/checkout' component={ Checkout } />
