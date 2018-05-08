@@ -3,7 +3,6 @@ const Product = require('./Product');
 const User = require('./User');
 const Order = require('./Order');
 const Review = require('./Review');
-const fake = require('faker');
 
 const categories = [
   {
@@ -23,13 +22,13 @@ const products = [
   },
   {
     name: 'Vase',
-    description: 'Porcelain longnecked vase, ideal for roses.',     
+    description: 'Porcelain longnecked vase, ideal for roses.',
     price: 31.95,
     imageUrl: '/images/vase.jpg'
   },
   {
     name: 'Vanilla Diffuser',
-    description: 'A room diffuser with reeds and vanilla oil',    
+    description: 'A room diffuser with reeds and vanilla oil',
     price: 6.85,
     imageUrl: '/images/vanilladiffuser.jpg'
   },
@@ -336,25 +335,25 @@ const users = [
 
 const reviews = [
   {
-    content: fake.lorem.paragraph(),
+    content: 'I really do LOVE this product! I tell all my friends and I cant imagine hosting a dinner party or cooking a meal without this in the kitchen.',
     rating: 5,
     productId: 1,
     userId: 1
   },
   {
-    content: fake.lorem.paragraph(),
+    content: 'Solid, sturdy, perfect addition to my collection of kitchen supplies. I would buy this again.',
     rating: 4,
     productId: 1,
     userId: 2
   },
   {
-    content: fake.lorem.paragraph(),
+    content: 'Good for the home, good as a last minute gift idea. Not a huge fan of the color options.',
     rating: 3,
     productId: 2,
     userId: 3
   },
   {
-    content: fake.lorem.paragraph(),
+    content: 'I bought this product and it is not what I was looking for. Never trust a jpeg, I had no idea it would be this size. I will probably return it once I find the reciept. My fault for shopping online instead of at the Williams-Pomona in the city.',
     rating: 1,
     productId: 3,
     userId: 1
