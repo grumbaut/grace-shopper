@@ -10,8 +10,8 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   Review.findById(req.params.id)
-  .then(review => res.send(review))
-  .catch(next);
+    .then(review => res.send(review))
+    .catch(next);
 });
 
 router.post('/', (req, res, next) => {

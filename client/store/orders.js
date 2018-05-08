@@ -28,9 +28,9 @@ export const getOrders = () => {
   };
 };
 
-export const updateOrder = (userId, orderId, updatedShippingInfo, history) => {
+export const updateOrder = (userId, orderId, update, history) => {
   return dispatch => {
-    return axios.put(`/api/users/${userId}/orders/${orderId}`, updatedShippingInfo)
+    return axios.put(`/api/users/${userId}/orders/${orderId}`, update)
       .then(res => res.data)
       .then(order => dispatch(gotUpdatedOrder(order)))
       .then(() => history.push('/manage-orders'))

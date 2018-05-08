@@ -7,9 +7,19 @@ class ManageOrders extends React.Component {
     super(props);
   }
 
+  checkIfOrders(orders) {
+    for(let key in orders) {
+      if(orders[key].length) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   render() {
-    const { pastOrders, shippedOrders, inProcess, cancelled } = this.props;
-    if(!inProcess.length || !shippedOrders.length || !pastOrders.length || !cancelled.length ) return <h2>You have not placed any orders.</h2>;
+    const { orders } = this.props;
+    if(this.checkIfOrders(orders)) return <h2>You have not placed any orders.</h2>;
+    const { pastOrders, shippedOrders, inProcess, cancelled } = orders;
     return (
       <div>
         <h2>Manage Orders</h2>
@@ -17,7 +27,9 @@ class ManageOrders extends React.Component {
           inProcess && inProcess.length ?
             <div>
               <h3>Not Yet Shipped</h3>
-              <OrderInfo orders={ inProcess } />
+              {
+                inProcess.map(order => <OrderInfo order={ order } key={ order.id } />)
+              }
             </div>
             :
             null
@@ -26,7 +38,9 @@ class ManageOrders extends React.Component {
           shippedOrders && shippedOrders.length ?
             <div>
               <h3>On Its Way</h3>
-              <OrderInfo orders={ shippedOrders } />
+              {
+                shippedOrders.map(order => <OrderInfo order={ order } key={ order.id } />)
+              }
             </div>
             :
             null
@@ -35,7 +49,9 @@ class ManageOrders extends React.Component {
           pastOrders && pastOrders.length ?
             <div>
               <h3>Past Orders</h3>
-              <OrderInfo orders={ pastOrders } />
+              {
+                pastOrders.map(order => <OrderInfo order={ order } key={ order.id } />)
+              }
             </div>
             :
             null
@@ -44,7 +60,9 @@ class ManageOrders extends React.Component {
           cancelled && cancelled.length ?
             <div>
               <h3>Cancelled Orders</h3>
-              <OrderInfo orders={ cancelled } />
+              {
+                cancelled.map(order => <OrderInfo order={ order } key={ order.id } />)
+              }
             </div>
             :
             null
@@ -60,7 +78,7 @@ const mapState = state => {
   const shippedOrders = state.orders.filter(order => order.userId === userId && order.status === 'shipped');
   const inProcess = state.orders.filter(order => order.userId === userId && order.status === 'processing');
   const cancelled = state.orders.filter(order => order.userId === userId && order.status === 'cancelled');
-  return { pastOrders, shippedOrders, inProcess, cancelled };
+  return { orders: { pastOrders, shippedOrders, inProcess, cancelled } };
 };
 
 export default connect(mapState)(ManageOrders);

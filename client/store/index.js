@@ -9,10 +9,21 @@ import reviews from './reviews';
 import orders from './orders';
 import users from './users';
 
+import { signUp } from './sessions';
+import { addUser } from './users';
+
 const reducers = combineReducers({ categories, products, user, cart, reviews, orders, users });
 const middleware = applyMiddleware(thunk, logger);
 
 const store = createStore(reducers, middleware);
+
+export const signUpAddUser = (userInfo, history) => {
+  return dispatch => {
+    return dispatch(signUp(userInfo, history))
+      .then(user => dispatch(addUser(user)))
+      .then(() => history.push('/'));
+  };
+};
 
 export default store;
 export * from './categories';

@@ -1,44 +1,51 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import OrderInfo from './OrderInfo';
 
 class AdminOrderStatus extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       search: '',
-      user: null,
       changed: false
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.search = this.search.bind(this);
   }
 
-  handleChange(event){
+  handleChange(event) {
     this.setState({ search: event.target.value});
+    this.setState({ change: true });
   }
 
-  search(event) {
-    event.preventDefault();
-    const user = this.props.users.find(user => user.email === this.state.search);
-    if(user) {
-      this.setState({ user });
-    }
-    this.setState({ changed: true });
+  search(id) {
+    return this.props.orders.find(order => order.id === Number(id) && order.status !== 'cart');
+  }
+
+  changeStatus(userId, orderId, event) {
+    this.props.changeOrderStatus(userId, orderId, { status: event.target.value });
   }
 
   render(){
-    const { user, changed } = this.state;
-
+    const { search, changed } = this.state;
+    const order = this.search(search);
     return (
       <div>
         <h2 className='header'>Change Order Status</h2>
-        <form>
-          <input value={ this.state.search } placeholder='Search by user email...' />
-          <button className='btn btn-primary btn-sm'>Search</button>
-        </form>
+        <input value={ this.state.search } placeholder='Search by order ID...' onChange={ this.handleChange } />
         <div>
-          { !user && changed ?
-            <h2>No users found.</h2>
+          { !order && changed ?
+            <h2>No orders found.</h2>
             :
             null
+          }
+          {
+            order ?
+              <div>
+                <OrderInfo order={ order } admin={ true } />
+              </div>
+              :
+              null
           }
         </div>
       </div>
@@ -47,9 +54,7 @@ class AdminOrderStatus extends React.Component {
 }
 
 const mapState = state => ({
-  users: state.users
+  orders: state.orders
 });
 
-const mapDispatch = null;
-
-export default connect(mapState, mapDispatch)(AdminOrderStatus);
+export default connect(mapState)(AdminOrderStatus);

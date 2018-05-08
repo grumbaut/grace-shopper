@@ -15,6 +15,7 @@ import Users from './Users';
 import Cart from './Cart';
 import Checkout from './Checkout';
 import ManageOrders from './ManageOrders';
+import AdminOrderStatus from './AdminOrderStatus';
 import EditOrder from './EditOrder';
 import LoggedOut from './LoggedOut';
 import Footer from './Footer';
@@ -45,10 +46,10 @@ class Main extends React.Component {
           <Nav />
           <div className='container-fluid'>
             <Switch>
-              <Route path='/users' exact component = { Users } />
               <Route path='/products/:id' exact render={({match, history})=> <Product id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
               <Route path='/edit-order/:id' component={ EditOrder } />
+              <Route path='/orders' component={ AdminOrderStatus } />
               <Route path='/manage-orders' component={ ManageOrders} />
               <Route path='/logged-out' component={ LoggedOut } />
               <Route path='/products' component={ Products } />
@@ -57,6 +58,7 @@ class Main extends React.Component {
               <Route path='/login' component={ Login } />
               <Route path='/cart' component={ Cart } />
               <Route path='/categories' component={ Categories } />
+              <Route path='/users' exact component = { Users } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>
