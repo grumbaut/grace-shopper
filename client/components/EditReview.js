@@ -50,7 +50,7 @@ class EditReview extends React.Component {
     return starray;
     };
    // if(!product) return null;
-    if(id) return (<div>review exists</div>);
+    if(id) return (<div>review{product.name} exists</div>);
     return (
       <div>
         <h2>Review your { product.name }</h2>
@@ -76,11 +76,14 @@ class EditReview extends React.Component {
   }
 }
 
-const mapState = ({reviews, user}, { match, product }) => ({
-  review: match ? reviews.find(review => review.id === (match.params.id)*1) : null,
+const mapState = ({reviews, user}, { id, product }) => {
+  const review = id ? reviews.find(review => review.id === id) : null;
+  return {
+  review: review,
   user: user,
   product: product
-})
+};
+}
 ;
 
 const mapDispatch = (dispatch, { history }) => ({
