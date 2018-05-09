@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "JWT_KEY=fizzbuzz node server.js",
     "postinstall": "npm run webpack",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "test": "JWT_KEY=fizzbuzz DATABASE_URL=postgres://localhost/grace_shopper_db ./node_modules/mocha/bin/mocha --watch --recursive test/**/*.js",
@@ -24,7 +25,6 @@
     "cluster": "^0.7.7",
     "email-templates": "^3.6.0",
     "express": "^4.16.2",
-    "faker": "^4.1.0",
     "jshint": "^2.9.5",
     "jwt-simple": "^0.5.1",
     "mocha": "^5.1.1",

@@ -8,11 +8,11 @@ class createProduct extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
     this.state = {
-      name: product.name ? product.name: 'placeholder',
-      description: product.description ? product.description: 'placeholder',
-      price: product.price ? product.price: 0,
-      categoryId: product.categoryId ? product.categoryId: 1,
-      imageUrl: product.imageUrl ? product.imageUrl: '/images/noImage.jpg'
+      name: product.name ? product.name : 'placeholder',
+      description: product.description ? product.description : 'placeholder',
+      price: product.price ? product.price : 0,
+      categoryId: product.categoryId ? product.categoryId : 1,
+      imageUrl: product.imageUrl ? product.imageUrl : '/images/noImage.jpg'
     };
   }
 
@@ -51,9 +51,9 @@ class createProduct extends Component {
             <div className='form-group'>
               <label htmlFor='categoryId'>Category</label>
               <select name='categoryId' onChange = { this.onChange }>
-                <option> None </option>
+                <option> Select Category </option>
                 {
-                  this.props.categories.map (category => <option key={ category.id } value={ category.id }> { category.name } </option>)
+                  this.props.categories.map(category => <option key={ category.id } value={ category.id }> { category.name } </option>)
                 }
               </select>
             </div>
@@ -65,7 +65,7 @@ class createProduct extends Component {
   }
 }
 
-const mapState = ({ categories, products })=> {
+const mapState = ({ categories, products }) => {
   return {
     categories,
     products

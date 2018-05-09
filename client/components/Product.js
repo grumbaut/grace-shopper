@@ -14,7 +14,7 @@ class Product extends React.Component {
       description: this.props.product ? this.props.product.description : '',
       price: this.props.product ? this.props.product.price : 0,
       imageUrl: this.props.product ? this.props.product.imageUrl : '',
-      categoryId: -1,
+      categoryId: -1
     };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSelectCategory = this.onSelectCategory.bind(this);
@@ -46,7 +46,6 @@ class Product extends React.Component {
       imageUrl: this.state.imageUrl,
       categoryId: this.state.categoryId
     };
-    console.log('product in onSaveCategory is', product);
     this.props.saveProduct(product);
   }
   onSelectCategory(ev) {
@@ -62,7 +61,6 @@ class Product extends React.Component {
         price: this.state.price,
         imageUrl: this.state.imageUrl,
       };
-    console.log('product in onSave is', product);
     this.props.saveProduct(product);
   }
   onDelete() {
@@ -112,9 +110,9 @@ class Product extends React.Component {
                 </p>
                 <button type="submit"> Update </button>
               </form>
-              <form onSubmit={onSaveCategory}>
-                <p>Current category: {productCategory.name}</p>
-                <select value={categoryId} name="categoryId" onChange={onSelectCategory}>
+              <form onSubmit={ onSaveCategory }>
+                {/*<p>Current category: {productCategory.name}</p>*/}
+                <select value={ categoryId } name="categoryId" onChange={ onSelectCategory }>
                   <option value="-1">Select New Category</option>
                   {
                     availableCategories.map(category => {

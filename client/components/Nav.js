@@ -12,7 +12,7 @@ const Nav = ({ user, logout, cart }) => {
         <span className="navbar-toggler-icon" />
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav ml-auto">
+        <div className="navbar-nav ml-auto">
           {
             user && user.id ?
               <li className="nav-item dropdown">
@@ -37,6 +37,8 @@ const Nav = ({ user, logout, cart }) => {
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <NavLink className="dropdown-item" to='/createproduct' activeClassName='active'>Create New Product</NavLink>
                   <NavLink className="dropdown-item" to='/products' activeClassName='active'>Update Products</NavLink>
+                  <NavLink className="dropdown-item" to='/categories' activeClassName='active'>Update Categories</NavLink>
+                  <NavLink className="dropdown-item" to='/createcategory' activeClassName='active'>Create New Category</NavLink>
                   <NavLink className="dropdown-item" to='/users' activeClassName='active'>View and Update Users</NavLink>
                   <NavLink className="dropdown-item" to='/orders' activeClassName='active'>Manage Orders</NavLink>
                 </div>
@@ -84,7 +86,7 @@ const Nav = ({ user, logout, cart }) => {
               </li>
             )
           }
-        </ul>
+        </div>
       </div>
     </nav>
   );

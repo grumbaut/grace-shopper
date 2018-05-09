@@ -71,5 +71,4 @@ export const saveProduct = (product) => (
   )
 );
 
-
 export default reducer;

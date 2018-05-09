@@ -11,6 +11,7 @@ import Products from './Products';
 import Login from './Login';
 import SignUp from './SignUp';
 import Category from './Category';
+import CategoryCreate from './CategoryCreate';
 import Categories from './Categories';
 import AdminIndex from './AdminIndex';
 import EditUser from './EditUser';
@@ -55,8 +56,9 @@ class Main extends React.Component {
               <Route path='/users/:id' exact render={({ match, history }) => <EditUser id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/users' exact render={({ history }) => <Users history={ history } /> } />
               <Route path='/createProduct' exact component = { createProduct } />
-              <Route path='/products/:id' exact render={({match, history})=> <Product id={ match.params.id * 1 } history={ history } /> } />
-              <Route path='/categories/:id' exact render={({match})=> <Category id={ match.params.id * 1 } /> } />
+              <Route path='/createcategory' exact render={({history}) => <CategoryCreate history={history} /> } />
+              <Route path='/products/:id' exact render={({match, history}) => <Product id={ match.params.id * 1 } history={ history } /> } />
+              <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/edit-order/:id' component={ EditOrder } />
               <Route path='/orders' component={ AdminOrderStatus } />
               <Route path='/manage-orders' component={ ManageOrders} />
@@ -67,8 +69,7 @@ class Main extends React.Component {
               <Route path='/signup' component={ SignUp } />
               <Route path='/login' component={ Login } />
               <Route path='/cart' component={ Cart } />
-              <Route path='/categories' component={ Categories } />
-              <Route path='/users' exact component = { Users } />
+              <Route path='/categories' component={ Categories } />              
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>
