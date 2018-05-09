@@ -54,26 +54,30 @@ class SignUp extends React.Component {
   }
 
   render() {
-
+    const { firstName, lastName, email, password, errors } = this.state;
     return (
       <div>
         <h1 className='header'>Sign Up</h1>
-        <form onSubmit={ event => signUp(event, this.state) }>
+        <form onSubmit={ this.handleSubmit }>
           <div className='form-group'>
             <label htmlFor='firstName'>First Name:</label>
-            <input name='firstName' onChange={ this.handleChange } />
+            <input name='firstName' value={ firstName } onChange={ this.handleChange } />
+            <p className='error'>{ errors.firstName }</p>
           </div>
           <div className='form-group'>
             <label htmlFor='lastName'>Last Name:</label>
-            <input name='lastName' onChange={ this.handleChange } />
+            <input name='lastName' value={ lastName } onChange={ this.handleChange } />
+            <p className='error'>{ errors.lastName }</p>
           </div>
           <div className='form-group'>
             <label htmlFor='email'>Email:</label>
-            <input name='email' onChange={ this.handleChange } />
+            <input name='email' value={ email } onChange={ this.handleChange } />
+            <p className='error'>{ errors.email }</p>
           </div>
           <div className='form-group'>
             <label htmlFor='password'>Password:</label>
-            <input type='password' name='password' onChange={ this.handleChange } />
+            <input type='password' name='password' value={ password } onChange={ this.handleChange } />
+            <p className='error'>{ errors.password }</p>
           </div>
           <button type='submit' className='btn btn-primary'>Sign Up</button>
         </form>
