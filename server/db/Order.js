@@ -62,8 +62,9 @@ const Order = conn.define('order', {
     defaultValue: 'cart'
   },
   date: Sequelize.DATE,
+  firstName: Sequelize.STRING,
+  lastName: Sequelize.STRING,
   address: Sequelize.STRING,
-  name: Sequelize.STRING,
   city: Sequelize.STRING,
   state: Sequelize.STRING,
   zip: Sequelize.STRING,
@@ -75,6 +76,9 @@ const Order = conn.define('order', {
         return acc + Number(item.get().subtotal);
       }, 0);
       return total.toFixed(2);
+    },
+    name() {
+      return `${this.firstName} ${this.lastName}`;
     }
   }
 });
@@ -112,11 +116,12 @@ Order.prototype.addToCart = function(quantity, product) {
 };
 
 Order.prototype.checkout = function(userId, shippingInfo) {
-  const { name, address, city, state, zip, email } = shippingInfo;
+  const { firstName, lastName, address, city, state, zip, email } = shippingInfo;
   return this.update({
     status: 'processing',
     date: new Date(),
-    name,
+    firstName,
+    lastName,
     address,
     city,
     state,
