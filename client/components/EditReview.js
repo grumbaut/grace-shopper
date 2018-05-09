@@ -79,6 +79,7 @@ class EditReview extends React.Component {
               <option value="5">5</option>
             </select>
           </div>
+          <div className='error' >{ error }</div>
           <div className='form-group'>
             <label htmlFor='name'>Content: </label>
             <textarea rows="4" cols="50" name='content' value={ content } onChange={ this.onChange } />
