@@ -25,6 +25,7 @@ class Product extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.product) {
       this.setState({
+        id: nextProps.product.id,
         name: nextProps.product.name,
         description: nextProps.product.description,
         price: nextProps.product.price,
