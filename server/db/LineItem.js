@@ -29,7 +29,7 @@ LineItem.updateOrCreateLineItem = function(order, quantity, product) {
           orderId: order.id
         });
       } else {
-        const updatedQuantity = lineItem.quantity + quantity;
+        const updatedQuantity = (lineItem.quantity * 1) + (quantity * 1);
         return lineItem.update({
           quantity: updatedQuantity
         });
