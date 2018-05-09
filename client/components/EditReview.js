@@ -10,9 +10,18 @@ class EditReview extends React.Component {
       id: review ? this.props.id : null,
       rating: review ? review.rating : 5,
       content: review ? review.content : '',
+      error: null
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.contentValidator = (value) => {
+        if(!value) {
+          return 'Please write a review.';
+        }
+        if(value.length < 20) {
+          return 'Reviews must be at least 20 characters.';
+        }
+      };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,6 +32,7 @@ class EditReview extends React.Component {
   }
 
   onSubmit(ev) {
+    ev.preventDefault();
     const review = this.props.review;
     const newReview = {
       id: this.state.id,
@@ -31,7 +41,11 @@ class EditReview extends React.Component {
       productId: review ? review.productId : this.props.product.id,
       userId: this.props.user.id
     };
-    ev.preventDefault();
+    const error = this.contentValidator(this.state.content);
+    this.setState({ error });
+    if (error) {
+      return;
+    }
     this.props.saveReview(newReview);
   }
 
@@ -41,7 +55,7 @@ class EditReview extends React.Component {
 
   render() {
     const { product, updateProduct } = this.props;
-    const { id, rating, content } = this.state;
+    const { id, rating, content, error } = this.state;
     const star = '/images/star.png';
     const stars = (num)=> {
     let starray = [];
@@ -53,7 +67,7 @@ class EditReview extends React.Component {
 
     return  id ? (
      <div>
-       <h2>Update your review of the {updateProduct.name} </h2>
+       <h2>Update your review of the {updateProduct.name}. </h2>
         <form onSubmit={ ev => this.onSubmit(ev) }>
           <div className='form-group'>
             <label><strong>Rating:</strong> {stars(rating).map(star => star)} </label>
@@ -87,6 +101,7 @@ class EditReview extends React.Component {
               <option value="5">5</option>
             </select>
           </div>
+          <div className='error' >{ error }</div>
           <div className='form-group'>
             <label htmlFor='name'>Content: </label>
             <textarea rows="4" cols="50" name='content' value={ content } onChange={ this.onChange } />

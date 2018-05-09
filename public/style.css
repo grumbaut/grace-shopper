@@ -4,6 +4,10 @@ body {
   height: 100vh;
 }
 
+.error {
+  color: red;
+}
+
 /* NAV STYLES */
 
 .navbar-background {
