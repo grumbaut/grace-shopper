@@ -138,7 +138,6 @@ class Product extends React.Component {
                   :
                   <EditReview product={product} history={history}>Add Review</EditReview>) : null
                 }
-                {/* (reviewed ? <Link to={ `/edit-reviews/${reviewed.id}`} review={reviewed} >Edit Your Review</Link> : <Link to={ `/reviews/create`} product= {product}>Add Review</Link>) : null */}
                 {
                   reviews.map(review => {
                     if (review.productId === id) return <Review review={review} key={review.id} />;
