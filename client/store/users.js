@@ -50,18 +50,21 @@ export const getUsers = () => (
 );
 
 export const saveUser = (user) => (
-  dispatch => (
-    axios.put(`api/users/${user.id}`, user)
+  dispatch => {
+    const headers = headerFunc();
+    return axios.put(`api/users/${user.id}`, user, { headers })
       .then(result => result.data)
-      .then(user => dispatch(updateUserInStore(user))))
+      .then(user => dispatch(updateUserInStore(user)));
+  }
 );
 
 export const deleteUser = (user, history) => (
-  dispatch => (
-    axios.delete(`api/users/${user.id}`)
+  dispatch => {
+    const headers = headerFunc();
+    return axios.delete(`api/users/${user.id}`, { headers })
       .then( () => dispatch(deleteUserInStore(user)))
-      .then( () => history.push('/users'))
-  )
+      .then( () => history.push('/users'));
+  }
 );
 
 export default reducer;
