@@ -17,6 +17,7 @@ class Category extends React.Component {
     this.onDelete = this.onDelete.bind(this);
     this.onSelectProduct = this.onSelectProduct.bind(this);
     this.onAddProduct = this.onAddProduct.bind(this);
+    this.onRemoveProduct = this.onRemoveProduct.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.category) {
@@ -46,13 +47,19 @@ class Category extends React.Component {
   onAddProduct(ev){
     ev.preventDefault();
     const product = this.props.products.find( product => product.id === this.state.productId);
-    this.props.saveProduct(product)
+    this.props.saveProduct(Object.assign(product, {categoryId: this.props.id}))
+    .then(() => this.setState({ productId: -1 }));
+  }
+  onRemoveProduct(ev){
+    ev.preventDefault();
+    const product = this.props.products.find( product => product.id === this.state.productId);
+    this.props.saveProduct(Object.assign(product, {categoryId: null}))
     .then(() => this.setState({ productId: -1 }));
   }
   render() {
     const { products, user, category, categories, id, productsOfThisCategory } = this.props;
     const { name, productId } = this.state;
-    const { onChangeInput, onSave, onDelete, onSelectProduct, onAddProduct } = this;
+    const { onChangeInput, onSave, onDelete, onSelectProduct, onAddProduct, onRemoveProduct } = this;
 
     if (!category) {
       return null;
@@ -97,6 +104,24 @@ class Category extends React.Component {
 
                 <button disabled={ id * 1 === -1 }>Add Product</button>
                 </form>
+                <br />
+                <form onSubmit={ onRemoveProduct }>
+                <select value={ productId } name="productId" onChange={ onSelectProduct }>
+                  <option value="-1">Select Product</option>
+                  {
+                    productsOfThisCategory.map( product => {
+                      return (
+                        <option key={ product.id } value={ product.id }>
+                          { product.name }
+                        </option>
+                      );
+                    })
+                  }
+                </select>
+
+                <button disabled={ id * 1 === -1 }>Remove Product</button>
+                </form>
+                <br />
               <button onClick={ onDelete }>Delete Category</button>
               <div>
               <p>Products:</p>
@@ -156,7 +181,7 @@ const mapDispatch = (dispatch, { history, id }) => {
   return {
     saveCategory: (category) => dispatch(saveCategory(category)),
     deleteCategory: (category) => dispatch(deleteCategory(category, history)),
-    saveProduct: (product) => dispatch(saveProduct(Object.assign(product, { categoryId: id })))
+    saveProduct: (product) => dispatch(saveProduct(product))
   };
 };
 

@@ -17,7 +17,7 @@ class EditUser extends Component {
   }
   onResetPassword(ev) {
     ev.preventDefault();
-    let userToken = { id: this.props.user.id, passwordPrompt: true };
+    let userToken = { id: this.props.id, passwordPrompt: true };
     this.props.saveUser(userToken);
   }
   onDelete(){
@@ -54,7 +54,8 @@ class EditUser extends Component {
 const mapState = ({ users }, { id }) => {
   const user = users.find(user => user.id === id);
   return {
-    user
+    user,
+    id
   };
 };
 
