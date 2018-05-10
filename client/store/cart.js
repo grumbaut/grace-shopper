@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getOrders, checkoutOrder } from './orders';
+import headerFunc from './headers';
 
 const GOT_CART = 'GOT_CART';
 const GOT_UPDATED_CART = 'GOT_UPDATED_CART';
@@ -59,8 +60,8 @@ export const deleteItem = (userId, orderId, lineItemId) => (
 
 export const checkout = (userId, orderId, shippingInfo, history) => (
   dispatch => {
-    const token = window.localStorage.getItem('token');
-    return axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, shippingInfo, { headers: { authorization: token } })
+    const headers = headerFunc();
+    return axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, shippingInfo, { headers })
       .then(res => res.data)
       .then(order => dispatch(checkoutOrder(order)))
       .then(() => dispatch(getCart(userId)))
