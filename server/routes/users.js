@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const db = require('../db');
 const { User, Order, LineItem, Product } = db.models;
-const { authorized, isCorrectUser, isAdmin, isUserOrAdmin } = require('./authFuncs');
+const { authorized, isCorrectUser, isAdmin } = require('./authFuncs');
 
 //USER ROUTES
 router.get('/', authorized, isAdmin, (req, res, next)=> {
@@ -18,7 +18,7 @@ router.get('/', authorized, isAdmin, (req, res, next)=> {
     .catch(next);
 });
 
-router.delete('/:id', authorized, isUserOrAdmin('req', 'id'), (req, res, next) => {
+router.delete('/:id', authorized, isCorrectUser('req', 'id'), (req, res, next) => {
   User.findById(req.params.id)
     .then( user => {
       user.destroy();
@@ -27,7 +27,7 @@ router.delete('/:id', authorized, isUserOrAdmin('req', 'id'), (req, res, next) =
     .catch(next);
 });
 
-router.put('/:id', authorized, isUserOrAdmin('req', 'id'), (req, res, next) => {
+router.put('/:id', authorized, isCorrectUser('req', 'id'), (req, res, next) => {
   User.findById(req.params.id)
     .then( user => {
       Object.assign(user, req.body);

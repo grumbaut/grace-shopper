@@ -7,7 +7,7 @@ const authorized = (req, res, next) => {
 
 const isCorrectUser = (key, paramName) => {
   return (req, res, next) => {
-    if(req[key][paramName] === req.user.id) {
+    if(req[key][paramName] === req.user.id || req.user.isAdmin) {
       return next();
     }
     next({ status: 401 });
@@ -21,18 +21,8 @@ const isAdmin = (req, res, next) => {
   next({ status: 401 });
 };
 
-const isUserOrAdmin = (key, paramName) => {
-  return (req, res, next) => {
-    if(req[key][paramName] === req.user.id || req.user.isAdmin) {
-      return next();
-    }
-    next({ status: 401 });
-  };
-};
-
 module.exports = {
   authorized,
   isCorrectUser,
-  isAdmin,
-  isUserOrAdmin
+  isAdmin
 };
