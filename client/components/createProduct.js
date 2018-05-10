@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { saveProduct } from '../store/products';
 
-class createProduct extends Component {
+class CreateProduct extends Component {
   constructor(product){
     super();
     this.onChange = this.onChange.bind(this);
@@ -15,17 +15,14 @@ class createProduct extends Component {
       imageUrl: product.imageUrl ? product.imageUrl : '/images/noImage.jpg'
     };
   }
-
   onSave(ev){
     ev.preventDefault();
     const product = this.state;
     this.props.saveProduct(product);
   }
-
   onChange(ev){
     this.setState({ [ev.target.name]: ev.target.value });
   }
-
   render(){
     return (
       <div>
@@ -72,10 +69,10 @@ const mapState = ({ categories, products }) => {
   };
 };
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, { history }) => {
   return {
-    saveProduct: (product) => dispatch(saveProduct(product)),
+    saveProduct: (product) => dispatch(saveProduct(product, history)),
   };
 };
 
-export default connect(mapState, mapDispatch)(createProduct);
+export default connect(mapState, mapDispatch)(CreateProduct);
