@@ -28,15 +28,15 @@ const updateReviewInStore = review => {
 
 const reducer = (state = [], action) => {
   switch (action.type) {
-    case GOT_REVIEWS:
-      return action.reviews;
-    case CREATE_REVIEW:
-      return [...state, action.review];
-    case DELETE_REVIEW:
-      return state.filter(review => review.id !== action.review.id);
-    case UPDATE_REVIEW:
-      return state.map( review => review.id === action.review.id ? action.review : review);
-    default: return state;
+  case GOT_REVIEWS:
+    return action.reviews;
+  case CREATE_REVIEW:
+    return [...state, action.review];
+  case DELETE_REVIEW:
+    return state.filter(review => review.id !== action.review.id);
+  case UPDATE_REVIEW:
+    return state.map( review => review.id === action.review.id ? action.review : review);
+  default: return state;
   }
 };
 
@@ -65,12 +65,12 @@ export const saveReview = (review, history) => (
         .then( () => history.push(`/products/${review.productId}`))
     )
   ) : (
-  dispatch => (
-    axios.post(`api/reviews`, review)
-      .then(res => res.data)
-      .then( newReview => dispatch(createReviewInStore(newReview)))
-      .then( () => history.push(`/products/${review.productId}`))
-  ))
+    dispatch => (
+      axios.post(`api/reviews`, review)
+        .then(res => res.data)
+        .then( newReview => dispatch(createReviewInStore(newReview)))
+        .then( () => history.push(`/products/${review.productId}`))
+    ))
 );
 
 export default reducer;

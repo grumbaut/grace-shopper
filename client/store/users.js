@@ -16,8 +16,8 @@ const deleteUserInStore = user => {
 };
 
 const updateUserInStore = user => {
-    const action = { type: UPDATE_USER, user };
-    return action;
+  const action = { type: UPDATE_USER, user };
+  return action;
 };
 export const addUser = user => {
   const action = { type: GOT_USER, user };
@@ -51,16 +51,15 @@ export const saveUser = (user) => (
   dispatch => (
     axios.put(`api/users/${user.id}`, user)
       .then(result => result.data)
-      .then(user => dispatch(updateUserInStore(user))))      
+      .then(user => dispatch(updateUserInStore(user))))
 );
 
 export const deleteUser = (user, history) => (
-    // console.log('delete', user),
-    dispatch => (
-      axios.delete(`api/users/${user.id}`)
-        .then( () => dispatch(deleteUserInStore(user)))
-        .then( () => history.push('/users'))
-    )
+  dispatch => (
+    axios.delete(`api/users/${user.id}`)
+      .then( () => dispatch(deleteUserInStore(user)))
+      .then( () => history.push('/users'))
+  )
 );
 
 export default reducer;
