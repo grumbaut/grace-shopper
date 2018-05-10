@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { saveProduct } from '../store/products';
 
-class createProduct extends Component {
+class CreateProduct extends Component {
   constructor(product){
     super();
     this.onChange = this.onChange.bind(this);
@@ -27,6 +27,8 @@ class createProduct extends Component {
   }
 
   render(){
+    const { user } = this.props;
+    if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
       <div>
         <ul>
@@ -65,10 +67,11 @@ class createProduct extends Component {
   }
 }
 
-const mapState = ({ categories, products }) => {
+const mapState = ({ categories, products, user }) => {
   return {
     categories,
-    products
+    products,
+    user
   };
 };
 
@@ -78,4 +81,4 @@ const mapDispatch = dispatch => {
   };
 };
 
-export default connect(mapState, mapDispatch)(createProduct);
+export default connect(mapState, mapDispatch)(CreateProduct);
