@@ -42,7 +42,8 @@ export const updateOrder = (userId, orderId, update, history) => {
 
 export const cancelOrder = (userId, orderId) => {
   return dispatch => {
-    return axios.delete(`/api/users/${userId}/orders/${orderId}`)
+    const headers = headerFunc();
+    return axios.delete(`/api/users/${userId}/orders/${orderId}`, { headers })
       .then(res => res.data)
       .then(order => dispatch(gotUpdatedOrder(order)))
       .catch(err => console.error(err));
