@@ -3,7 +3,8 @@ const { syncAndSeed } = require('./server/db');
 
 const port = process.env.PORT || 3000;
 
-server.listen( port, ()=> console.log(`Listening on port ${port}`));
-
-syncAndSeed();
+syncAndSeed()
+  .then(() => {
+    server.listen( port, ()=> console.log(`Listening on port ${port}`));
+  });
 

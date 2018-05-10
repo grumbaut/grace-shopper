@@ -21,14 +21,15 @@ const deletedItem = id => {
 };
 
 export const getCart = userId => (
-  dispatch => (
-    axios.post(`/api/users/${userId}/orders`)
+  dispatch => {
+    return axios.post(`/api/users/${userId}/orders`)
       .then(res => res.data)
       .then(cart => dispatch(gotCart(cart)))
       .then(() => dispatch(getOrders()))
-      .catch(err => console.error(err))
-  )
-);
+      .catch(err => console.error(err));
+  }
+)
+;
 
 export const updateCart = (userId, orderId, lineItems) => (
   dispatch => (
@@ -57,13 +58,14 @@ export const deleteItem = (userId, orderId, lineItemId) => (
 );
 
 export const checkout = (userId, orderId, shippingInfo, history) => (
-  dispatch => (
-    axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, shippingInfo)
+  dispatch => {
+    const token = window.localStorage.getItem('token');
+    return axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, shippingInfo, { headers: { authorization: token } })
       .then(res => res.data)
       .then(order => dispatch(checkoutOrder(order)))
       .then(() => dispatch(getCart(userId)))
-      .then(() => history.push('/'))
-  )
+      .then(() => history.push('/'));
+  }
 );
 
 const reducer = (state = {}, action) => {

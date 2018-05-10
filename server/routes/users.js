@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const db = require('../db');
 const { User, Order, LineItem, Product } = db.models;
+const { authorized, isCorrectUser } = require('./authFuncs');
 
 //USER ROUTES
 router.get('/', (req, res, next)=> {
@@ -28,7 +29,7 @@ router.delete('/:id', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   User.findById(req.params.id)
-    .then( user => {      
+    .then( user => {
       Object.assign(user, req.body);
       return user.save();
     })
@@ -108,7 +109,7 @@ router.put('/:id/orders/:orderId/quantity', (req, res, next) => {
     .catch(next);
 });
 
-router.put('/:id/orders/:orderId/checkout', (req, res, next)=> {
+router.put('/:id/orders/:orderId/checkout', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   Order.findById(req.params.orderId, {
     include: [{
       model: LineItem,
