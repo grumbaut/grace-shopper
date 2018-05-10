@@ -15,13 +15,13 @@ class EditReview extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.contentValidator = (value) => {
-        if(!value) {
-          return 'Please write a review.';
-        }
-        if(value.length < 20) {
-          return 'Reviews must be at least 20 characters.';
-        }
-      };
+      if(!value) {
+        return 'Please write a review.';
+      }
+      if(value.length < 20) {
+        return 'Reviews must be at least 20 characters.';
+      }
+    };
   }
 
   componentWillReceiveProps(nextProps) {

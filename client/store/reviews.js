@@ -1,4 +1,5 @@
 import axios from 'axios';
+import headerFunc from './headerFunc';
 
 const GOT_REVIEWS = 'GOT_REVIEWS';
 const CREATE_REVIEW = 'CREATE_REVIEW';
@@ -56,22 +57,23 @@ export const deleteReview = (review, history) => (
   )
 );
 
-export const saveReview = (review, history) => (
-  review.id ? (
+export const saveReview = (review, history) => {
+  const headers = headerFunc();
+  return review.id ? (
     dispatch => (
-      axios.put(`api/reviews/${review.id}`, review)
+      axios.put(`api/reviews/${review.id}`, review, { headers })
         .then( res => res.data)
         .then( updatedReview => dispatch(updateReviewInStore(updatedReview)))
         .then( () => history.push(`/products/${review.productId}`))
     )
   ) : (
     dispatch => (
-      axios.post(`api/reviews`, review)
+      axios.post(`api/reviews`, review, { headers })
         .then(res => res.data)
         .then( newReview => dispatch(createReviewInStore(newReview)))
         .then( () => history.push(`/products/${review.productId}`))
-    ))
-);
+    ));
+};
 
 export default reducer;
 
