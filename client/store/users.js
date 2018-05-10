@@ -49,12 +49,9 @@ export const getUsers = () => (
 
 export const saveUser = (user) => (
   dispatch => (
-    axios.put(`api/users/${user.id}`, user)
-      
-      .then(result => result.data)
-      
-      .then(user => dispatch(updateUserInStore(user))))
-      .then(()=> console.log('got to store'))
+    axios.put(`api/users/${user.id}`, user)      
+      .then(result => result.data)      
+      .then(user => dispatch(updateUserInStore(user))))      
 );
 
 export const deleteUser = (user, history) => (
