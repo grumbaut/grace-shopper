@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getOrders, checkoutOrder } from './orders';
-import headerFunc from './headers';
+import headerFunc from './headerFunc';
 
 const GOT_CART = 'GOT_CART';
 const GOT_UPDATED_CART = 'GOT_UPDATED_CART';
@@ -33,29 +33,32 @@ export const getCart = userId => (
 ;
 
 export const updateCart = (userId, orderId, lineItems) => (
-  dispatch => (
-    axios.put(`/api/users/${userId}/orders/${orderId}/quantity`, lineItems)
+  dispatch => {
+    const headers = headerFunc();
+    return axios.put(`/api/users/${userId}/orders/${orderId}/quantity`, lineItems, { headers })
       .then(res => res.data)
       .then(cart => dispatch(gotUpdatedCart(cart)))
       .catch(err => console.error(err))
-  )
+  }
 );
 
 export const addToCart = (userId, orderId, quantity, product) => (
-  dispatch => (
-    axios.put(`/api/users/${userId}/orders/${orderId}/add`, { quantity, product })
+  dispatch => {
+    const headers = headerFunc();
+    return axios.put(`/api/users/${userId}/orders/${orderId}/add`, { quantity, product }, { headers })
       .then(res => res.data)
       .then(cart => dispatch(gotUpdatedCart(cart)))
-      .catch(err => console.error(err))
-  )
+      .catch(err => console.error(err));
+  }
 );
 
 export const deleteItem = (userId, orderId, lineItemId) => (
-  dispatch => (
-    axios.delete(`/api/users/${userId}/orders/${orderId}/lineitems/${lineItemId}`)
+  dispatch => {
+    const headers = headerFunc();
+    return axios.delete(`/api/users/${userId}/orders/${orderId}/lineitems/${lineItemId}`, { headers })
       .then(() => dispatch(deletedItem(lineItemId)))
-      .catch( err => console.error(err))
-  )
+      .catch( err => console.error(err));
+  }
 );
 
 export const checkout = (userId, orderId, shippingInfo, history) => (

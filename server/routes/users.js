@@ -64,7 +64,7 @@ router.delete('/:id/orders/:orderId', (req, res, next)=> {
     .catch(next);
 });
 
-router.delete('/:id/orders/:orderId/lineitems/:lineItemId', (req, res, next) => {
+router.delete('/:id/orders/:orderId/lineitems/:lineItemId', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   LineItem.findById(req.params.lineItemId)
     .then(lineItem => lineItem.destroy())
     .then(() => res.sendStatus(200))
@@ -84,7 +84,7 @@ router.put('/:id/orders/:orderId', (req, res, next) => {
     .catch(next);
 });
 
-router.put('/:id/orders/:orderId/add', (req, res, next)=> {
+router.put('/:id/orders/:orderId/add', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => order.addToCart(req.body.quantity, req.body.product))
     .then(() => Order.findById(req.params.orderId, {
@@ -97,7 +97,7 @@ router.put('/:id/orders/:orderId/add', (req, res, next)=> {
     .catch(next);
 });
 
-router.put('/:id/orders/:orderId/quantity', (req, res, next) => {
+router.put('/:id/orders/:orderId/quantity', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   LineItem.changeQuantities(req.body)
     .then(() => Order.findById(req.params.orderId, {
       include: [{
