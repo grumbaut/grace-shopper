@@ -24,6 +24,8 @@ class CreateProduct extends Component {
     this.setState({ [ev.target.name]: ev.target.value });
   }
   render(){
+    const { user } = this.props;
+    if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
       <div>
         <ul>
@@ -62,10 +64,11 @@ class CreateProduct extends Component {
   }
 }
 
-const mapState = ({ categories, products }) => {
+const mapState = ({ categories, products, user }) => {
   return {
     categories,
-    products
+    products,
+    user
   };
 };
 

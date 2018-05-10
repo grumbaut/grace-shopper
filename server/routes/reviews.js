@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const db = require('../db');
 const { Review } = db.models;
+const { authorized, isAdmin, isCorrectUser } = require('./authFuncs');
 
 router.get('/', (req, res, next) => {
   Review.findAll()
@@ -14,7 +15,7 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', authorized, isCorrectUser('body', 'userId'), (req, res, next) => {
   Review.create(req.body)
     .then( review => Review.find({
       where: { id: review.id }
@@ -23,7 +24,7 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', authorized, isCorrectUser('body', 'userId'), (req, res, next) => {
   Review.findById(req.params.id)
     .then( review => {
       Object.assign(review, req.body);

@@ -62,14 +62,14 @@ export const saveCategory = (category, history) => (
       axios.put(`/api/categories/${category.id}`, category)
         .then(result => result.data)
         .then(category => dispatch(updateCategoryInStore(category))))
-      ) : (
-      dispatch => (
-        axios.post(`api/categories`, category)
-          .then(result => result.data)
-          .then(category => dispatch(createCategoryInStore(category)))
-          .then( () => history.push('/categories'))
-      )
+  ) : (
+    dispatch => (
+      axios.post(`api/categories`, category)
+        .then(result => result.data)
+        .then(category => dispatch(createCategoryInStore(category)))
+        .then( () => history.push('/categories'))
     )
-  );
+  )
+);
 
 export default reducer;

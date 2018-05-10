@@ -83,8 +83,8 @@ class Product extends React.Component {
           productCategory ? (
             <p>{product.name} is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>
           ) : (
-              <p>{product.name} is not in any category yet.</p>
-            )
+            <p>{product.name} is not in any category yet.</p>
+          )
         }
         {
           user.isAdmin ? (

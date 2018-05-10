@@ -1,4 +1,5 @@
 import axios from 'axios';
+import headerFunc from './headerFunc';
 
 const GOT_PRODUCTS = 'GOT_PRODUCTS';
 const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
@@ -41,35 +42,38 @@ const reducer = (state = [], action) => {
 };
 
 export const getProducts = () => (
-  dispatch => (
-    axios.get('/api/products')
+  dispatch => {
+    return axios.get('/api/products')
       .then(res => res.data)
-      .then(products => dispatch(addProductsToStore(products)))
-  )
+      .then(products => dispatch(addProductsToStore(products)));
+  }
 );
 
 export const deleteProduct = (product, history) => (
-  dispatch => (
-    axios.delete(`api/products/${product.id}`)
+  dispatch => {
+    const headers = headerFunc();
+    return axios.delete(`api/products/${product.id}`, { headers })
       .then( () => dispatch(deleteProductInStore(product)))
-      .then( () => history.push('/products'))
-  )
+      .then( () => history.push('/products'));
+  }
 );
 
-export const saveProduct = (product, history) => (
-  product.id ? (
-    dispatch => (
-      axios.put(`api/products/${product.id}`, product)
+export const saveProduct = (product, history) => {
+  const headers = headerFunc();
+  return product.id ? (
+    dispatch => {
+      return axios.put(`api/products/${product.id}`, product, { headers })
         .then(result => result.data)
-        .then(product => dispatch(updateProductInStore(product))))
+        .then(product => dispatch(updateProductInStore(product)));
+    }
   ) : (
-    dispatch => (
-      axios.post(`api/products`, product)
+    dispatch => {
+      return axios.post(`api/products`, product, { headers })
         .then(result => result.data)
         .then(product => dispatch(createProductInStore(product)))
         .then( () => history.push('/products'))
-    )
+    }
   )
-);
+};
 
 export default reducer;

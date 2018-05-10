@@ -41,13 +41,13 @@ class Home extends React.Component {
     if (user.passwordPrompt) {
       return (
         <div>
-          <h1> What fun . . . it's time to change your password! </h1>
+          <h1> What fun . . . it&#146;s time to change your password! </h1>
           <form onSubmit={ onSave }>
              Password: <input value = { password } name = 'password' onChange ={ onChange }/>
-             <button type='submit' className='btn btn-primary btn-sm'> Change password </button>
+            <button type='submit' className='btn btn-primary btn-sm'> Change password </button>
           </form>
         </div>
-      )
+      );
     }
     else {
       return (

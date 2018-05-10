@@ -1,4 +1,5 @@
 import axios from 'axios';
+import headerFunc from './headerFunc';
 
 const GOT_ORDERS = 'GOT_ORDERS';
 const GOT_UPDATED_ORDER = 'GOT_UPDATED_ORDER';
@@ -30,7 +31,8 @@ export const getOrders = () => {
 
 export const updateOrder = (userId, orderId, update, history) => {
   return dispatch => {
-    return axios.put(`/api/users/${userId}/orders/${orderId}`, update)
+    const headers = headerFunc();
+    return axios.put(`/api/users/${userId}/orders/${orderId}`, update, { headers })
       .then(res => res.data)
       .then(order => dispatch(gotUpdatedOrder(order)))
       .then(() => history.push('/manage-orders'))
@@ -40,7 +42,8 @@ export const updateOrder = (userId, orderId, update, history) => {
 
 export const cancelOrder = (userId, orderId) => {
   return dispatch => {
-    return axios.delete(`/api/users/${userId}/orders/${orderId}`)
+    const headers = headerFunc();
+    return axios.delete(`/api/users/${userId}/orders/${orderId}`, { headers })
       .then(res => res.data)
       .then(order => dispatch(gotUpdatedOrder(order)))
       .catch(err => console.error(err));

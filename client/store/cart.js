@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getOrders, checkoutOrder } from './orders';
+import headerFunc from './headerFunc';
 
 const GOT_CART = 'GOT_CART';
 const GOT_UPDATED_CART = 'GOT_UPDATED_CART';
@@ -21,49 +22,54 @@ const deletedItem = id => {
 };
 
 export const getCart = userId => (
-  dispatch => (
-    axios.post(`/api/users/${userId}/orders`)
+  dispatch => {
+    return axios.post(`/api/users/${userId}/orders`)
       .then(res => res.data)
       .then(cart => dispatch(gotCart(cart)))
       .then(() => dispatch(getOrders()))
-      .catch(err => console.error(err))
-  )
-);
+      .catch(err => console.error(err));
+  }
+)
+;
 
 export const updateCart = (userId, orderId, lineItems) => (
-  dispatch => (
-    axios.put(`/api/users/${userId}/orders/${orderId}/quantity`, lineItems)
+  dispatch => {
+    const headers = headerFunc();
+    return axios.put(`/api/users/${userId}/orders/${orderId}/quantity`, lineItems, { headers })
       .then(res => res.data)
       .then(cart => dispatch(gotUpdatedCart(cart)))
-      .catch(err => console.error(err))
-  )
+      .catch(err => console.error(err));
+  }
 );
 
 export const addToCart = (userId, orderId, quantity, product) => (
-  dispatch => (
-    axios.put(`/api/users/${userId}/orders/${orderId}/add`, { quantity, product })
+  dispatch => {
+    const headers = headerFunc();
+    return axios.put(`/api/users/${userId}/orders/${orderId}/add`, { quantity, product }, { headers })
       .then(res => res.data)
       .then(cart => dispatch(gotUpdatedCart(cart)))
-      .catch(err => console.error(err))
-  )
+      .catch(err => console.error(err));
+  }
 );
 
 export const deleteItem = (userId, orderId, lineItemId) => (
-  dispatch => (
-    axios.delete(`/api/users/${userId}/orders/${orderId}/lineitems/${lineItemId}`)
+  dispatch => {
+    const headers = headerFunc();
+    return axios.delete(`/api/users/${userId}/orders/${orderId}/lineitems/${lineItemId}`, { headers })
       .then(() => dispatch(deletedItem(lineItemId)))
-      .catch( err => console.error(err))
-  )
+      .catch( err => console.error(err));
+  }
 );
 
 export const checkout = (userId, orderId, shippingInfo, history) => (
-  dispatch => (
-    axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, shippingInfo)
+  dispatch => {
+    const headers = headerFunc();
+    return axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, shippingInfo, { headers })
       .then(res => res.data)
       .then(order => dispatch(checkoutOrder(order)))
       .then(() => dispatch(getCart(userId)))
-      .then(() => history.push('/'))
-  )
+      .then(() => history.push('/'));
+  }
 );
 
 const reducer = (state = {}, action) => {

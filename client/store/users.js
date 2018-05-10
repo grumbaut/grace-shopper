@@ -1,4 +1,5 @@
 import axios from 'axios';
+import headerFunc from './headerFunc';
 
 const GOT_USERS = 'GOT_USERS';
 const DELETE_USER = 'DELETE_USER';
@@ -40,26 +41,30 @@ const reducer = (state = [], action) => {
 };
 
 export const getUsers = () => (
-  dispatch => (
-    axios.get('/api/users')
+  dispatch => {
+    const headers = headerFunc();
+    axios.get('/api/users', { headers })
       .then(res => res.data)
-      .then(users => dispatch(addUsersToStore(users)))
-  )
+      .then(users => dispatch(addUsersToStore(users)));
+  }
 );
 
 export const saveUser = (user) => (
-  dispatch => (
-    axios.put(`api/users/${user.id}`, user)      
-      .then(result => result.data)      
-      .then(user => dispatch(updateUserInStore(user))))      
+  dispatch => {
+    const headers = headerFunc();
+    return axios.put(`api/users/${user.id}`, user, { headers })
+      .then(result => result.data)
+      .then(user => dispatch(updateUserInStore(user)));
+  }
 );
 
 export const deleteUser = (user, history) => (
-  dispatch => (
-    axios.delete(`api/users/${user.id}`)
+  dispatch => {
+    const headers = headerFunc();
+    return axios.delete(`api/users/${user.id}`, { headers })
       .then( () => dispatch(deleteUserInStore(user)))
-      .then( () => history.push('/users'))
-  )
+      .then( () => history.push('/users'));
+  }
 );
 
 export default reducer;
