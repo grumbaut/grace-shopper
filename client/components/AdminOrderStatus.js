@@ -27,6 +27,8 @@ class AdminOrderStatus extends React.Component {
   }
 
   render(){
+    const { user } = this.props;
+    if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     const { search, changed } = this.state;
     const order = this.search(search);
     return (
@@ -54,7 +56,8 @@ class AdminOrderStatus extends React.Component {
 }
 
 const mapState = state => ({
-  orders: state.orders
+  orders: state.orders,
+  user: state.user
 });
 
 export default connect(mapState)(AdminOrderStatus);
