@@ -29,6 +29,11 @@ const User = conn.define('user', {
   },
   password: {
     type: Sequelize.STRING
+  },
+  passwordPrompt: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
   }
 },{
   getterMethods: {
@@ -73,8 +78,8 @@ User.exchangeTokenForUser = function(token){
   }
 };
 
-User.prototype.correctPassword = function(password) { //this is a placeholder!!
-  return password === 'bobshops' ? true : false;
-};
+// User.prototype.correctPassword = function(password) { //this is a placeholder!!
+//   return password === 'bobshops' ? true : false;
+// };
 
 module.exports = User;

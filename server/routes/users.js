@@ -28,7 +28,7 @@ router.delete('/:id', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   User.findById(req.params.id)
-    .then( user => {
+    .then( user => {      
       Object.assign(user, req.body);
       return user.save();
     })

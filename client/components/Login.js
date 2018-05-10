@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { attemptLogin } from '../store';
 
-//need to define loggedIn here or elsewhere (nav)
-
 class Login extends React.Component {
   constructor(props){
     super(props);

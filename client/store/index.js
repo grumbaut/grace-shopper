@@ -4,10 +4,10 @@ import thunk from 'redux-thunk';
 import categories from './categories';
 import products from './products';
 import user from './sessions';
+import users from './users';
 import cart from './cart';
 import reviews from './reviews';
 import orders from './orders';
-import users from './users';
 
 import { signUp } from './sessions';
 import { addUser } from './users';

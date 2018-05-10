@@ -315,21 +315,24 @@ const users = [
     lastName: 'Buyer',
     email: 'alice@wonderland.com',
     isAdmin: true,
-    password: 'ALICE'
+    password: 'ALICE',
+    passwordPrompt: false
   },
   {
     firstName: 'Bob',
     lastName: 'Bill',
     email: 'bob@wonderland.com',
     isAdmin: false,
-    password: 'BOB'
+    password: 'BOB',
+    passwordPrompt: false
   },
   {
     firstName: 'Cat',
     lastName: 'Purchase',
     email: 'cat@wonderland.com',
     isAdmin: false,
-    password: 'CAT'
+    password: 'CAT',
+    passwordPrompt: false
   }
 ];
 
