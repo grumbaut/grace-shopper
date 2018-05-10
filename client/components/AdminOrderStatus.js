@@ -30,7 +30,9 @@ class AdminOrderStatus extends React.Component {
     const { user } = this.props;
     if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     const { search, changed } = this.state;
+    const { user } = this.props;
     const order = this.search(search);
+    if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
       <div>
         <h2 className='header'>Change Order Status</h2>

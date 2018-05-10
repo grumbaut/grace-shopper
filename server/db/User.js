@@ -65,13 +65,17 @@ User.authenticate = function(credentials){
 User.exchangeTokenForUser = function(token){
   try {
     const id = jwt.decode(token, KEY).id;
-    return User.findById(id)
+    return User.find({
+      where: { id }
+    })
       .then( user => {
-        if(user)
+        console.log(id)
+        if(user) {
           return user;
-        throw { status: 401 }
+        }
+        throw { status: 401 };
       })
-      .catch(()=> {throw { status: 401 }});
+      .catch(err=> console.error(err));
   }
   catch(ex){
     return Promise.reject({ status: 401 });

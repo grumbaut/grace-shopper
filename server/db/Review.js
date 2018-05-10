@@ -10,13 +10,12 @@ const Review = conn.define('review', {
     type: Sequelize.INTEGER,
     validate: {min: 1, max: 5}
   }
-}
-, {
-    defaultScope: {
-      include: [
-        { model: User }
-      ]
-    }
+}, {
+  defaultScope: {
+    include: [
+      { model: User }
+    ]
+  }
 }
 );
 

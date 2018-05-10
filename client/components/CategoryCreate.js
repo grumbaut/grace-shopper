@@ -22,12 +22,14 @@ class CategoryCreate extends React.Component {
   render() {
     const { name } = this.state;
     const { onChangeInfo, onSave } = this;
+    const { user } = this.props;
+    if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
       <div>
         <h2>Add A New Category</h2>
         <form onSubmit={ onSave }>
           <p>Name:<br />
-          <input value={ name } onChange={ onChangeInfo } />
+            <input value={ name } onChange={ onChangeInfo } />
           </p>
           <button type="submit">Add</button>
         </form>
@@ -36,10 +38,14 @@ class CategoryCreate extends React.Component {
   }
 }
 
+const mapState = state => ({
+  user: state.user
+});
+
 const mapDispatch = (dispatch, { history }) => {
   return {
     saveCategory: (category) => dispatch(saveCategory(category, history))
   };
 };
 
-export default connect(null, mapDispatch)(CategoryCreate);
+export default connect(mapState, mapDispatch)(CategoryCreate);

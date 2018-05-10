@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const db = require('../db');
 const { User, Order, LineItem, Product } = db.models;
+const { authorized, isCorrectUser, isAdmin } = require('./authFuncs');
 
 //USER ROUTES
-router.get('/', (req, res, next)=> {
+router.get('/', authorized, isAdmin, (req, res, next)=> {
   User.findAll({
     include: [{
       model: Order,
@@ -17,7 +18,7 @@ router.get('/', (req, res, next)=> {
     .catch(next);
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', authorized, isCorrectUser('req', 'id'), (req, res, next) => {
   User.findById(req.params.id)
     .then( user => {
       user.destroy();
@@ -26,9 +27,9 @@ router.delete('/:id', (req, res, next) => {
     .catch(next);
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', authorized, isCorrectUser('req', 'id'), (req, res, next) => {
   User.findById(req.params.id)
-    .then( user => {      
+    .then( user => {
       Object.assign(user, req.body);
       return user.save();
     })
@@ -56,21 +57,21 @@ router.post('/:id/orders', (req, res, next)=> {
     .catch(next);
 });
 
-router.delete('/:id/orders/:orderId', (req, res, next)=> {
+router.delete('/:id/orders/:orderId', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => order.cancelOrder())
     .then(order => res.send(order))
     .catch(next);
 });
 
-router.delete('/:id/orders/:orderId/lineitems/:lineItemId', (req, res, next) => {
+router.delete('/:id/orders/:orderId/lineitems/:lineItemId', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   LineItem.findById(req.params.lineItemId)
     .then(lineItem => lineItem.destroy())
     .then(() => res.sendStatus(200))
     .catch(next);
 });
 
-router.put('/:id/orders/:orderId', (req, res, next) => {
+router.put('/:id/orders/:orderId', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => order.update(req.body))
     .then(() => Order.findById(req.params.orderId, {
@@ -83,7 +84,7 @@ router.put('/:id/orders/:orderId', (req, res, next) => {
     .catch(next);
 });
 
-router.put('/:id/orders/:orderId/add', (req, res, next)=> {
+router.put('/:id/orders/:orderId/add', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => order.addToCart(req.body.quantity, req.body.product))
     .then(() => Order.findById(req.params.orderId, {
@@ -96,7 +97,7 @@ router.put('/:id/orders/:orderId/add', (req, res, next)=> {
     .catch(next);
 });
 
-router.put('/:id/orders/:orderId/quantity', (req, res, next) => {
+router.put('/:id/orders/:orderId/quantity', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   LineItem.changeQuantities(req.body)
     .then(() => Order.findById(req.params.orderId, {
       include: [{
@@ -108,7 +109,7 @@ router.put('/:id/orders/:orderId/quantity', (req, res, next) => {
     .catch(next);
 });
 
-router.put('/:id/orders/:orderId/checkout', (req, res, next)=> {
+router.put('/:id/orders/:orderId/checkout', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   Order.findById(req.params.orderId, {
     include: [{
       model: LineItem,

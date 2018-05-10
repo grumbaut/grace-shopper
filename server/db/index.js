@@ -22,10 +22,10 @@ User.hasMany(Review);
 
 const syncAndSeed = () => {
   return conn.sync({ force: true })
-  .then(() => seed())
-  .catch(err => {
-    throw err;
-  });
+    .then(() => seed())
+    .catch(err => {
+      throw err;
+    });
 };
 
 module.exports = {

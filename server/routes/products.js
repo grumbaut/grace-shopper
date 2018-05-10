@@ -1,21 +1,21 @@
 const router = require('express').Router();
 const db = require('../db');
 const { Product } = db.models;
+const { authorized, isAdmin } = require('./authFuncs');
 
-router.get('/', (req, res, next)=> {
+router.get('/', (req, res, next) => {
   Product.findAll()
     .then( products => res.send(products))
     .catch(next);
 });
 
-router.post('/', (req, res, next)=> {
-  console.log(req.body)
+router.post('/', authorized, isAdmin, (req, res, next) => {
   Product.create(req.body)
     .then( product => res.send(product))
     .catch(next);
 });
 
-router.delete('/:id', (req, res, next)=> {
+router.delete('/:id', authorized, isAdmin, (req, res, next) => {
   Product.findById(req.params.id)
     .then( product => {
       product.destroy();
@@ -24,7 +24,7 @@ router.delete('/:id', (req, res, next)=> {
     .catch(next);
 });
 
-router.put('/:id', (req, res, next)=> {
+router.put('/:id', authorized, isAdmin, (req, res, next) => {
   Product.findById(req.params.id)
     .then( product => {
       Object.assign(product, req.body);

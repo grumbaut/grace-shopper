@@ -14,7 +14,8 @@ export const signUp = userInfo => {
       .then(result => {
         window.localStorage.setItem('token', result.data);
       })
-      .then(() => dispatch(getUserFromToken(window.localStorage.getItem('token'))));
+      .then(() => dispatch(getUserFromToken(window.localStorage.getItem('token'))))
+      .catch(() => window.localStorage.removeItem('token'));
   };
 };
 
@@ -45,7 +46,8 @@ export const attemptLogin = (credentials, history) => {
     return axios.post('/api/sessions', credentials)
       .then (result => window.localStorage.setItem('token', result.data))
       .then(()=> dispatch(getUserFromToken(window.localStorage.getItem('token'))))
-      .then(() => history.push('/'));
+      .then(() => history.push('/'))
+      .catch(() => window.localStorage.removeItem('token'));
   };
 };
 

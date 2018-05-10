@@ -42,7 +42,7 @@ class Home extends React.Component {
         <div>
           <h1> What fun . . . it&#146;s time to change your password! </h1>
           <form onSubmit={ onSave }>
-             Password: <input value = { password } name = 'password' onChange ={ onChange } />;
+             Password: <input value = { password } name = 'password' onChange ={ onChange }/>
             <button type='submit' className='btn btn-primary btn-sm'> Change password </button>
           </form>
         </div>
