@@ -21,5 +21,4 @@ const mapState = ({ users } ) => {
     }
 }
 
-
 export default connect(mapState)(Users);
