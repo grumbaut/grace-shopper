@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const db = require('../db');
 const { User, Order, LineItem, Product } = db.models;
-const { authorized, isCorrectUser } = require('./authFuncs');
+const { authorized, isCorrectUser, isAdmin } = require('./authFuncs');
 
 //USER ROUTES
-router.get('/', (req, res, next)=> {
+router.get('/', authorized, isAdmin, (req, res, next)=> {
   User.findAll({
     include: [{
       model: Order,

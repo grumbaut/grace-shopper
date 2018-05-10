@@ -29,12 +29,6 @@ import CreateProduct from './CreateProduct';
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      categories: [],
-      products: [],
-      users: [],
-      reviews: []
-    };
   }
 
   componentDidMount() {
@@ -87,7 +81,6 @@ const mapDispatch = dispatch => ({
     dispatch(getProducts());
     dispatch(getReviews());
     dispatch(getOrders());
-    dispatch(getUsers());
   },
   getUser(token) {
     dispatch(getUserFromToken(token));

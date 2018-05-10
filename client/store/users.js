@@ -1,4 +1,5 @@
 import axios from 'axios';
+import headerFunc from './headerFunc';
 
 const GOT_USERS = 'GOT_USERS';
 const DELETE_USER = 'DELETE_USER';
@@ -40,11 +41,12 @@ const reducer = (state = [], action) => {
 };
 
 export const getUsers = () => (
-  dispatch => (
-    axios.get('/api/users')
+  dispatch => {
+    const headers = headerFunc();
+    axios.get('/api/users', { headers })
       .then(res => res.data)
-      .then(users => dispatch(addUsersToStore(users)))
-  )
+      .then(users => dispatch(addUsersToStore(users)));
+  }
 );
 
 export const saveUser = (user) => (
