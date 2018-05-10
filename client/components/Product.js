@@ -68,7 +68,7 @@ class Product extends React.Component {
     this.props.deleteProduct({ id: this.props.id });
   }
   render() {
-    const { user, product, categories, reviews, id, purchased, history, reviewed } = this.props; 
+    const { user, product, categories, reviews, id, purchased, history, reviewed } = this.props;
     const { name, price, description, categoryId } = this.state;
     const { onChangeInput, onSelectCategory, onSaveCategory, onSave, onDelete } = this;
     if (!product) {
@@ -76,7 +76,7 @@ class Product extends React.Component {
     }
     const availableCategories = categories.filter(category => category.id !== product.categoryId);
     const productCategory = categories.find(category => category.id === product.categoryId);
-
+    const reviewHeader = reviews.filter(review => review.productId === product.id).length ? 'Reviews:' : 'There are no reviews for this product yet.';
     return (
       <div>
         {
@@ -111,8 +111,7 @@ class Product extends React.Component {
                 </p>
                 <button type="submit"> Update </button>
               </form>
-              <form onSubmit={ onSaveCategory }>
-                {/*<p>Current category: {productCategory.name}</p>*/}
+              <form onSubmit={ onSaveCategory }>                
                 <select value={ categoryId } name="categoryId" onChange={ onSelectCategory }>
                   <option value="-1">Select New Category</option>
                   {
@@ -133,7 +132,7 @@ class Product extends React.Component {
             : (
               <div>
                 <ProductCardDetail product={product} />
-                <h3>Reviews:</h3>
+                <h3>{reviewHeader}</h3>
                 {purchased ? (reviewed ?
                   <Link to={`/edit-reviews/${reviewed.id}`} >Edit Your Review</Link>
                   :
