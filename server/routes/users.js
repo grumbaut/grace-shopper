@@ -57,7 +57,7 @@ router.post('/:id/orders', (req, res, next)=> {
     .catch(next);
 });
 
-router.delete('/:id/orders/:orderId', (req, res, next)=> {
+router.delete('/:id/orders/:orderId', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => order.cancelOrder())
     .then(order => res.send(order))
@@ -71,7 +71,7 @@ router.delete('/:id/orders/:orderId/lineitems/:lineItemId', authorized, isCorrec
     .catch(next);
 });
 
-router.put('/:id/orders/:orderId', (req, res, next) => {
+router.put('/:id/orders/:orderId', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => order.update(req.body))
     .then(() => Order.findById(req.params.orderId, {

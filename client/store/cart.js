@@ -38,7 +38,7 @@ export const updateCart = (userId, orderId, lineItems) => (
     return axios.put(`/api/users/${userId}/orders/${orderId}/quantity`, lineItems, { headers })
       .then(res => res.data)
       .then(cart => dispatch(gotUpdatedCart(cart)))
-      .catch(err => console.error(err))
+      .catch(err => console.error(err));
   }
 );
 
