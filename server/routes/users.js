@@ -18,7 +18,7 @@ router.get('/', authorized, isAdmin, (req, res, next)=> {
     .catch(next);
 });
 
-router.delete('/:id', authorized, isCorrectUser('req', 'id'), (req, res, next) => {
+router.delete('/:id', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   User.findById(req.params.id)
     .then( user => {
       user.destroy();
@@ -27,7 +27,7 @@ router.delete('/:id', authorized, isCorrectUser('req', 'id'), (req, res, next) =
     .catch(next);
 });
 
-router.put('/:id', authorized, isCorrectUser('req', 'id'), (req, res, next) => {
+router.put('/:id', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   User.findById(req.params.id)
     .then( user => {
       Object.assign(user, req.body);
