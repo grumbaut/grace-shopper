@@ -25,7 +25,7 @@ const Product = conn.define('product', {
     }
   },
   imageUrl: {
-    type: Sequelize.BLOB,
+    type: Sequelize.TEXT,
     defaultValue: '/images/noImage.jpg'
   },
   displayItem: {

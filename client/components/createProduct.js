@@ -8,28 +8,22 @@ class CreateProduct extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
     this.previewFile = this.previewFile.bind(this);
-    this.onLoadImage = this.onLoadImage.bind(this);
     this.state = {
       name: product.name ? product.name : 'placeholder',
       description: product.description ? product.description : 'placeholder',
       price: product.price ? product.price : 0,
       categoryId: product.categoryId ? product.categoryId : 1,
-      imageUrl: product.imageUrl ? product.imageUrl : null
+      imageUrl: product.imageUrl ? product.imageUrl : ''
     };
   }
 
   previewFile(){
     const preview = document.querySelector('img');
-    const setImage = this.onLoadImage;
     const file = preview? document.querySelector('input[type=file]').files[0]: null;
     const reader = new FileReader();
 
-    reader.addEventListener("load", function () {
-      console.log(`I got a result!`);
-      const data = reader.result.replace(/^data:image\/\w+;base64,/, "");
-      const buf = new Buffer(data, 'base64');
-      setImage({ 'imageUrl': buf});
-      //setImage({ 'imageUrl': reader.result});
+    reader.addEventListener("load", ()=>{
+      this.setState({ 'imageUrl': reader.result});
     preview.src = reader.result;
     }, false);
 
@@ -37,10 +31,6 @@ class CreateProduct extends Component {
     reader.readAsDataURL(file);
     }
   }
-
-  onLoadImage(result){ this.setState({ imageUrl: result });
-}
-
 
   onSave(ev){
     ev.preventDefault();
