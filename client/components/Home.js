@@ -104,7 +104,7 @@ const mapState = state => {
   return { products, firstProduct, user };
 };
 
-const mapDispatch = dispatch => {
+const mapDispatch = dispatch => {  
   return {
     saveUser: (user) => dispatch(saveUser(user))
   };
