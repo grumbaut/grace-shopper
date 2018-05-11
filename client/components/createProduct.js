@@ -7,6 +7,7 @@ class CreateProduct extends Component {
     super();
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.previewFile = this.previewFile.bind(this);
     this.state = {
       name: product.name ? product.name : 'placeholder',
       description: product.description ? product.description : 'placeholder',
@@ -15,6 +16,21 @@ class CreateProduct extends Component {
       imageUrl: product.imageUrl ? product.imageUrl : '/images/noImage.jpg'
     };
   }
+
+  previewFile(){
+    const preview = document.querySelector('img');
+    const file = preview? document.querySelector('input[type=file]').files[0]: null;
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+    preview.src = reader.result;
+    }, false);
+
+    if (file) {
+    reader.readAsDataURL(file);
+    }
+  }
+
 
   onSave(ev){
     ev.preventDefault();
@@ -49,6 +65,11 @@ class CreateProduct extends Component {
             <div className='form-group'>
               <label htmlFor='imageUrl'>Image URL: </label>
               <input name = 'imageUrl' onChange = { this.onChange } />
+            </div>
+            <div>
+              <label htmlFor='imageUrl'>Image URL: </label>
+              <input type="file" onChange={ this.previewFile } />
+              <img src="" height="200" alt="Image preview..." />
             </div>
             <div className='form-group'>
               <label htmlFor='categoryId'>Category</label>
