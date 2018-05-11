@@ -70,7 +70,8 @@ export const saveProduct = (product) => {
     dispatch => {
       return axios.post(`api/products`, product, { headers })
         .then(result => result.data)
-        .then(product => dispatch(createProductInStore(product)));
+        .then(product => dispatch(createProductInStore(product)))
+        .catch(err => console.error(err.response));
     }
   );
 };

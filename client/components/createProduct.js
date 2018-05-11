@@ -23,8 +23,9 @@ class CreateProduct extends Component {
     const reader = new FileReader();
 
     reader.addEventListener("load", ()=>{
-      this.setState({ 'imageUrl': reader.result});
-    preview.src = reader.result;
+      const image = reader.result;
+      this.setState({ imageUrl: image});
+      preview.src = image;
     }, false);
 
     if (file) {
@@ -35,6 +36,7 @@ class CreateProduct extends Component {
   onSave(ev){
     ev.preventDefault();
     const product = this.state;
+    console.log(product);
     this.props.saveProduct(product);
   }
 
@@ -43,7 +45,6 @@ class CreateProduct extends Component {
   }
 
   render(){
-    console.log(this.state.imageUrl);
     const { user } = this.props;
     if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
