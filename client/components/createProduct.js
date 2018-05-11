@@ -39,12 +39,10 @@ class CreateProduct extends Component {
     console.log(product);
     this.props.saveProduct(product);
   }
-
-  onChange(ev) {
+  onChange(ev){
     this.setState({ [ev.target.name]: ev.target.value });
   }
-
-  render() {
+  render(){
     const { user } = this.props;
     if (!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
@@ -94,9 +92,9 @@ const mapState = ({ categories, products, user }) => {
   };
 };
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, { history }) => {
   return {
-    saveProduct: (product) => dispatch(saveProduct(product)),
+    saveProduct: (product) => dispatch(saveProduct(product, history)),
   };
 };
 

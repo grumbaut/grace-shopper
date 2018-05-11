@@ -49,10 +49,10 @@ export const getUsers = () => (
   }
 );
 
-export const saveUser = (user) => (
+export const saveUser = (userInfo) => (
   dispatch => {
     const headers = headerFunc();
-    return axios.put(`api/users/${user.id}`, user, { headers })
+    return axios.put(`api/users/${userInfo.id}`, userInfo, { headers })
       .then(result => result.data)
       .then(user => dispatch(updateUserInStore(user)));
   }

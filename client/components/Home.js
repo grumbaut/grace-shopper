@@ -1,39 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { saveUser } from '../store'
+import { saveUser } from '../store';
 import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
   constructor(props){
     super(props);
-
+    this.state = {
+      password: ''
+    }
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
-
-    this.state= {
-      password: this.props.user.password ? this.props.user.password : '',
-      passwordPrompt: this.props.user.passwordPrompt ? this.props.user.passwordPrompt : false
-    }
+  }
+  onChange(ev){
+    this.setState({ password: ev.target.value });
   }
   onSave(ev){
     ev.preventDefault();
     const user =  {
       id: this.props.user.id,
-      firstName: this.props.user.firstName,
-      lastName: this.props.user.lastName,
-      email: this.props.user.email,
       password: this.state.password,
-      isAdmin: this.props.user.isAdmin,
-      passwordPrompt: this.state.passwordPrompt
+      passwordPrompt: false
     };
-    saveUser(user);
+    console.log('user is:', user);
+    this.props.saveUser(user);
   }
-  onChange(ev){
-    this.setState({ [ev.target.name]: ev.target.value });
-    this.setState({ passwordPrompt: false });
-    this.onSave(ev);
-  }
-  render(){
+  
+  render() {
     const { onChange, onSave } = this;
     const { user, password, firstProduct, products } = this.props;
     if (!firstProduct || !products ) return null;
@@ -103,9 +96,9 @@ const mapState = state => {
   return { products, firstProduct, user };
 };
 
-const mapDispatch = dispatch => {
+const mapDispatch = dispatch => {  
   return {
-    save: (user) => dispatch(saveUser(user)),
+    saveUser: (user) => dispatch(saveUser(user))
   };
 };
 

@@ -12,13 +12,14 @@ class EditUser extends Component {
   }
   onSave(ev) {
     ev.preventDefault();
-    let userToken = { id: this.props.user.id, isAdmin: !this.props.user.isAdmin };
-    this.props.saveUser(userToken);
+    let userInfo = { id: this.props.user.id, isAdmin: !this.props.user.isAdmin };
+    this.props.saveUser(userInfo);
   }
   onResetPassword(ev) {
     ev.preventDefault();
-    let userToken = { id: this.props.user.id, passwordPrompt: true };
-    this.props.saveUser(userToken);
+    let userInfo = { id: this.props.id, passwordPrompt: true };
+    console.log ('usersInfo is:', userInfo);
+    this.props.saveUser(userInfo);
   }
   onDelete(){
     this.props.deleteUser({ id: this.props.id });
@@ -40,7 +41,7 @@ class EditUser extends Component {
         </div>
         <br />
         <div>
-          <button  type ="submit" onClick={ onResetPassword } className="btn btn-primary btn-sm"> Require Password Reset</button>
+          <button type ="submit" onClick={ onResetPassword } className="btn btn-primary btn-sm"> Require Password Reset</button>
         </div>
         <br />
         <div>
@@ -54,13 +55,14 @@ class EditUser extends Component {
 const mapState = ({ users }, { id }) => {
   const user = users.find(user => user.id === id);
   return {
-    user
+    user,
+    id
   };
 };
 
 const mapDispatch = (dispatch, { history }) => {
   return {
-    saveUser: (userToken) => dispatch(saveUser(userToken)),
+    saveUser: (userInfo) => dispatch(saveUser(userInfo)),
     deleteUser: (user) => dispatch(deleteUser(user, history))
   };
 };
