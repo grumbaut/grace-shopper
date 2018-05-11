@@ -78,26 +78,31 @@ class Product extends React.Component {
     const productCategory = categories.find(category => category.id === product.categoryId);
     const reviewHeader = reviews.filter(review => review.productId === product.id).length ? 'Reviews:' : 'There are no reviews for this product yet.';
     return (
-      <div>
-        {
-          productCategory ? (
-            <p>{product.name} is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>
-          ) : (
-            <p>{product.name} is not in any category yet.</p>
-          )
-        }
+      <div className="row">
+        <div className="col">
+          {
+            productCategory ? (
+              <p>{product.name} is in our <Link to={`/categories/${productCategory.id}`}>{productCategory.name}</Link> category</p>
+            ) : (
+              <p>{product.name} is not in any category yet.</p>
+            )
+          }        
+          <ProductCardDetail product={product} />          
+          <h3>{reviewHeader}</h3>
+          {purchased ? (reviewed ?
+            <Link to={`/edit-reviews/${reviewed.id}`} >Edit Your Review</Link>
+            :
+            <EditReview product={product} history={history}>Add Review</EditReview>) : null
+          }
+          {
+            reviews.map(review => {
+              if (review.productId === id) return <Review review={review} key={review.id} />;
+            })
+          }          
+         </div>
         {
           user.isAdmin ? (
-            <div>
-              <h1>{product.name}</h1>
-              <img src={product.imageUrl} width={400} />
-              <h2>{`$${product.price}`}</h2>
-              <p>{product.description}</p>
-              {
-                reviews.map(review => {
-                  if (review.productId === id) return <Review review={review} key={review.id} />;
-                })
-              }
+            <div className="col">
               <form onSubmit={onSave}>
                 <h3>Admin: you may update this product </h3>
                 <p>Name:<br />
@@ -128,23 +133,7 @@ class Product extends React.Component {
               </form>
               <button onClick={onDelete}>Delete</button>
             </div>
-          )
-            : (
-              <div>
-                <ProductCardDetail product={product} />
-                <h3>{reviewHeader}</h3>
-                {purchased ? (reviewed ?
-                  <Link to={`/edit-reviews/${reviewed.id}`} >Edit Your Review</Link>
-                  :
-                  <EditReview product={product} history={history}>Add Review</EditReview>) : null
-                }
-                {
-                  reviews.map(review => {
-                    if (review.productId === id) return <Review review={review} key={review.id} />;
-                  })
-                }
-              </div>
-            )
+          ) : null
         }
       </div>
     );
