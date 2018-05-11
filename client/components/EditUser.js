@@ -18,6 +18,7 @@ class EditUser extends Component {
   onResetPassword(ev) {
     ev.preventDefault();
     let userInfo = { id: this.props.id, passwordPrompt: true };
+    console.log ('usersInfo is:', userInfo);
     this.props.saveUser(userInfo);
   }
   onDelete(){
