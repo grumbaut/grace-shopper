@@ -8,6 +8,7 @@ class CreateProduct extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
     this.previewFile = this.previewFile.bind(this);
+    this.onLoadImage = this.onLoadImage.bind(this);
     this.state = {
       name: product.name ? product.name : 'placeholder',
       description: product.description ? product.description : 'placeholder',
@@ -17,45 +18,29 @@ class CreateProduct extends Component {
     };
   }
 
-  previewFile(ev){
+  previewFile(){
     const preview = document.querySelector('img');
+    const setImage = this.onLoadImage;
     const file = preview? document.querySelector('input[type=file]').files[0]: null;
     const reader = new FileReader();
+
     reader.addEventListener("load", function () {
+      console.log(`I got a result!`);
+      const data = reader.result.replace(/^data:image\/\w+;base64,/, "");
+      const buf = new Buffer(data, 'base64');
+      setImage({ 'imageUrl': buf});
+      //setImage({ 'imageUrl': reader.result});
     preview.src = reader.result;
     }, false);
 
     if (file) {
     reader.readAsDataURL(file);
     }
-
-    this.setState({ 'imageUrl': ev.target.result});
   }
 
+  onLoadImage(result){ this.setState({ imageUrl: result });
+}
 
-  callback(fileData) {
-    console.log(fileData); // Or do something else with it...
-  }
-
- const reader = new FileReader();
-  reader.onload = function(e, callback) {
-    callback(e.target.result);
-  }
-
-  reader.readDataAsURL(file);
-
-  // onChangeImage(ev){
-  //   const readFile = (file,callback)=>{
-  //      var reader = new FileReader();
-  //   reader.onload = callback;
-  //   reader.readAsDataURL(file);
-  //   };
-  //   if(this.files){
-  //       readFile(this.files[0], function(ev) {
-  //           this.setState({ 'imageUrl': ev.target.result});
-  //       });
-  //     }
-  //     }
 
   onSave(ev){
     ev.preventDefault();
