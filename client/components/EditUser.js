@@ -12,13 +12,13 @@ class EditUser extends Component {
   }
   onSave(ev) {
     ev.preventDefault();
-    let userToken = { id: this.props.user.id, isAdmin: !this.props.user.isAdmin };
-    this.props.saveUser(userToken);
+    let userInfo = { id: this.props.user.id, isAdmin: !this.props.user.isAdmin };
+    this.props.saveUser(userInfo);
   }
   onResetPassword(ev) {
     ev.preventDefault();
-    let userToken = { id: this.props.user.id, passwordPrompt: true };
-    this.props.saveUser(userToken);
+    let userInfo = { id: this.props.user.id, passwordPrompt: true };
+    this.props.saveUser(userInfo);
   }
   onDelete(){
     this.props.deleteUser({ id: this.props.id });
@@ -60,7 +60,7 @@ const mapState = ({ users }, { id }) => {
 
 const mapDispatch = (dispatch, { history }) => {
   return {
-    saveUser: (userToken) => dispatch(saveUser(userToken)),
+    saveUser: (userInfo) => dispatch(saveUser(userInfo)),
     deleteUser: (user) => dispatch(deleteUser(user, history))
   };
 };
