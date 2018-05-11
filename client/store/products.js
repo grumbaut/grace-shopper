@@ -58,7 +58,7 @@ export const deleteProduct = (product, history) => (
   }
 );
 
-export const saveProduct = (product) => {
+export const saveProduct = (product, history) => {
   const headers = headerFunc();
   return product.id ? (
     dispatch => {
@@ -70,9 +70,10 @@ export const saveProduct = (product) => {
     dispatch => {
       return axios.post(`api/products`, product, { headers })
         .then(result => result.data)
-        .then(product => dispatch(createProductInStore(product)));
+        .then(product => dispatch(createProductInStore(product)))
+        .then( () => history.push('/products'))
     }
-  );
+  )
 };
 
 export default reducer;

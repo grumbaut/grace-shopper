@@ -15,17 +15,14 @@ class CreateProduct extends Component {
       imageUrl: product.imageUrl ? product.imageUrl : '/images/noImage.jpg'
     };
   }
-
   onSave(ev){
     ev.preventDefault();
     const product = this.state;
     this.props.saveProduct(product);
   }
-
   onChange(ev){
     this.setState({ [ev.target.name]: ev.target.value });
   }
-
   render(){
     const { user } = this.props;
     if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
@@ -75,9 +72,9 @@ const mapState = ({ categories, products, user }) => {
   };
 };
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, { history }) => {
   return {
-    saveProduct: (product) => dispatch(saveProduct(product)),
+    saveProduct: (product) => dispatch(saveProduct(product, history)),
   };
 };
 

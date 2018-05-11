@@ -24,7 +24,7 @@ import EditOrder from './EditOrder';
 import LoggedOut from './LoggedOut';
 import Footer from './Footer';
 import EditReview from './EditReview';
-import CreateProduct from './CreateProduct';
+import CreateProduct from './createProduct'
 
 class Main extends React.Component {
   constructor(props) {
@@ -49,7 +49,7 @@ class Main extends React.Component {
               <Route path='/admin' exact component = { AdminIndex } />
               <Route path='/users/:id' exact render={({ match, history }) => <EditUser id={ match.params.id } history={ history } /> } />
               <Route path='/users' exact render={({ history }) => <Users history={ history } /> } />
-              <Route path='/createProduct' exact component = { CreateProduct } />
+              <Route path='/createProduct' exact render={({history}) => <CreateProduct history={history} />} />
               <Route path='/createcategory' exact render={({history}) => <CategoryCreate history={history} /> } />
               <Route path='/products/:id' exact render={({match, history}) => <Product id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
