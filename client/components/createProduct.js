@@ -13,15 +13,14 @@ class CreateProduct extends Component {
       description: product.description ? product.description : 'placeholder',
       price: product.price ? product.price : 0,
       categoryId: product.categoryId ? product.categoryId : 1,
-      imageUrl: product.imageUrl ? product.imageUrl : '/images/noImage.jpg'
+      imageUrl: product.imageUrl ? product.imageUrl : null
     };
   }
 
-  previewFile(){
+  previewFile(ev){
     const preview = document.querySelector('img');
     const file = preview? document.querySelector('input[type=file]').files[0]: null;
     const reader = new FileReader();
-
     reader.addEventListener("load", function () {
     preview.src = reader.result;
     }, false);
@@ -29,8 +28,34 @@ class CreateProduct extends Component {
     if (file) {
     reader.readAsDataURL(file);
     }
+
+    this.setState({ 'imageUrl': ev.target.result});
   }
 
+
+  callback(fileData) {
+    console.log(fileData); // Or do something else with it...
+  }
+
+ const reader = new FileReader();
+  reader.onload = function(e, callback) {
+    callback(e.target.result);
+  }
+
+  reader.readDataAsURL(file);
+
+  // onChangeImage(ev){
+  //   const readFile = (file,callback)=>{
+  //      var reader = new FileReader();
+  //   reader.onload = callback;
+  //   reader.readAsDataURL(file);
+  //   };
+  //   if(this.files){
+  //       readFile(this.files[0], function(ev) {
+  //           this.setState({ 'imageUrl': ev.target.result});
+  //       });
+  //     }
+  //     }
 
   onSave(ev){
     ev.preventDefault();
@@ -43,6 +68,7 @@ class CreateProduct extends Component {
   }
 
   render(){
+    console.log(this.state.imageUrl);
     const { user } = this.props;
     if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
@@ -62,13 +88,9 @@ class CreateProduct extends Component {
               <label htmlFor='description'>Description: </label>
               <input name = 'description' onChange = { this.onChange } />
             </div>
-            <div className='form-group'>
-              <label htmlFor='imageUrl'>Image URL: </label>
-              <input name = 'imageUrl' onChange = { this.onChange } />
-            </div>
             <div>
               <label htmlFor='imageUrl'>Image URL: </label>
-              <input type="file" onChange={ this.previewFile } />
+              <input type="file" name ='imageUrl' onChange={ this.previewFile } />
               <img src="" height="200" alt="Image preview..." />
             </div>
             <div className='form-group'>
