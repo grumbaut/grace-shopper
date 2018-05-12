@@ -56,27 +56,23 @@ class SignUp extends React.Component {
   render() {
     const { firstName, lastName, email, password, errors } = this.state;
     return (
-      <div>
+      <div id='style'>
         <h1 className='header'>Sign Up</h1>
         <form onSubmit={ this.handleSubmit }>
           <div className='form-group'>
-            <label htmlFor='firstName'>First Name:</label>
-            <input name='firstName' value={ firstName } onChange={ this.handleChange } />
+            <input name='firstName' className='element' value={ firstName } onChange={ this.handleChange } placeholder='First Name' />
             <p className='error'>{ errors.firstName }</p>
           </div>
           <div className='form-group'>
-            <label htmlFor='lastName'>Last Name:</label>
-            <input name='lastName' value={ lastName } onChange={ this.handleChange } />
+            <input name='lastName' value={ lastName } className='element' onChange={ this.handleChange } placeholder='Last Name' />
             <p className='error'>{ errors.lastName }</p>
           </div>
           <div className='form-group'>
-            <label htmlFor='email'>Email:</label>
-            <input name='email' value={ email } onChange={ this.handleChange } />
+            <input name='email' value={ email } className='element' onChange={ this.handleChange } placeholder='Email' />
             <p className='error'>{ errors.email }</p>
           </div>
           <div className='form-group'>
-            <label htmlFor='password'>Password:</label>
-            <input type='password' name='password' value={ password } onChange={ this.handleChange } />
+            <input type='password' name='password' className='element' value={ password } onChange={ this.handleChange } placeholder='Password' />
             <p className='error'>{ errors.password }</p>
           </div>
           <button type='submit' className='btn btn-primary'>Sign Up</button>

@@ -72,6 +72,7 @@ export const saveProduct = (product, history) => {
         .then(result => result.data)
         .then(product => dispatch(createProductInStore(product)))
         .then( () => history.push('/products'))
+        .catch(err => console.error(err.response));
     }
   )
 };

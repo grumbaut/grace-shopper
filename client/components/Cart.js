@@ -35,7 +35,7 @@ class Cart extends React.Component {
       quantityNum.push(i);
     }
     return (
-      <div id='cart'>
+      <div id='style'>
         <hr className='style-eight' />
         <h1 className='header' >Cart</h1>
         { lineItems.map(lineItem => (

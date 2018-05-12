@@ -61,10 +61,11 @@ export const deleteItem = (userId, orderId, lineItemId) => (
   }
 );
 
-export const checkout = (userId, orderId, shippingInfo, history) => (
+export const checkout = (userId, orderId, orderInfo, history) => (
   dispatch => {
     const headers = headerFunc();
-    return axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, shippingInfo, { headers })
+    console.log(orderInfo)
+    return axios.put(`/api/users/${userId}/orders/${orderId}/checkout`, orderInfo, { headers })
       .then(res => res.data)
       .then(order => dispatch(checkoutOrder(order)))
       .then(() => dispatch(getCart(userId)))
