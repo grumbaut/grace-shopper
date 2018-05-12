@@ -67,7 +67,7 @@ class Main extends React.Component {
               <Route path='/login' component={ Login } />
               <Route path='/cart' component={ Cart } />
               <Route path='/categories' component={ Categories } />
-              <Route path='/account-settings' exact render={({ match, history }) => <AccountSettings id={ match.params.id } history={ history } /> } />
+              <Route path='/account-settings/:id' exact render={({ match, history }) => <AccountSettings id={ match.params.id } history={ history } /> } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>
