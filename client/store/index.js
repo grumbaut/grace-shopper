@@ -9,8 +9,9 @@ import cart from './cart';
 import reviews from './reviews';
 import orders from './orders';
 
-import { signUp } from './sessions';
-import { addUser } from './users';
+import { signUp, getUserFromToken } from './sessions';
+import { addUser, saveUser } from './users';
+
 
 const reducers = combineReducers({ categories, products, user, cart, reviews, orders, users });
 const middleware = applyMiddleware(thunk, logger);
@@ -22,6 +23,16 @@ export const signUpAddUser = (userInfo, history) => {
     return dispatch(signUp(userInfo, history))
       .then(user => dispatch(addUser(user)))
       .then(() => history.push('/'));
+  };
+};
+
+export const passwordReset = (userInfo, history) => {
+  return dispatch => {
+    return dispatch(saveUser(userInfo, history))
+      .then(() => {
+        const token = window.localStorage.getItem('token');
+        dispatch(getUserFromToken(token));
+      });
   };
 };
 

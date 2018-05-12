@@ -56,7 +56,7 @@ export const saveUser = (userInfo, history) => (
     return axios.put(`api/users/${userInfo.id}`, userInfo, { headers })
       .then(result => result.data)
       .then(user => {
-        dispatch(updateUserInStore(user))
+        dispatch(updateUserInStore(user));
       })
       .then(() => history.push('/'));
   }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { saveUser } from '../store';
-import { Link } from 'react-router-dom';
+import { passwordReset } from '../store';
 
 class AccountSettings extends React.Component {
   constructor(props){
@@ -22,13 +21,12 @@ class AccountSettings extends React.Component {
       password: this.state.password,
       passwordPrompt: false
     };
-    console.log('user in onSave in AccountSettings is:', userInfo);
-    this.props.saveUser(userInfo);
+    this.props.passwordReset(userInfo);
   }
-  
+
   render() {
     const { onChange, onSave } = this;
-    const { user, password, firstProduct, products } = this.props;
+    const { user, password } = this.props;
     return (
       <div>
         <h1>Change Account Settings</h1>
@@ -39,7 +37,7 @@ class AccountSettings extends React.Component {
         </form>
       </div>
     );
-  }  
+  }
 }
 
 const mapState = state => {
@@ -51,7 +49,7 @@ const mapState = state => {
 
 const mapDispatch = (dispatch, {history}) => {
   return {
-    saveUser: (userInfo) => dispatch(saveUser(userInfo, history))
+    passwordReset: (userInfo) => dispatch(passwordReset(userInfo, history))
   };
 };
 
