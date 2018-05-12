@@ -13,7 +13,6 @@ import SignUp from './SignUp';
 import Category from './Category';
 import CategoryCreate from './CategoryCreate';
 import Categories from './Categories';
-import AdminIndex from './AdminIndex';
 import EditUser from './EditUser';
 import Users from './Users';
 import Cart from './Cart';
@@ -49,7 +48,6 @@ class Main extends React.Component {
           <div className='container-fluid'>
             <Switch>
               <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
-              <Route path='/admin' exact component = { AdminIndex } />
               <Route path='/users/:id' exact render={({ match, history }) => <EditUser id={ match.params.id } history={ history } /> } />
               <Route path='/users' exact render={({ history }) => <Users history={ history } /> } />
               <Route path='/createProduct' exact render={({history}) => <CreateProduct history={history} />} />
