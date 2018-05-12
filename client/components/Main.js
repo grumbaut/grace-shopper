@@ -26,6 +26,7 @@ import Footer from './Footer';
 import EditReview from './EditReview';
 import CreateProduct from './createProduct';
 import ProductsForAdmin from './ProductsForAdmin';
+import AccountSettings from './AccountSettings';
 
 class Main extends React.Component {
   constructor(props) {
@@ -66,6 +67,7 @@ class Main extends React.Component {
               <Route path='/login' component={ Login } />
               <Route path='/cart' component={ Cart } />
               <Route path='/categories' component={ Categories } />
+              <Route path='/account-settings' exact render={({ match, history }) => <AccountSettings id={ match.params.id } history={ history } /> } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>

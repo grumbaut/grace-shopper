@@ -4,40 +4,39 @@ import { saveUser } from '../store';
 import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      password: ''
-    }
-    this.onChange = this.onChange.bind(this);
-    this.onSave = this.onSave.bind(this);
-  }
-  onChange(ev){
-    this.setState({ password: ev.target.value });
-  }
-  onSave(ev){
-    ev.preventDefault();
-    const user =  {
-      id: this.props.user.id,
-      password: this.state.password,
-      passwordPrompt: false
-    };
-    console.log('user is:', user);
-    this.props.saveUser(user);
-  }
+  // constructor(props){
+  //   super(props);
+    // this.state = {
+    //   password: '',
+    //   passwordPrompt: false
+    // };
+    // this.onChange = this.onChange.bind(this);
+    // this.onSave = this.onSave.bind(this);
+  // }
+  // onChange(ev){
+  //   this.setState({ password: ev.target.value });
+  // }
+  // onSave(ev){
+  //   ev.preventDefault();
+  //   const user =  {
+  //     id: this.props.user.id,
+  //     password: this.state.password,
+  //     passwordPrompt: this.state.passwordPrompt
+  //   };
+  //   console.log('user in onSave is:', user);
+  //   this.props.saveUser(user);
+  // }
   
   render() {
     const { onChange, onSave } = this;
     const { user, password, firstProduct, products } = this.props;
     if (!firstProduct || !products ) return null;
+    // if (!user) return null;
     if (user.passwordPrompt) {
       return (
         <div>
-          <h1> What fun . . . it's time to change your password! </h1>         
-          <form onSubmit={ onSave }>
-             Password: <input value = { password } name = 'password' onChange ={ onChange }/>
-            <button type='submit' className='btn btn-primary btn-sm'> Change password </button>
-          </form>
+          <h1>Please change your password in your account settings:</h1>
+          <Link to='/account-settings'>Account Settings</Link>
         </div>
       );
     }
@@ -96,11 +95,11 @@ const mapState = state => {
   return { products, firstProduct, user };
 };
 
-const mapDispatch = dispatch => {  
-  return {
-    saveUser: (user) => dispatch(saveUser(user))
-  };
-};
+// const mapDispatch = (dispatch, {history}) => {  
+//   return {
+//     saveUser: (user) => dispatch(saveUser(user, 'home', history))
+//   };
+// };
 
-export default connect(mapState, mapDispatch)(Home);
+export default connect(mapState)(Home);
 
