@@ -20,6 +20,10 @@ class CreateProduct extends Component {
   previewFile() {
     const preview = document.querySelector('img');
     const file = preview ? document.querySelector('input[type=file]').files[0] : null;
+    if(file.size>1048576) {
+      alert(file.size +" bites Too big!\n Please upload a 70kb image.");
+      return;
+    }
     const reader = new FileReader();
 
     reader.addEventListener("load", () => {
@@ -36,7 +40,6 @@ class CreateProduct extends Component {
   onSave(ev) {
     ev.preventDefault();
     const product = this.state;
-    console.log(product);
     this.props.saveProduct(product);
   }
   onChange(ev){
@@ -65,7 +68,7 @@ class CreateProduct extends Component {
             <div>
               <label htmlFor='imageUrl'>Image URL: </label>
               <input type="file" name='imageUrl' onChange={this.previewFile} />
-              <img src="" height="200" alt="Image preview..." />
+              <img src="'/images/upload.png'" height="200" alt="Image preview..." />
             </div>
             <div className='form-group'>
               <label htmlFor='categoryId'>Category</label>
