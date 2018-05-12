@@ -24,7 +24,7 @@ class AdminCatsAndProds extends React.Component {
     return (
       <div className="row">
         <div className="col">
-          <h1>All Categories</h1>
+          <h2>Select Category To Update</h2>
           <p>Number of Categories: { categories.length }</p>
           <ul>
             {
