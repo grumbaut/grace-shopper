@@ -118,9 +118,9 @@ hr.style-eight:after {
 }
 
 /* CHECKOUT STYLES */
-.StripeElement {
+.element {
   display: block;
-  margin: 10px auto 20px auto;
+  margin: 10px auto 20px 0;
   font-family: Crimson Text, serif;
   padding: 5px;
   width: 90%;

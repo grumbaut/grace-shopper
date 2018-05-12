@@ -24,16 +24,14 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const { attemptLogin } = this.props;
     return (
-      <div>
+      <div id='cart'>
         <h3 className='header'> Login </h3>
         <form onSubmit={ event => attemptLogin(this.state, event)}>
           <div className='form-group'>
-            <label htmlFor='email'>Email: </label>
-            <input value = { email } onChange = { this.onChange } name = 'email' />
+            <input value = { email } className='element' onChange = { this.onChange } name = 'email' placeholder='Email' />
           </div>
           <div className='form-group'>
-            <label htmlFor='password'>Password: </label>
-            <input type='password' value = { password } onChange = { this.onChange } name = 'password' />
+            <input type='password' className='element' value = { password } onChange = { this.onChange } name = 'password' placeholder='Password' />
           </div>
           <button className="btn btn-primary btn-sm"> Login </button>
         </form>

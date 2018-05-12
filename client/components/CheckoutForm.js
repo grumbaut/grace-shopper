@@ -8,6 +8,8 @@ class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      billingFirstName: '',
+      billingLastName: '',
       firstName: '',
       lastName: '',
       address: '',
@@ -22,6 +24,12 @@ class Checkout extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePaymentChange = this.handlePaymentChange.bind(this);
     this.validators = {
+      billingFirstName: value => {
+        if(!value) return 'First name is required.';
+      },
+      billingLastName: value => {
+        if(!value) return 'Last name is required.';
+      },
       firstName: value => {
         if(!value) return 'First name is required.';
       },
@@ -81,7 +89,7 @@ class Checkout extends React.Component {
   }
 
   render() {
-    const { firstName, lastName, address, city, state, zip, email, errors } = this.state;
+    const { billingFirstName, billingLastName, firstName, lastName, address, city, state, zip, email, errors } = this.state;
     const { cart, userId } = this.props;
     if(!cart.id) return null;
     return (
@@ -99,40 +107,51 @@ class Checkout extends React.Component {
             <div className='col-4'>{ '$' + item.subtotal.toFixed(2) }</div>
           </div>
         ))}
-        <p><Link to='/cart'>Edit Cart</Link></p>
+        <p><Link to='/cart'><button className='btn btn-primary btn-sm'>Edit Cart</button></Link></p>
         <p><strong>Total: </strong>{ '$' + cart.total }</p>
         <form onSubmit={ event => this.handleSubmit(event, userId, cart.id, this.state) }>
+          <h2 className='header'>Billing Information</h2>
           <div className='form-group'>
-            <input name='firstName' value={ firstName } className='StripeElement' onChange={ this.handleChange } placeholder='First Name' />
+            <input name='billingFirstName' value={ billingFirstName } className='element' onChange={ this.handleChange } placeholder='Billing First Name' />
+            <p className='error'>{ errors.billingFirstName }</p>
+          </div>
+          <div className='form-group'>
+            <input name='billingLastName' value={ billingLastName } className='element' onChange={ this.handleChange } placeholder='Billing Last Name' />
+            <p className='error'>{ errors.billingFirstName }</p>
+          </div>
+          <div className='form-group'>
+            <CardElement className='CardElement element' onChange={ this.handlePaymentChange } />
+            <p className='error'>{ errors.payment }</p>
+          </div>
+          <hr className='style-eight' />
+          <h2 className='header'>Shipment Information</h2>
+          <div className='form-group'>
+            <input name='firstName' value={ firstName } className='element' onChange={ this.handleChange } placeholder='First Name' />
             <p className='error'>{ errors.firstName }</p>
           </div>
           <div className='form-group'>
-            <input name='lastName' value={ lastName } className='StripeElement' onChange={ this.handleChange } placeholder='Last Name' />
+            <input name='lastName' value={ lastName } className='element' onChange={ this.handleChange } placeholder='Last Name' />
             <p className='error'>{ errors.lastName }</p>
           </div>
           <div className='form-group'>
-            <input name='email' value={ email } className='StripeElement' onChange={ this.handleChange } placeholder='Email' />
+            <input name='email' value={ email } className='element' onChange={ this.handleChange } placeholder='Email' />
             <p className='error'>{ errors.email }</p>
           </div>
           <div className='form-group'>
-            <input name='address' value={ address } className='StripeElement' onChange={ this.handleChange } placeholder='Address' />
+            <input name='address' value={ address } className='element' onChange={ this.handleChange } placeholder='Address' />
             <p className='error'>{ errors.address }</p>
           </div>
           <div className='form-group'>
-            <input name='city' value={ city } className='StripeElement' onChange={ this.handleChange } placeholder='City' />
+            <input name='city' value={ city } className='element' onChange={ this.handleChange } placeholder='City' />
             <p className='error'>{ errors.city }</p>
           </div>
           <div className='form-group'>
-            <input name='state' value={ state } className='StripeElement' onChange={ this.handleChange } placeholder='State' />
+            <input name='state' value={ state } className='element' onChange={ this.handleChange } placeholder='State' />
             <p className='error'>{ errors.state }</p>
           </div>
           <div className='form-group'>
-            <input name='zip' value={ zip } className='StripeElement' onChange={ this.handleChange } placeholder='Zip Code' />
+            <input name='zip' value={ zip } className='element' onChange={ this.handleChange } placeholder='Zip Code' />
             <p className='error'>{ errors.zip }</p>
-          </div>
-          <div className='form-group'>
-            <CardElement className='CardElement' onChange={ this.handlePaymentChange } />
-            <p className='error'>{ errors.payment }</p>
           </div>
           <button className='btn btn-primary btn-sm'>Submit Order</button>
         </form>
