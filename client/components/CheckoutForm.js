@@ -72,7 +72,7 @@ class Checkout extends React.Component {
     if(Object.keys(errors).length) {
       return;
     }
-    const name = `${this.state.firstName} ${this.state.lastName}`;
+    const name = `${this.state.billingFirstName} ${this.state.billingLastName}`;
     this.props.stripe.createToken({type: 'card', name })
       .then(({token}) => {
         const orderInfo = { shippingInfo, token };
