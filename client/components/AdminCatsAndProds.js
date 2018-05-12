@@ -24,6 +24,7 @@ class AdminCatsAndProds extends React.Component {
     return (
       <div className="row">
         <div className="col">
+          <Link to="createcategory"><button>Add Category</button></Link>
           <h2>Select Category To Update</h2>
           <p>Number of Categories: { categories.length }</p>
           <ul>
@@ -40,6 +41,7 @@ class AdminCatsAndProds extends React.Component {
           </ul>
         </div>
         <div className="col">
+          <Link to="createproduct"><button>Add Product</button></Link>
           <h2>Select Product To Update</h2>
           <br />
           <select value={ this.state.filter } onChange={ this.handleChange }>
