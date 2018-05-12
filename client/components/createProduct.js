@@ -3,19 +3,41 @@ import { connect } from 'react-redux';
 import { saveProduct } from '../store/products';
 
 class CreateProduct extends Component {
-  constructor(product){
+  constructor(product) {
     super();
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.previewFile = this.previewFile.bind(this);
     this.state = {
       name: product.name ? product.name : 'placeholder',
       description: product.description ? product.description : 'placeholder',
       price: product.price ? product.price : 0,
       categoryId: product.categoryId ? product.categoryId : 1,
-      imageUrl: product.imageUrl ? product.imageUrl : '/images/noImage.jpg'
+      imageUrl: product.imageUrl ? product.imageUrl : ''
     };
   }
-  onSave(ev){
+
+  previewFile() {
+    const preview = document.querySelector('img');
+    const file = preview ? document.querySelector('input[type=file]').files[0] : null;
+    if(file.size>1048576) {
+      alert(file.size +" bites Too big!\n Please upload a 70kb image.");
+      return;
+    }
+    const reader = new FileReader();
+
+    reader.addEventListener("load", () => {
+      const image = reader.result;
+      this.setState({ imageUrl: image });
+      preview.src = image;
+    }, false);
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onSave(ev) {
     ev.preventDefault();
     const product = this.state;
     this.props.saveProduct(product);
@@ -25,34 +47,35 @@ class CreateProduct extends Component {
   }
   render(){
     const { user } = this.props;
-    if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
+    if (!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
       <div>
         <ul>
           <h3> Create New Product </h3>
-          <form onSubmit ={ this.onSave }>
+          <form onSubmit={this.onSave}>
             <div className='form-group'>
               <label htmlFor='name'>Name: </label>
-              <input name = 'name' onChange = { this.onChange } />
+              <input name='name' onChange={this.onChange} />
             </div>
             <div className='form-group'>
               <label htmlFor='price'>Price: </label>
-              <input name = 'price' onChange = { this.onChange } />
+              <input name='price' onChange={this.onChange} />
             </div>
             <div className='form-group'>
               <label htmlFor='description'>Description: </label>
-              <input name = 'description' onChange = { this.onChange } />
+              <input name='description' onChange={this.onChange} />
             </div>
-            <div className='form-group'>
+            <div>
               <label htmlFor='imageUrl'>Image URL: </label>
-              <input name = 'imageUrl' onChange = { this.onChange } />
+              <input type="file" name='imageUrl' onChange={this.previewFile} />
+              <img src="/images/upload.png" alt="Image preview..." />
             </div>
             <div className='form-group'>
               <label htmlFor='categoryId'>Category</label>
-              <select name='categoryId' onChange = { this.onChange }>
+              <select name='categoryId' onChange={this.onChange}>
                 <option> Select Category </option>
                 {
-                  this.props.categories.map(category => <option key={ category.id } value={ category.id }> { category.name } </option>)
+                  this.props.categories.map(category => <option key={category.id} value={category.id}> {category.name} </option>)
                 }
               </select>
             </div>

@@ -18,6 +18,7 @@ class EditUser extends Component {
   onResetPassword(ev) {
     ev.preventDefault();
     let userInfo = { id: this.props.id, passwordPrompt: true };
+    console.log ('usersInfo is:', userInfo);
     this.props.saveUser(userInfo);
   }
   onDelete(){
@@ -40,7 +41,7 @@ class EditUser extends Component {
         </div>
         <br />
         <div>
-          <button  type ="submit" onClick={ onResetPassword } className="btn btn-primary btn-sm"> Require Password Reset</button>
+          <button type ="submit" onClick={ onResetPassword } className="btn btn-primary btn-sm"> Require Password Reset</button>
         </div>
         <br />
         <div>

@@ -8,33 +8,25 @@ class Home extends React.Component {
     super(props);
     this.state = {
       password: ''
-      // passwordPrompt: this.props.user.passwordPrompt ? this.props.user.passwordPrompt : false
     }
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
   onChange(ev){
     this.setState({ password: ev.target.value });
-    // this.setState({ passwordPrompt: false })
-    // this.onSave(ev);
   }
   onSave(ev){
     ev.preventDefault();
     const user =  {
       id: this.props.user.id,
-      // firstName: this.props.user.firstName,
-      // lastName: this.props.user.lastName,
-      // email: this.props.user.email,
       password: this.state.password,
-      // isAdmin: this.props.user.isAdmin,
       passwordPrompt: false
     };
     console.log('user is:', user);
-    saveUser(user);
+    this.props.saveUser(user);
   }
   
-  render(){
-    
+  render() {
     const { onChange, onSave } = this;
     const { user, password, firstProduct, products } = this.props;
     if (!firstProduct || !products ) return null;
@@ -104,7 +96,7 @@ const mapState = state => {
   return { products, firstProduct, user };
 };
 
-const mapDispatch = dispatch => {
+const mapDispatch = dispatch => {  
   return {
     saveUser: (user) => dispatch(saveUser(user))
   };
