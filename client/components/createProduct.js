@@ -68,7 +68,7 @@ class CreateProduct extends Component {
             <div>
               <label htmlFor='imageUrl'>Image URL: </label>
               <input type="file" name='imageUrl' onChange={this.previewFile} />
-              <img src="'/images/upload.png'" height="200" alt="Image preview..." />
+              <img src="/images/upload.png" alt="Image preview..." />
             </div>
             <div className='form-group'>
               <label htmlFor='categoryId'>Category</label>
