@@ -25,7 +25,7 @@ import LoggedOut from './LoggedOut';
 import Footer from './Footer';
 import EditReview from './EditReview';
 import CreateProduct from './createProduct';
-import ProductsForAdmin from './ProductsForAdmin';
+import AdminCatsAndProds from './AdminCatsAndProds';
 import AccountSettings from './AccountSettings';
 
 class Main extends React.Component {
@@ -48,14 +48,14 @@ class Main extends React.Component {
           <Nav />
           <div className='container-fluid'>
             <Switch>
+              <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/admin' exact component = { AdminIndex } />
               <Route path='/users/:id' exact render={({ match, history }) => <EditUser id={ match.params.id } history={ history } /> } />
               <Route path='/users' exact render={({ history }) => <Users history={ history } /> } />
               <Route path='/createProduct' exact render={({history}) => <CreateProduct history={history} />} />
               <Route path='/createcategory' exact render={({history}) => <CategoryCreate history={history} /> } />
-              <Route path='/products/admin' component={ ProductsForAdmin } />
+              <Route path='/admin-categories-products' component={ AdminCatsAndProds } />
               <Route path='/products/:id' exact render={({match, history}) => <Product id={ match.params.id * 1 } history={ history } /> } />
-              <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/edit-order/:id' component={ EditOrder } />
               <Route path='/orders' component={ AdminOrderStatus } />
               <Route path='/manage-orders' component={ ManageOrders} />

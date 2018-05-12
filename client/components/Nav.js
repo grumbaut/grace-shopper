@@ -35,10 +35,9 @@ const Nav = ({ user, logout, cart }) => {
                   Admin
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <NavLink className="dropdown-item" to='/createproduct' activeClassName='active'>Create New Product</NavLink>
-                  <NavLink className="dropdown-item" to='/products/admin' activeClassName='active'>Update Products</NavLink>
-                  <NavLink className="dropdown-item" to='/categories' activeClassName='active'>Update Categories</NavLink>
+                  <NavLink className="dropdown-item" to='/createproduct' activeClassName='active'>Create New Product</NavLink>                  
                   <NavLink className="dropdown-item" to='/createcategory' activeClassName='active'>Create New Category</NavLink>
+                  <NavLink className="dropdown-item" to='/admin-categories-products' activeClassName='active'>Update Categories & Products</NavLink>
                   <NavLink className="dropdown-item" to='/users' activeClassName='active'>View and Update Users</NavLink>
                   <NavLink className="dropdown-item" to='/orders' activeClassName='active'>Manage Orders</NavLink>
                 </div>
