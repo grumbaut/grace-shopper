@@ -4,6 +4,7 @@ const LineItem = require('./LineItem');
 const Product = require('./Product');
 const User = require('./User')
 const nodemailer = require('nodemailer');
+const stripe = require("stripe")("sk_test_LqwHQ45LaOBDNsZHnZOyzazP");
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -115,8 +116,16 @@ Order.prototype.addToCart = function(quantity, product) {
     }));
 };
 
-Order.prototype.checkout = function(userId, shippingInfo) {
-  const { firstName, lastName, address, city, state, zip, email } = shippingInfo;
+Order.prototype.checkout = function(userId, orderInfo) {
+  const { firstName, lastName, address, city, state, zip, email } = orderInfo.shippingInfo;
+  const amount = this.total.split('.').join('');
+  stripe.charges.create({
+    amount,
+    currency: 'usd',
+    description: 'Williams-Pomona',
+    source: orderInfo.token
+  })
+    .catch(err => console.error(err));
   return this.update({
     status: 'processing',
     date: new Date(),

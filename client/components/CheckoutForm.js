@@ -15,10 +15,12 @@ class Checkout extends React.Component {
       state: '',
       zip: '',
       email: '',
+      payment: false,
       errors: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePaymentChange = this.handlePaymentChange.bind(this);
     this.validators = {
       firstName: value => {
         if(!value) return 'First name is required.';
@@ -40,6 +42,9 @@ class Checkout extends React.Component {
       },
       zip: value => {
         if(!value) return 'Zip code is required.';
+      },
+      payment: value => {
+        if(!value) return 'Payment information is required.';
       }
     };
   }
@@ -59,12 +64,20 @@ class Checkout extends React.Component {
     if(Object.keys(errors).length) {
       return;
     }
-
-    this.props.checkoutCart(userId, orderId, shippingInfo);
+    const name = `${this.state.firstName} ${this.state.lastName}`;
+    this.props.stripe.createToken({type: 'card', name })
+      .then(({token}) => {
+        const orderInfo = { shippingInfo, token };
+        this.props.checkoutCart(userId, orderId, orderInfo);
+      });
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handlePaymentChange(event) {
+    this.setState({ payment: event.complete });
   }
 
   render() {
@@ -72,8 +85,8 @@ class Checkout extends React.Component {
     const { cart, userId } = this.props;
     if(!cart.id) return null;
     return (
-      <div>
-        <h1>Checkout</h1>
+      <div id='cart'>
+        <h1 className='header'>Checkout</h1>
         <div className='row'>
           <div className='col-2'><strong>Quantity</strong></div>
           <div className='col-6'><strong>Name</strong></div>
@@ -90,42 +103,36 @@ class Checkout extends React.Component {
         <p><strong>Total: </strong>{ '$' + cart.total }</p>
         <form onSubmit={ event => this.handleSubmit(event, userId, cart.id, this.state) }>
           <div className='form-group'>
-            <label htmlFor='name'>Recipient First Name: </label>
-            <input name='firstName' value={ firstName } onChange={ this.handleChange } />
+            <input name='firstName' value={ firstName } className='StripeElement' onChange={ this.handleChange } placeholder='First Name' />
             <p className='error'>{ errors.firstName }</p>
           </div>
           <div className='form-group'>
-            <label htmlFor='name'>Recipient Last Name: </label>
-            <input name='lastName' value={ lastName } onChange={ this.handleChange } />
+            <input name='lastName' value={ lastName } className='StripeElement' onChange={ this.handleChange } placeholder='Last Name' />
             <p className='error'>{ errors.lastName }</p>
           </div>
           <div className='form-group'>
-            <label htmlFor='email'>Recipient Email: </label>
-            <input name='email' value={ email } onChange={ this.handleChange } />
+            <input name='email' value={ email } className='StripeElement' onChange={ this.handleChange } placeholder='Email' />
             <p className='error'>{ errors.email }</p>
           </div>
           <div className='form-group'>
-            <label htmlFor='address'>Shipping Address: </label>
-            <input name='address' value={ address } onChange={ this.handleChange } />
+            <input name='address' value={ address } className='StripeElement' onChange={ this.handleChange } placeholder='Address' />
             <p className='error'>{ errors.address }</p>
           </div>
           <div className='form-group'>
-            <label htmlFor='city'>City: </label>
-            <input name='city' value={ city } onChange={ this.handleChange } />
+            <input name='city' value={ city } className='StripeElement' onChange={ this.handleChange } placeholder='City' />
             <p className='error'>{ errors.city }</p>
           </div>
           <div className='form-group'>
-            <label htmlFor='state'>State: </label>
-            <input name='state' value={ state } onChange={ this.handleChange } />
+            <input name='state' value={ state } className='StripeElement' onChange={ this.handleChange } placeholder='State' />
             <p className='error'>{ errors.state }</p>
           </div>
           <div className='form-group'>
-            <label htmlFor='zip'>Zip Code: </label>
-            <input name='zip' value={ zip } onChange={ this.handleChange } />
+            <input name='zip' value={ zip } className='StripeElement' onChange={ this.handleChange } placeholder='Zip Code' />
             <p className='error'>{ errors.zip }</p>
           </div>
           <div className='form-group'>
-            <CardElement style={{base: {fontSize: '18px'}}} />
+            <CardElement className='CardElement' onChange={ this.handlePaymentChange } />
+            <p className='error'>{ errors.payment }</p>
           </div>
           <button className='btn btn-primary btn-sm'>Submit Order</button>
         </form>
@@ -140,8 +147,8 @@ const mapState = state => ({
 });
 
 const mapDispatch = (dispatch, { history }) => ({
-  checkoutCart(userId, orderId, shippingInfo) {
-    dispatch(checkout(userId, orderId, shippingInfo, history));
+  checkoutCart(userId, orderId, orderInfo) {
+    dispatch(checkout(userId, orderId, orderInfo, history));
   }
 });
 
