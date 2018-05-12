@@ -119,24 +119,23 @@ Order.prototype.addToCart = function(quantity, product) {
 Order.prototype.checkout = function(userId, orderInfo) {
   const { firstName, lastName, address, city, state, zip, email } = orderInfo.shippingInfo;
   const amount = this.total.split('.').join('');
-  stripe.charges.create({
+  return stripe.charges.create({
     amount,
     currency: 'usd',
     description: 'Williams-Pomona',
-    source: orderInfo.token
+    source: orderInfo.token.id
   })
-    .catch(err => console.error(err));
-  return this.update({
-    status: 'processing',
-    date: new Date(),
-    firstName,
-    lastName,
-    address,
-    city,
-    state,
-    zip,
-    email
-  })
+    .then(() => this.update({
+      status: 'processing',
+      date: new Date(),
+      firstName,
+      lastName,
+      address,
+      city,
+      state,
+      zip,
+      email
+    }))
     .then(() => User.findById(userId))
     .then(user => {
       const mailOptions = {
