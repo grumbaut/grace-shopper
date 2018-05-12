@@ -93,7 +93,7 @@ class Checkout extends React.Component {
     const { cart, userId } = this.props;
     if(!cart.id) return null;
     return (
-      <div id='cart'>
+      <div id='style'>
         <h1 className='header'>Checkout</h1>
         <div className='row'>
           <div className='col-2'><strong>Quantity</strong></div>

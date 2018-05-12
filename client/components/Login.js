@@ -24,7 +24,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const { attemptLogin } = this.props;
     return (
-      <div id='cart'>
+      <div id='style'>
         <h3 className='header'> Login </h3>
         <form onSubmit={ event => attemptLogin(this.state, event)}>
           <div className='form-group'>
