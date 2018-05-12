@@ -69,7 +69,6 @@ User.exchangeTokenForUser = function(token){
       where: { id }
     })
       .then( user => {
-        console.log(id)
         if(user) {
           return user;
         }
