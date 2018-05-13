@@ -47,6 +47,14 @@ hr.style-eight:after {
   text-decoration: underline;
 }
 
+label {
+  margin-right: 5px;
+}
+
+button {
+  margin-bottom: 10px;
+}
+
 /* NAV STYLES */
 
 .navbar-background {

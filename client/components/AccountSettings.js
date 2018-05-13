@@ -50,37 +50,38 @@ class AccountSettings extends React.Component {
     if (this.props.user.password !== this.state.password) {
       this.props.passwordReset(userNewPassword);
     }
-    else alert('New Password Must Be Different From The Old Password');    
+    else alert('New Password Must Be Different From The Old Password');
   }
   render() {
     const { onChange, onSave, onChangePassword } = this;
     const { user } = this.props;
     const { firstName, lastName, email, password } = this.state;
+    if(!user || !user.id) return <h1 className='header'>Sign in to edit your account details.</h1>;
     return (
-      <div>
-        <h1>Change Account Settings</h1>
-        <h2>Name: {user.name}</h2>
-        <h2>Email: {user.email}</h2>        
+      <div id='style'>
+        <h1 className='header'>Change Account Settings</h1>
+        <p><strong>Name: {user.name}</strong></p>
+        <p><strong>Email: {user.email}</strong></p>
         <form onSubmit={ onSave }>
-            <p>
-              First Name:<br />
-              <input value={ firstName } name="firstName" onChange ={ onChange } />
-            </p>
-            <p>
-              Last Name:<br />
-              <input value={ lastName } name="lastName" onChange ={ onChange } />
-            </p>
-            <p>
-              Email:<br />
-              <input value={ email } name="email" onChange ={ onChange } />
-            </p>
+          <div className='form-group'>
+            <label htmlFor='firstName'>First Name:</label>
+            <input value={ firstName } name="firstName" onChange ={ onChange } />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='lastName'>Last Name:</label>
+            <input value={ lastName } name="lastName" onChange ={ onChange } />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='email'>Email:</label>
+            <input value={ email } name="email" onChange ={ onChange } />
+          </div>
           <button type="submit" className="btn btn-primary btn-sm"> Change Name / Email </button>
         </form>
-        <form onSubmit={ onChangePassword }>          
-          <p>
-            New Password:<br />
+        <form onSubmit={ onChangePassword }>
+          <div className='form-group'>
+            <label htmlFor='password'>Password:</label>
             <input type="password" value={ password } name="password" onChange ={ onChange } />
-          </p>
+          </div>
           <button type="submit" className="btn btn-primary btn-sm"> Change Password </button>
         </form>
       </div>
