@@ -6,6 +6,9 @@ import { saveUser, deleteUser } from '../store/users';
 class EditUser extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      message: false
+    }
     this.onSave = this.onSave.bind(this);
     this.onResetPassword = this.onResetPassword.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -17,8 +20,8 @@ class EditUser extends Component {
   }
   onResetPassword(ev) {
     ev.preventDefault();
+    this.setState({ message: true });
     let userInfo = { id: this.props.id, passwordPrompt: true };
-    console.log ('usersInfo is:', userInfo);
     this.props.saveUser(userInfo);
   }
   onDelete(){
@@ -27,6 +30,7 @@ class EditUser extends Component {
 
   render(){
     const { onSave, onDelete, onResetPassword } = this;
+    const { message } = this.state;
     const { user } = this.props;
     if (!user) {
       return null;
@@ -42,6 +46,7 @@ class EditUser extends Component {
         <br />
         <div>
           <button type ="submit" onClick={ onResetPassword } className="btn btn-primary btn-sm"> Require Password Reset</button>
+          { message ? <h3><i>Password reset was requested</i></h3> : null }
         </div>
         <br />
         <div>

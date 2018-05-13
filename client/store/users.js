@@ -32,6 +32,7 @@ const reducer = (state = [], action) => {
   case DELETE_USER:
     return state.filter(user => user.id !== action.user.id);
   case UPDATE_USER:
+    console.log(action.user)
     return state.map(user => user.id === action.user.id ? action.user : user);
   case GOT_USER:
     return [...state, action.user];
@@ -49,12 +50,15 @@ export const getUsers = () => (
   }
 );
 
-export const saveUser = (userInfo) => (
+export const saveUser = (userInfo, history) => (
   dispatch => {
     const headers = headerFunc();
     return axios.put(`api/users/${userInfo.id}`, userInfo, { headers })
       .then(result => result.data)
-      .then(user => dispatch(updateUserInStore(user)));
+      .then(user => {
+        dispatch(updateUserInStore(user));
+      })
+      .then(() => history.push('/'));
   }
 );
 

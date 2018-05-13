@@ -30,8 +30,7 @@ router.delete('/:id', authorized, isCorrectUser('params', 'id'), (req, res, next
 router.put('/:id', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   User.findById(req.params.id)
     .then( user => {
-      Object.assign(user, req.body);
-      return user.save();
+      return user.update(req.body);
     })
     .then( user => res.send(user))
     .catch(next);

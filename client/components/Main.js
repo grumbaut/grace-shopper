@@ -13,7 +13,6 @@ import SignUp from './SignUp';
 import Category from './Category';
 import CategoryCreate from './CategoryCreate';
 import Categories from './Categories';
-import AdminIndex from './AdminIndex';
 import EditUser from './EditUser';
 import Users from './Users';
 import Cart from './Cart';
@@ -24,7 +23,9 @@ import EditOrder from './EditOrder';
 import LoggedOut from './LoggedOut';
 import Footer from './Footer';
 import EditReview from './EditReview';
-import CreateProduct from './createProduct'
+import CreateProduct from './createProduct';
+import AdminCatsAndProds from './AdminCatsAndProds';
+import AccountSettings from './AccountSettings';
 
 class Main extends React.Component {
   constructor(props) {
@@ -46,13 +47,13 @@ class Main extends React.Component {
           <Nav />
           <div className='container-fluid'>
             <Switch>
-              <Route path='/admin' exact component = { AdminIndex } />
+              <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/users/:id' exact render={({ match, history }) => <EditUser id={ match.params.id } history={ history } /> } />
               <Route path='/users' exact render={({ history }) => <Users history={ history } /> } />
               <Route path='/createProduct' exact render={({history}) => <CreateProduct history={history} />} />
               <Route path='/createcategory' exact render={({history}) => <CategoryCreate history={history} /> } />
+              <Route path='/admin-categories-products' component={ AdminCatsAndProds } />
               <Route path='/products/:id' exact render={({match, history}) => <Product id={ match.params.id * 1 } history={ history } /> } />
-              <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
               <Route path='/edit-order/:id' component={ EditOrder } />
               <Route path='/orders' component={ AdminOrderStatus } />
               <Route path='/manage-orders' component={ ManageOrders} />
@@ -64,6 +65,7 @@ class Main extends React.Component {
               <Route path='/login' component={ Login } />
               <Route path='/cart' component={ Cart } />
               <Route path='/categories' component={ Categories } />
+              <Route path='/account-settings/:id' exact render={({ match, history }) => <AccountSettings id={ match.params.id } history={ history } /> } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>

@@ -21,7 +21,7 @@ const Nav = ({ user, logout, cart }) => {
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <NavLink className="dropdown-item" to='/manage-orders' activeClassName='active'>Manage Orders</NavLink>
-                  <NavLink className="dropdown-item" to='/account-settings' activeClassName='active'>Account Settings</NavLink>
+                  <NavLink className="dropdown-item" to={`/account-settings/${user.id}`} activeClassName='active'>Account Settings</NavLink>
                   <NavLink className="dropdown-item" to='/logged-out' activeClassName='active' onClick={ logout }>Logout { user.firstName }</NavLink>
                 </div>
               </div>
@@ -35,10 +35,9 @@ const Nav = ({ user, logout, cart }) => {
                   Admin
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <NavLink className="dropdown-item" to='/createproduct' activeClassName='active'>Create New Product</NavLink>
-                  <NavLink className="dropdown-item" to='/products' activeClassName='active'>Update Products</NavLink>
-                  <NavLink className="dropdown-item" to='/categories' activeClassName='active'>Update Categories</NavLink>
+                  <NavLink className="dropdown-item" to='/createproduct' activeClassName='active'>Create New Product</NavLink>                  
                   <NavLink className="dropdown-item" to='/createcategory' activeClassName='active'>Create New Category</NavLink>
+                  <NavLink className="dropdown-item" to='/admin-categories-products' activeClassName='active'>Update Categories & Products</NavLink>
                   <NavLink className="dropdown-item" to='/users' activeClassName='active'>View and Update Users</NavLink>
                   <NavLink className="dropdown-item" to='/orders' activeClassName='active'>Manage Orders</NavLink>
                 </div>
