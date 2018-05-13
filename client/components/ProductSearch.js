@@ -34,8 +34,7 @@ class ProductSearch extends React.Component {
 }
 
 const mapState = state => ({
-  products: state.products,
-  categories: state.categories
+  products: state.products
 });
 
 export default connect(mapState)(ProductSearch);
