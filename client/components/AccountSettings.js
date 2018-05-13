@@ -9,7 +9,8 @@ class AccountSettings extends React.Component {
       firstName: this.props.user.firstName,
       lastName: this.props.user.lastName,
       email: this.props.user.email,
-      password: this.props.user.password
+      password: this.props.user.password,
+      message: false
     }
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -49,6 +50,7 @@ class AccountSettings extends React.Component {
     if (this.props.user.password !== this.state.password) {
       this.props.passwordReset(userNewPassword);
     }
+    else alert('New Password Must Be Different From The Old Password');    
   }
   render() {
     const { onChange, onSave, onChangePassword } = this;
