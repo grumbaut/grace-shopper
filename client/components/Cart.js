@@ -8,6 +8,7 @@ class Cart extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.changePromo = this.changePromo.bind(this)
+    this.onSave = this.onSave.bind(this)
 
     this.state = {
       discount: ''
@@ -23,8 +24,12 @@ class Cart extends React.Component {
     const { userId, cart } = this.props;
     this.props.updateCart(userId, cart.id, lineItems);
   }
-  changePromo(ev){
-    const code = ev.target.value
+  onSave(ev){
+    ev.preventDefault()
+
+  }
+  changePromo(event){
+    const code = event.target.value
     const promoCode2Apply = this.props.promoCodes.find(promoCode => promoCode.password === code)
     console.log(promoCode2Apply, 'promoCode2apply')
     if(promoCode2Apply){
@@ -35,8 +40,8 @@ class Cart extends React.Component {
   }
   render() {
     const { lineItems, deleteItem, userId, cart, promoCodes } = this.props;
-    const { promoCode } = this.state
-    const { changePromo } = this
+    const { discount } = this.state;
+    const { changePromo, onSave } = this;
     if(!userId) {
       return (
         <h1>
@@ -77,9 +82,9 @@ class Cart extends React.Component {
         ))}
 
 
-        <form>
+        <form onSubmit = { onSave } >
         <p><strong>Have a Promo code?</strong></p> 
-        <input value = { promoCode } onChange = { changePromo } ></input>
+        <input onChange = { changePromo } ></input>
         <button type = 'submit' className='btn btn-primary btn-sm'> Apply Discount </button>
         </form>
         
