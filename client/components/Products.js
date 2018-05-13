@@ -66,9 +66,6 @@ const Paginated = ({ activePage, products, changeActivePage }) => {
 
   return (
     <div className='row justify-content-center'>
-      <div className='row justify-content-center'>
-        { currentProducts.map(product => <ProductCard key={ product.id } product={ product } />) }
-      </div>
       <div className='row'>
         { pageNumbers.map(num => {
           return (
@@ -84,6 +81,9 @@ const Paginated = ({ activePage, products, changeActivePage }) => {
             </span>
           );
         })}
+      </div>
+      <div className='row justify-content-center'>
+        { currentProducts.map(product => <ProductCard key={ product.id } product={ product } />) }
       </div>
     </div>
   );
