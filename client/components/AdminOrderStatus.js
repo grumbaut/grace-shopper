@@ -33,9 +33,9 @@ class AdminOrderStatus extends React.Component {
     const order = this.search(search);
     if(!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
-      <div>
+      <div id='style'>
         <h2 className='header'>Change Order Status</h2>
-        <input value={ this.state.search } placeholder='Search by order ID...' onChange={ this.handleChange } />
+        <input value={ this.state.search } className='element' placeholder='Search by order ID' onChange={ this.handleChange } />
         <div>
           { !order && changed ?
             <h2>No orders found.</h2>
