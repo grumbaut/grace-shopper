@@ -11,13 +11,13 @@ class ProductSearch extends React.Component {
     this.updateSearch = this.updateSearch.bind(this);
   }
   updateSearch(ev) {
-    this.setState({ [ev.target.name]: ev.target.value.substr(0, 20)});
+    this.setState({ [ev.target.name]: ev.target.value.toLowerCase().substr(0, 20)});
   }
   render() {
     const { search } = this.state;
     const { updateSearch } = this;
     let filteredProducts = this.props.products.filter(product => {
-      return product.name.indexOf(search) !== -1;
+      return product.name.toLowerCase().indexOf(search) !== -1;
     });
     return (
       <div>
