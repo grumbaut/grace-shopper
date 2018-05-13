@@ -7,6 +7,9 @@ const PromoCode = conn.define('promoCode', {
   },
   percent: {
     type: Sequelize.FLOAT,
+  },
+  password: {
+     type: Sequelize.STRING
   }
 });
 

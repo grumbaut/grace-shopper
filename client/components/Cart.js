@@ -19,8 +19,10 @@ class Cart extends React.Component {
     this.props.updateCart(userId, cart.id, lineItems);
   }
 
+  //enter info - do a if findOne, then take that value
+
   render() {
-    const { lineItems, deleteItem, userId, cart } = this.props;
+    const { lineItems, deleteItem, userId, cart, promoCodes } = this.props;
     if(!userId) {
       return (
         <h1>
@@ -49,6 +51,7 @@ class Cart extends React.Component {
             </div>
             <div className='col-5'>
               { lineItem.product.name }
+                ERASE THIS { promoCodes.map(promoCode => <li> {promoCode.name} </li>) }
             </div>
             <div className='col-3'>
               <p>Subtotal: ${ lineItem.subtotal.toFixed(2) }</p>
@@ -78,7 +81,8 @@ class Cart extends React.Component {
 const mapState = state => ({
   cart: state.cart,
   userId: state.user.id,
-  lineItems: state.cart.lineitems
+  lineItems: state.cart.lineitems,
+  promoCodes: state.promoCodes
 });
 
 const mapDispatch = dispatch => ({
