@@ -26,9 +26,11 @@ class Cart extends React.Component {
   changePromo(ev){
     const code = ev.target.value
     const promoCode2Apply = this.props.promoCodes.find(promoCode => promoCode.password === code)
+    console.log(promoCode2Apply, 'promoCode2apply')
     if(promoCode2Apply){
       const discount = promoCode2Apply.discount
       this.setState({discount})
+      console.log(discount, 'discount')
     }
   }
   render() {
@@ -45,6 +47,7 @@ class Cart extends React.Component {
     if(!lineItems || !lineItems.length) return <h1>Your cart is empty.</h1>;
     const quantityNum = [];
     const total = lineItems.reduce((acc, item) => acc + Number(item.subtotal), 0).toFixed(2);
+    const discountedPrice = total - (total * this.state.discount)
     for(let i = 1; i <= 50; i++) {
       quantityNum.push(i);
     }
@@ -77,11 +80,19 @@ class Cart extends React.Component {
         <form>
         <p><strong>Have a Promo code?</strong></p> 
         <input value = { promoCode } onChange = { changePromo } ></input>
-        <button type = 'submit' className='btn btn-primary btn-sm'>Apply Discount</button>
+        <button type = 'submit' className='btn btn-primary btn-sm'> Apply Discount </button>
         </form>
         
 
         <p><strong>Total:</strong> ${ total }</p>
+        {
+          this.state.discount !== '' ?
+            <p><strong>Total with discount:</strong> ${ discountedPrice } </p>
+          :
+          <p><strong>Thanks for shopping!</strong></p>
+        }
+
+
         <Link to='/checkout'><button className='btn btn-primary btn-sm'>Checkout</button></Link>
         <hr className='style-eight' />
       </div>
