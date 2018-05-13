@@ -124,6 +124,7 @@ button {
 }
 
 .product-card {
+  width: 30%;
   border-radius: 30px;
   text-align: center;
   margin: 10px;
@@ -137,6 +138,13 @@ button {
 
 .product-name {
   margin: 30px auto;
+}
+
+#product-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
 }
 
 /* CHECKOUT STYLES */

@@ -55,12 +55,12 @@ const mapState = state => ({
 export default connect(mapState)(Products);
 
 const Paginated = ({ activePage, products, changeActivePage }) => {
-  const lastIndex = activePage * 5;
-  const firstIndex = lastIndex - 5;
+  const lastIndex = activePage * 6;
+  const firstIndex = lastIndex - 6;
   const currentProducts = products.slice(firstIndex, lastIndex);
 
   const pageNumbers = [];
-  for(let i = 1; i <= Math.ceil(products.length/5); i++) {
+  for(let i = 1; i <= Math.ceil(products.length/6); i++) {
     pageNumbers.push(i);
   }
 
@@ -82,7 +82,7 @@ const Paginated = ({ activePage, products, changeActivePage }) => {
           );
         })}
       </div>
-      <div className='row justify-content-center'>
+      <div id='product-container'>
         { currentProducts.map(product => <ProductCard key={ product.id } product={ product } />) }
       </div>
     </div>
