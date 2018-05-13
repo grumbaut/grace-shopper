@@ -76,11 +76,10 @@ class AccountSettings extends React.Component {
             </p>
           <button type="submit" className="btn btn-primary btn-sm"> Change Name / Email </button>
         </form>
-        <form onSubmit={ onChangePassword }>
-          <h2>Password: {user.password}</h2>
+        <form onSubmit={ onChangePassword }>          
           <p>
             New Password:<br />
-            <input value={ password } name="password" onChange ={ onChange } />
+            <input type="password" value={ password } name="password" onChange ={ onChange } />
           </p>
           <button type="submit" className="btn btn-primary btn-sm"> Change Password </button>
         </form>
