@@ -14,13 +14,33 @@ class Product extends React.Component {
       description: this.props.product ? this.props.product.description : '',
       price: this.props.product ? this.props.product.price : 0,
       imageUrl: this.props.product ? this.props.product.imageUrl : '',
-      categoryId: -1
+      categoryId: -1,
+      errors: {}
     };
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onSelectCategory = this.onSelectCategory.bind(this);
     this.onSaveCategory = this.onSaveCategory.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.validators = {
+      name: (value) => {
+        if (!value) {
+          return 'Product name is required.';
+        }
+      },
+      description: (value) => {
+        if (!value) {
+          return 'Description is required.';
+        }
+      },
+      price: (value) => {
+      const regEx= /^\$?[0-9]+(\.[0-9][0-9])?$/;
+       if (!value) {
+          return 'Price is required.';
+        }
+      return regEx.test(value) ? null : 'Please enter a valid price amount.';
+      }
+    };
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.product) {
@@ -37,6 +57,7 @@ class Product extends React.Component {
   onChangeInput(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
   }
+
   onSaveCategory(ev) {
     ev.preventDefault();
     const product = {
@@ -49,11 +70,26 @@ class Product extends React.Component {
     };
     this.props.saveProduct(product);
   }
+
   onSelectCategory(ev) {
     this.setState({ [ev.target.name]: ev.target.value * 1 });
   }
+
   onSave(ev) {
     ev.preventDefault();
+    const errors = Object.keys(this.validators).reduce((memo, key) => {
+      const validator = this.validators[key];
+      const value = this.state[key];
+      const error = validator(value);
+      if (error) {
+        memo[key] = error;
+      }
+      return memo;
+    }, {});
+    this.setState({ errors });
+    if (Object.keys(errors).length) {
+      return;
+    }
     const product =
       {
         id: this.props.id,
@@ -64,12 +100,14 @@ class Product extends React.Component {
       };
     this.props.saveProduct(product);
   }
+
   onDelete() {
     this.props.deleteProduct({ id: this.props.id });
   }
+
   render() {
     const { user, product, categories, reviews, id, purchased, history, reviewed } = this.props;
-    const { name, price, description, categoryId } = this.state;
+    const { name, price, description, categoryId, errors } = this.state;
     const { onChangeInput, onSelectCategory, onSaveCategory, onSave, onDelete } = this;
     if (!product) {
       return null;
@@ -86,8 +124,8 @@ class Product extends React.Component {
             ) : (
               <p>{product.name} is not in any category yet.</p>
             )
-          }        
-          <ProductCardDetail product={product} />          
+          }
+          <ProductCardDetail product={product} />
           <h3>{reviewHeader}</h3>
           {purchased ? (reviewed ?
             <Link to={`/edit-reviews/${reviewed.id}`} >Edit Your Review</Link>
@@ -98,7 +136,7 @@ class Product extends React.Component {
             reviews.map(review => {
               if (review.productId === id) return <Review review={review} key={review.id} />;
             })
-          }          
+          }
          </div>
         {
           user.isAdmin ? (
@@ -108,15 +146,18 @@ class Product extends React.Component {
                 <p>Name:<br />
                   <input value={name} name="name" onChange={onChangeInput} />
                 </p>
+                <div className='error' >{ errors.name }</div>
                 <p>Description:<br />
                   <input value={description} name="description" onChange={onChangeInput} />
                 </p>
+                <div className='error' >{ errors.description }</div>
                 <p>Price:<br />
                   <input value={price} name="price" onChange={onChangeInput} />
                 </p>
+                <div className='error' >{ errors.price }</div>
                 <button type="submit"> Update </button>
               </form>
-              <form onSubmit={ onSaveCategory }>                
+              <form onSubmit={ onSaveCategory }>
                 <select value={ categoryId } name="categoryId" onChange={ onSelectCategory }>
                   <option value="-1">Select New Category</option>
                   {

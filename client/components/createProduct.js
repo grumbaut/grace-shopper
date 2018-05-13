@@ -87,9 +87,9 @@ class CreateProduct extends Component {
     const { error, errors } = this.state;
     if (!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
-      <div>
+      <div id='style'>
         <ul>
-          <h3> Create New Product </h3>
+          <h3 className='header'>Create New Product</h3>
           {
             error && (
               <div className='error' >
@@ -101,28 +101,24 @@ class CreateProduct extends Component {
           }
           <form onSubmit={this.onSave}>
             <div className='form-group'>
-              <label htmlFor='name'>Name: </label>
-              <input name='name' onChange={this.onChange} />
+              <input name='name' className='element' onChange={this.onChange} placeholder='Product Name' />
               <div className='error' >{ errors.name }</div>
             </div>
             <div className='form-group'>
-              <label htmlFor='price'>Price: </label>
-              <input name='price' onChange={this.onChange} />
+              <input name='price' className='element' onChange={this.onChange} placeholder='Price (e.g., $9.99)' />
               <div className='error' >{ errors.price }</div>
             </div>
             <div className='form-group'>
-              <label htmlFor='description'>Description: </label>
-              <input name='description' onChange={this.onChange} />
+              <input name='description' className='element' onChange={this.onChange} placeholder='Description' />
               <div className='error' >{ errors.description }</div>
             </div>
             <div>
-              <label htmlFor='imageUrl'>Image URL: </label>
+              <label htmlFor='imageUrl'>Product Image: </label><br />
               <input type="file" name='imageUrl' onChange={this.previewFile} />
               <img src="/images/upload.png" alt="Image preview..." />
             </div>
             <div className='form-group'>
-              <label htmlFor='categoryId'>Category</label>
-              <select name='categoryId' onChange={this.onChange}>
+              <select name='categoryId' className='element' onChange={this.onChange}>
                 <option> Select Category </option>
                 {
                   this.props.categories.map(category => <option key={category.id} value={category.id}> {category.name} </option>)

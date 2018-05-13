@@ -18,6 +18,11 @@ class Category extends React.Component {
     this.onSelectProduct = this.onSelectProduct.bind(this);
     this.onAddProduct = this.onAddProduct.bind(this);
     this.onRemoveProduct = this.onRemoveProduct.bind(this);
+    this.validator = (value) => {
+      if(!value) {
+        return 'Enter a category name.';
+      }
+    };
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.category) {
@@ -31,6 +36,11 @@ class Category extends React.Component {
   }
   onSave(ev){
     ev.preventDefault();
+    const error = this.validator(this.state.name);
+    this.setState({ error });
+    if (error) {
+      return;
+    }
     const category =
       {
         id: this.props.id,
@@ -58,7 +68,7 @@ class Category extends React.Component {
   }
   render() {
     const { products, user, category, categories, id, productsOfThisCategory } = this.props;
-    const { name, productId } = this.state;
+    const { name, productId, error } = this.state;
     const { onChangeInput, onSave, onDelete, onSelectProduct, onAddProduct, onRemoveProduct } = this;
 
     if (!category) {
@@ -85,6 +95,7 @@ class Category extends React.Component {
                 <p>Name:<br />
                 <input value={ name } onChange={ onChangeInput } />
                 </p>
+                <div className='error' >{ error }</div>
                 <button type="submit"> Update </button>
               </form>
 
