@@ -7,11 +7,51 @@ class Login extends React.Component {
     super(props);
 
     this.onChange = this.onChange.bind(this);
-
+    this.onLogin = this.onLogin.bind(this);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      error: null,
+      errors: {}
     };
+    this.validators = {
+      email: (value)=>{
+        const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(!value){
+        return 'Please enter your email address.';
+        }
+        return regEx.test(String(value).toLowerCase()) ? null : 'Please enter a valid email address.';
+      },
+      password: (value)=>{
+        if(!value){
+          return 'Please enter your password.';
+          }
+      },
+    };
+  }
+
+  onLogin(ev) {
+     ev.preventDefault();
+    const errors = Object.keys(this.validators).reduce((memo, key) => {
+      const validator = this.validators[key];
+      const value = this.state[key];
+      const error = validator(value);
+      if (error) {
+        memo[key] = error;
+      }
+      return memo;
+    }, {});
+    this.setState({ errors });
+    if (Object.keys(errors).length) {
+      return;
+    }
+    const credentials = this.state;
+    this.props.attemptLogin(credentials)
+    .then(err => {
+      if(err){
+      this.setState({ error: err.response.data.status });
+      }
+    });
   }
 
   onChange(ev){
@@ -21,17 +61,25 @@ class Login extends React.Component {
   }
 
   render(){
-    const { email, password } = this.state;
-    const { attemptLogin } = this.props;
+    const { email, password, error, errors } = this.state;
+    const { onLogin, onChange } = this;
     return (
       <div id='style'>
         <h3 className='header'> Login </h3>
-        <form onSubmit={ event => attemptLogin(this.state, event)}>
+        {
+            error && (
+              <div className='error' > The email or password you entered is not correct, please try again.
+              </div>
+            )
+          }
+        <form onSubmit={ onLogin }>
           <div className='form-group'>
-            <input value = { email } className='element' onChange = { this.onChange } name = 'email' placeholder='Email' />
+            <input value = { email } className='element' onChange = { onChange } name = 'email' placeholder='Email' />
+            <div className='error' >{ errors.email }</div>
           </div>
           <div className='form-group'>
-            <input type='password' className='element' value = { password } onChange = { this.onChange } name = 'password' placeholder='Password' />
+            <input type='password' className='element' value = { password } onChange = { onChange } name = 'password' placeholder='Password' />
+            <div className='error' >{ errors.password }</div>
           </div>
           <button className="btn btn-primary btn-sm"> Login </button>
         </form>
@@ -42,10 +90,7 @@ class Login extends React.Component {
 
 const mapDispatch = (dispatch, { history })=> {
   return {
-    attemptLogin: (credentials, event) => {
-      event.preventDefault();
-      dispatch(attemptLogin(credentials, history));
-    }
+    attemptLogin: (credentials) => dispatch(attemptLogin(credentials, history))
   };
 };
 
