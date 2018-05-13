@@ -6,19 +6,35 @@ class AccountSettings extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      password: ''
+      firstName: this.props.user.firstName,
+      lastName: this.props.user.lastName,
+      email: this.props.user.email,
+      password: this.props.user.password
     }
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user) {
+      this.setState({
+        firstName: nextProps.user.firstName,
+        lastName: nextProps.user.lastName,
+        email: nextProps.user.email,
+        password: nextProps.user.password
+      });
+    }
+  }
   onChange(ev){
-    this.setState({ password: ev.target.value });
+    this.setState({ [ev.target.name]: ev.target.value });
   }
   onSave(ev){
     ev.preventDefault();
     const userInfo =  {
       id: this.props.user.id,
       password: this.state.password,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
       passwordPrompt: false
     };
     this.props.passwordReset(userInfo);
@@ -32,8 +48,8 @@ class AccountSettings extends React.Component {
         <h1>Change Account Settings</h1>
         {user.name}
         <form onSubmit={ onSave }>
-            Password: <input value = { password } name = 'password' onChange ={ onChange }/>
-          <button type='submit' className='btn btn-primary btn-sm'> Change password </button>
+            Password: <input value={ password } name="password" onChange ={ onChange }/>
+          <button type="submit" className="btn btn-primary btn-sm"> Change password </button>
         </form>
       </div>
     );
