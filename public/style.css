@@ -45,6 +45,7 @@ hr.style-eight:after {
 
 .page-numbers:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 label {
