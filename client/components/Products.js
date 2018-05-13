@@ -14,7 +14,7 @@ class Products extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({ filter: event.target.value });
+    this.setState({ filter: event.target.value, activePage: 1 });
   }
 
   changeActivePage(num) {
@@ -72,7 +72,7 @@ const Paginated = ({ activePage, products, changeActivePage }) => {
             <span className='page-row' key={ num }>
               <span className='page-numbers' onClick={ () => changeActivePage(num) }>
                 { num === activePage ?
-                  <strong>{ num }</strong>
+                  <strong className='activePage'>{ num }</strong>
                   :
                   num
                 }

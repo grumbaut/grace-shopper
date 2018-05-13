@@ -48,6 +48,10 @@ hr.style-eight:after {
   cursor: pointer;
 }
 
+.activePage {
+  text-decoration: underline;
+}
+
 label {
   margin-right: 5px;
 }
