@@ -47,7 +47,10 @@ export const attemptLogin = (credentials, history) => {
       .then (result => window.localStorage.setItem('token', result.data))
       .then(()=> dispatch(getUserFromToken(window.localStorage.getItem('token'))))
       .then(() => history.push('/'))
-      .catch(() => window.localStorage.removeItem('token'));
+      .catch((err) => {
+        window.localStorage.removeItem('token');
+        return err;
+      });
   };
 };
 
