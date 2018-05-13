@@ -15,6 +15,7 @@ Category.hasMany(Product);
 LineItem.belongsTo(Order);
 LineItem.belongsTo(Product);
 Order.hasMany(LineItem);
+Order.hasMany(PromoCode)
 Order.belongsTo(User);
 User.hasMany(Order);
 Review.belongsTo(Product);

@@ -5,7 +5,7 @@ const PromoCode = conn.define('promoCode', {
   name: {
     type: Sequelize.STRING,
   },
-  percent: {
+  discount: {
     type: Sequelize.FLOAT,
   },
   password: {

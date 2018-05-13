@@ -10,7 +10,7 @@ class Cart extends React.Component {
     this.changePromo = this.changePromo.bind(this)
 
     this.state = {
-      promoCode: ''
+      discount: ''
     }
   }
 
@@ -23,11 +23,14 @@ class Cart extends React.Component {
     const { userId, cart } = this.props;
     this.props.updateCart(userId, cart.id, lineItems);
   }
-  changePromo(){
-
+  changePromo(ev){
+    const code = ev.target.value
+    const promoCode2Apply = this.props.promoCodes.find(promoCode => promoCode.password === code)
+    if(promoCode2Apply){
+      const discount = promoCode2Apply.discount
+      this.setState({discount})
+    }
   }
-  //enter info - do a if findOne, then take that value
-
   render() {
     const { lineItems, deleteItem, userId, cart, promoCodes } = this.props;
     const { promoCode } = this.state
@@ -60,7 +63,6 @@ class Cart extends React.Component {
             </div>
             <div className='col-5'>
               { lineItem.product.name }
-                !!!!ERASE THIS { promoCodes.map(promoCode => <li> {promoCode.name} </li>) }
             </div>
             <div className='col-3'>
               <p>Subtotal: ${ lineItem.subtotal.toFixed(2) }</p>
