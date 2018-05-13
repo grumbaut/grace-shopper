@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ProductCard from './ProductCard';
+import { Link } from 'react-router-dom';
 
 class Products extends React.Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class Products extends React.Component {
             </option>
           ))}
         </select>
+        <Link to="productsearch"><button>Search Products</button></Link>
         <div>
           <Paginated activePage={ activePage } products={ products } changeActivePage={ changeActivePage } />
         </div>
