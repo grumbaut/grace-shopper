@@ -18,11 +18,11 @@ const middleware = applyMiddleware(thunk, logger);
 
 const store = createStore(reducers, middleware);
 
-export const signUpAddUser = (userInfo, history) => {
+export const signUpAddUser = (userInfo, history) => {  
   return dispatch => {
     return dispatch(signUp(userInfo, history))
       .then(user => dispatch(addUser(user)))
-      .then(() => history.push('/'));
+      .then(() => history.push('/'))      
   };
 };
 

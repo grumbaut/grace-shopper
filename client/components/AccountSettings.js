@@ -13,6 +13,7 @@ class AccountSettings extends React.Component {
     }
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.user) {
@@ -24,32 +25,62 @@ class AccountSettings extends React.Component {
       });
     }
   }
-  onChange(ev){
+  onChange(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
   }
-  onSave(ev){
+  onSave(ev) {
     ev.preventDefault();
     const userInfo =  {
       id: this.props.user.id,
       password: this.state.password,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
-      email: this.state.email,
-      passwordPrompt: false
+      email: this.state.email
     };
     this.props.passwordReset(userInfo);
   }
-
+  onChangePassword(ev) {
+    ev.preventDefault();
+    const userNewPassword =  {
+      id: this.props.user.id,
+      password: this.state.password,
+      passwordPrompt: false
+    };
+    if (this.props.user.password !== this.state.password) {
+      this.props.passwordReset(userNewPassword);
+    }
+  }
   render() {
-    const { onChange, onSave } = this;
-    const { user, password } = this.props;
+    const { onChange, onSave, onChangePassword } = this;
+    const { user } = this.props;
+    const { firstName, lastName, email, password } = this.state;
     return (
       <div>
         <h1>Change Account Settings</h1>
-        {user.name}
+        <h2>Name: {user.name}</h2>
+        <h2>Email: {user.email}</h2>        
         <form onSubmit={ onSave }>
-            Password: <input value={ password } name="password" onChange ={ onChange }/>
-          <button type="submit" className="btn btn-primary btn-sm"> Change password </button>
+            <p>
+              First Name:<br />
+              <input value={ firstName } name="firstName" onChange ={ onChange } />
+            </p>
+            <p>
+              Last Name:<br />
+              <input value={ lastName } name="lastName" onChange ={ onChange } />
+            </p>
+            <p>
+              Email:<br />
+              <input value={ email } name="email" onChange ={ onChange } />
+            </p>
+          <button type="submit" className="btn btn-primary btn-sm"> Change Name / Email </button>
+        </form>
+        <form onSubmit={ onChangePassword }>
+          <h2>Password: {user.password}</h2>
+          <p>
+            New Password:<br />
+            <input value={ password } name="password" onChange ={ onChange } />
+          </p>
+          <button type="submit" className="btn btn-primary btn-sm"> Change Password </button>
         </form>
       </div>
     );

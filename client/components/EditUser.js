@@ -7,7 +7,8 @@ class EditUser extends Component {
   constructor(props){
     super(props);
     this.state = {
-      message: false
+      messageOne: false,
+      messageTwo: false
     }
     this.onSave = this.onSave.bind(this);
     this.onResetPassword = this.onResetPassword.bind(this);
@@ -15,12 +16,13 @@ class EditUser extends Component {
   }
   onSave(ev) {
     ev.preventDefault();
+    this.setState({ messageOne: true });
     let userInfo = { id: this.props.user.id, isAdmin: !this.props.user.isAdmin };
     this.props.saveUser(userInfo);
   }
   onResetPassword(ev) {
     ev.preventDefault();
-    this.setState({ message: true });
+    this.setState({ messageTwo: true });
     let userInfo = { id: this.props.id, passwordPrompt: true };
     this.props.saveUser(userInfo);
   }
@@ -30,7 +32,7 @@ class EditUser extends Component {
 
   render(){
     const { onSave, onDelete, onResetPassword } = this;
-    const { message } = this.state;
+    const { messageOne, messageTwo } = this.state;
     const { user } = this.props;
     if (!user) {
       return null;
@@ -42,11 +44,12 @@ class EditUser extends Component {
         <h3> { user.email } </h3>
         <div>
           <button type="submit" onClick={ onSave } className="btn btn-primary btn-sm">{changeStatus}</button>
+          { messageOne ? <h3><i>Admin status was changed</i></h3> : null }
         </div>
         <br />
         <div>
           <button type ="submit" onClick={ onResetPassword } className="btn btn-primary btn-sm"> Require Password Reset</button>
-          { message ? <h3><i>Password reset was requested</i></h3> : null }
+          { messageTwo ? <h3><i>Password reset was requested</i></h3> : null }
         </div>
         <br />
         <div>
