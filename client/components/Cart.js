@@ -58,6 +58,15 @@ class Cart extends React.Component {
             </div>
           </div>
         ))}
+
+
+        <form>
+        <p><strong>Have a Promo code?</strong></p> 
+        <input></input>
+        <button type = 'submit' className='btn btn-primary btn-sm'>Apply Discount</button>
+        </form>
+        
+
         <p><strong>Total:</strong> ${ total }</p>
         <Link to='/checkout'><button className='btn btn-primary btn-sm'>Checkout</button></Link>
         <hr className='style-eight' />

@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getCategories, getProducts, getUserFromToken, getReviews, getOrders, getUsers } from '../store';
+import { getCategories, getProducts, getUserFromToken, getReviews, getOrders, getUsers, getPromoCodes } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -83,6 +83,7 @@ const mapDispatch = dispatch => ({
     dispatch(getProducts());
     dispatch(getReviews());
     dispatch(getOrders());
+    dispatch(getPromoCodes())
   },
   getUser(token) {
     dispatch(getUserFromToken(token));
