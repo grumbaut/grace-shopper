@@ -20,13 +20,11 @@ class CreateProduct extends Component {
         }
       },
       price: (value) => {
-      //   const regEx= /^\$?[0-9]+(\.[0-9][0-9])?$/;
+      const regEx= /^\$?[0-9]+(\.[0-9][0-9])?$/;
        if (!value) {
           return 'Price is required.';
         }
-      //   if (regEx.test(value)) {
-      //     return 'Please enter an amount in USD.';
-      //   }
+      return regEx.test(value) ? null : `Please enter a correct dollar amount. Example: '$20.00' or '20.00`;
       }
     };
     this.state = {
