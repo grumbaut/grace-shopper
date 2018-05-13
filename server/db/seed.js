@@ -18,17 +18,17 @@ const promoCodes = [
   {
     name: 'Seasonal',
     percent: 0.10,
-    password: SEASONAL
+    password: 'SEASONAL'
   },
   {
     name: 'SuperDiscount',
     percent: 0.40,
-    password: SUPER
+    password: 'SUPER'
   },
   {
     name: 'FriendsAndFamily',
     percent: 0.30,
-    password: FAF
+    password: 'FAF'
   }
 ]
 

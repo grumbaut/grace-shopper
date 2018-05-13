@@ -7,6 +7,11 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.changePromo = this.changePromo.bind(this)
+
+    this.state = {
+      promoCode: ''
+    }
   }
 
   handleChange(event, lineItem) {
@@ -18,11 +23,15 @@ class Cart extends React.Component {
     const { userId, cart } = this.props;
     this.props.updateCart(userId, cart.id, lineItems);
   }
+  changePromo(){
 
+  }
   //enter info - do a if findOne, then take that value
 
   render() {
     const { lineItems, deleteItem, userId, cart, promoCodes } = this.props;
+    const { promoCode } = this.state
+    const { changePromo } = this
     if(!userId) {
       return (
         <h1>
@@ -51,7 +60,7 @@ class Cart extends React.Component {
             </div>
             <div className='col-5'>
               { lineItem.product.name }
-                ERASE THIS { promoCodes.map(promoCode => <li> {promoCode.name} </li>) }
+                !!!!ERASE THIS { promoCodes.map(promoCode => <li> {promoCode.name} </li>) }
             </div>
             <div className='col-3'>
               <p>Subtotal: ${ lineItem.subtotal.toFixed(2) }</p>
@@ -65,7 +74,7 @@ class Cart extends React.Component {
 
         <form>
         <p><strong>Have a Promo code?</strong></p> 
-        <input></input>
+        <input value = { promoCode } onChange = { changePromo } ></input>
         <button type = 'submit' className='btn btn-primary btn-sm'>Apply Discount</button>
         </form>
         
