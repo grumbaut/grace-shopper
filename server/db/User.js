@@ -73,8 +73,7 @@ User.exchangeTokenForUser = function(token){
           return user;
         }
         throw { status: 401 };
-      })
-      .catch(err=> console.error(err));
+      });
   }
   catch(ex){
     return Promise.reject({ status: 401 });

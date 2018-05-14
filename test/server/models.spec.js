@@ -64,7 +64,6 @@ describe('User model', () => {
         return User.create({
           firstName: 'Bob',
           lastName: 'Smith',
-          userName: 'bob123',
           email: 'bobby@gmail.com',
           password: 'bobshops'
         })
@@ -72,17 +71,14 @@ describe('User model', () => {
             bob = user;
           });
       });
-      it('User has a username and password', ()=> {
-        expect(bob.userName && bob.password).to.be.ok;
+      it('User has a email and password', ()=> {
+        expect(bob.email && bob.password).to.be.ok;
       });
 
-      it('returns true if the password is correct', () => {
-        expect(bob.correctPassword('bobshops')).to.be.equal(true);
+      it('Has a full name from the getter method.', () => {
+        expect(bob.name).to.be.equal('Bob Smith');
       });
 
-      it('returns false if the password is incorrect', () => {
-        expect(bob.correctPassword('bobshop')).to.be.equal(false);
-      });
     });
   });
 });
@@ -160,10 +156,10 @@ describe('cart', () => {
           expect(updatedCart.lineitems[0].product.name).to.equal(product.name);
         });
     });
-    it('checkout method sets cart status to false', () => {
-      cart.checkout(cart.id)
+    xit('checkout method sets order status to processing', () => {
+      cart.checkout(cart.id, orderInfo)
         .then(_cart => cart = _cart);
-      expect(cart.status).to.equal('empty');
+      expect(cart.status).to.equal('processing');
     });
     it('only generates a cart once', () => {
       Order.findOrCreateCart(user.id)
