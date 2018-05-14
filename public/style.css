@@ -147,6 +147,10 @@ button {
   width: 100%;
 }
 
+.search {
+  margin-left: 5px;
+}
+
 /* CHECKOUT STYLES */
 .element {
   display: block;
