@@ -32,15 +32,18 @@ class Products extends React.Component {
       this.props.products.filter(product => product.categoryId === Number(this.state.filter));
     return (
       <div>
-        <select value={ this.state.filter } onChange={ this.handleChange }>
-          <option value={ 0 }>All Products</option>
-          { categories.map(category => (
-            <option key={ category.id } value={ category.id }>
-              { category.name }
-            </option>
-          ))}
-        </select>
-        <Link to="productsearch"><button>Search Products</button></Link>
+        <div>
+          <select value={ this.state.filter } onChange={ this.handleChange }>
+            <option value={ 0 }>All Products</option>
+            { categories.map(category => (
+              <option key={ category.id } value={ category.id }>
+                { category.name }
+              </option>
+            ))}
+          </select>
+          <span>  </span>
+          <Link to="productsearch"><button className="btn btn-primary btn-sm">Search Products</button></Link>          
+        </div>
         <div>
           <Paginated activePage={ activePage } products={ products } changeActivePage={ changeActivePage } />
         </div>

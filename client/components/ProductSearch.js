@@ -20,14 +20,14 @@ class ProductSearch extends React.Component {
       return product.name.toLowerCase().indexOf(search) !== -1;
     });
     return (
-      <div>
-        <h2>Search for a product:</h2>
+      <div id="style">
+        <h2 className="header">Search for a product:</h2>
         <input value={search} name="search" onChange={ updateSearch } />
         <ul>
           {
             filteredProducts.map( product => <li key={product.id}><Link to={`/products/${product.id}`}><img src={product.imageUrl} width={50} />{product.name}</Link></li>)
           }
-        </ul>        
+        </ul>
       </div>
     );
   }
