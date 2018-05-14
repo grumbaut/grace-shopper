@@ -41,8 +41,7 @@ class Products extends React.Component {
               </option>
             ))}
           </select>
-          <span>  </span>
-          <Link to="productsearch"><button className="btn btn-primary btn-sm">Search Products</button></Link>          
+          <Link to="productsearch"><button className="search btn btn-primary btn-sm">Search Products</button></Link>
         </div>
         <div>
           <Paginated activePage={ activePage } products={ products } changeActivePage={ changeActivePage } />
