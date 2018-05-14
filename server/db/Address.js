@@ -9,6 +9,12 @@ const Address = conn.define('address', {
   state: Sequelize.STRING,
   zip: Sequelize.STRING,
   email: Sequelize.STRING
+}, {
+  getterMethods: {
+    name() {
+      return `${this.firstName} ${this.lastName}`;
+    }
+  }
 });
 
 module.exports = Address;
