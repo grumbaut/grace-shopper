@@ -29,6 +29,7 @@ import AccountInformation from './AccountInformation';
 import AccountSettings from './AccountSettings';
 import Addresses from './Addresses';
 import EditAddress from './EditAddress';
+import ProductSearch from './ProductSearch';
 
 class Main extends React.Component {
   constructor(props) {
@@ -72,6 +73,7 @@ class Main extends React.Component {
               <Route path='/account-information' component={ AccountInformation } />
               <Route path='/account-settings' component={ AccountSettings } />
               <Route path='/addresses' component={ Addresses } />
+              <Route path='/productsearch' component={ ProductSearch } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>
