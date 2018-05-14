@@ -28,6 +28,7 @@ import AdminCatsAndProds from './AdminCatsAndProds';
 import AccountInformation from './AccountInformation';
 import AccountSettings from './AccountSettings';
 import Addresses from './Addresses';
+import EditAddress from './EditAddress';
 
 class Main extends React.Component {
   constructor(props) {
@@ -50,6 +51,7 @@ class Main extends React.Component {
           <div className='container-fluid'>
             <Switch>
               <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
+              <Route path='/edit-address/:id' component={ EditAddress } />
               <Route path='/users/:id' exact render={({ match, history }) => <EditUser id={ match.params.id } history={ history } /> } />
               <Route path='/users' exact render={({ history }) => <Users history={ history } /> } />
               <Route path='/createProduct' exact render={({history}) => <CreateProduct history={history} />} />

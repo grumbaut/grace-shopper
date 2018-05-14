@@ -131,6 +131,17 @@ router.get('/:id/addresses', authorized, isCorrectUser('params', 'id'), (req, re
 
 router.post('/:id/addresses', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
   Address.create(req.body)
+    .then(address => {
+      return User.findById(req.params.id)
+        .then(user => address.setUser(user));
+    })
+    .then(address => res.send(address))
+    .catch(next);
+});
+
+router.put('/:id/addresses/:addressId', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
+  Address.findById(req.params.addressId)
+    .then(address => address.update(req.body))
     .then(address => res.send(address))
     .catch(next);
 });

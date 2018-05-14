@@ -75,8 +75,8 @@ const mapDispatch = dispatch => ({
   getAddresses(id) {
     dispatch(getAddresses(id));
   },
-  postAddress(id, addressInfo, addressId) {
-    dispatch(postAddress(id, addressInfo, addressId));
+  postAddress(id, addressInfo) {
+    dispatch(postAddress(id, addressInfo));
   }
 });
 

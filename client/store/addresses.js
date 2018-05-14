@@ -38,12 +38,13 @@ export const postAddress = (id, addressInfo) => {
   };
 };
 
-export const putAddress = (id, addressId, addressInfo) => {
+export const putAddress = (id, addressInfo, addressId, history) => {
   return dispatch => {
     const headers = headerFunc();
     return axios.put(`/api/users/${id}/addresses/${addressId}`, addressInfo, { headers })
       .then(result => result.data)
-      .then(address => dispatch(gotUpdatedAddress(address)));
+      .then(address => dispatch(gotUpdatedAddress(address)))
+      .then(() => history.push('/addresses'));
   };
 };
 
