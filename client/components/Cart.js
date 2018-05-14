@@ -7,12 +7,6 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.changePromo = this.changePromo.bind(this)
-    this.onSave = this.onSave.bind(this)
-
-    this.state = {
-      discount: ''
-    }
   }
 
   handleChange(event, lineItem) {
@@ -24,24 +18,8 @@ class Cart extends React.Component {
     const { userId, cart } = this.props;
     this.props.updateCart(userId, cart.id, lineItems);
   }
-  onSave(ev){
-    ev.preventDefault()
-
-  }
-  changePromo(event){
-    const code = event.target.value
-    const promoCode2Apply = this.props.promoCodes.find(promoCode => promoCode.password === code)
-    console.log(promoCode2Apply, 'promoCode2apply')
-    if(promoCode2Apply){
-      const discount = promoCode2Apply.discount
-      this.setState({discount})
-      console.log(discount, 'discount')
-    }
-  }
   render() {
     const { lineItems, deleteItem, userId, cart, promoCodes } = this.props;
-    const { discount } = this.state;
-    const { changePromo, onSave } = this;
     if(!userId) {
       return (
         <h1>
@@ -52,7 +30,6 @@ class Cart extends React.Component {
     if(!lineItems || !lineItems.length) return <h1>Your cart is empty.</h1>;
     const quantityNum = [];
     const total = lineItems.reduce((acc, item) => acc + Number(item.subtotal), 0).toFixed(2);
-    const discountedPrice = total - (total * this.state.discount)
     for(let i = 1; i <= 50; i++) {
       quantityNum.push(i);
     }
@@ -80,24 +57,6 @@ class Cart extends React.Component {
             </div>
           </div>
         ))}
-
-
-        <form onSubmit = { onSave } >
-        <p><strong>Have a Promo code?</strong></p> 
-        <input onChange = { changePromo } ></input>
-        <button type = 'submit' className='btn btn-primary btn-sm'> Apply Discount </button>
-        </form>
-        
-
-        <p><strong>Total:</strong> ${ total }</p>
-        {
-          this.state.discount !== '' ?
-            <p><strong>Total with discount:</strong> ${ discountedPrice } </p>
-          :
-          <p><strong>Thanks for shopping!</strong></p>
-        }
-
-
         <Link to='/checkout'><button className='btn btn-primary btn-sm'>Checkout</button></Link>
         <hr className='style-eight' />
       </div>
@@ -109,7 +68,6 @@ const mapState = state => ({
   cart: state.cart,
   userId: state.user.id,
   lineItems: state.cart.lineitems,
-  promoCodes: state.promoCodes
 });
 
 const mapDispatch = dispatch => ({

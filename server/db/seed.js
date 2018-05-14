@@ -17,17 +17,17 @@ const categories = [
 const promoCodes = [
   {
     name: 'Seasonal',
-    discount: 0.10,
+    discount: 0.90,
     password: 'SEASONAL'
   },
   {
     name: 'SuperDiscount',
-    discount: 0.40,
+    discount: 0.80,
     password: 'SUPER'
   },
   {
     name: 'FriendsAndFamily',
-    discount: 0.30,
+    discount: 0.70,
     password: 'FAF'
   }
 ]
