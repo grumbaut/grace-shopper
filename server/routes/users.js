@@ -146,4 +146,11 @@ router.put('/:id/addresses/:addressId', authorized, isCorrectUser('params', 'id'
     .catch(next);
 });
 
+router.delete('/:id/addresses/:addressId', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
+  Address.findById(req.params.addressId)
+    .then(address => address.destroy())
+    .then(() => res.sendStatus(200))
+    .catch(next);
+});
+
 module.exports = router;

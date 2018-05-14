@@ -4,6 +4,7 @@ import headerFunc from './headerFunc';
 const GOT_ADDRESSES = 'GOT_ADDRESSES';
 const GOT_ADDRESS = 'GOT_ADDRESS';
 const GOT_UPDATED_ADDRESS = 'GOT_UPDATED_ADDRESS';
+const DELETED_ADDRESS = 'DELETED_ADDRESS';
 
 const gotAddresses = addresses => {
   const action = { type: GOT_ADDRESSES, addresses };
@@ -17,6 +18,11 @@ const gotAddress = address => {
 
 const gotUpdatedAddress = address => {
   const action = { type: GOT_UPDATED_ADDRESS, address };
+  return action;
+};
+
+const deletedAddress = id => {
+  const action = { type: DELETED_ADDRESS, id };
   return action;
 };
 
@@ -48,6 +54,14 @@ export const putAddress = (id, addressInfo, addressId, history) => {
   };
 };
 
+export const deleteAddress = (id, addressId) => {
+  return dispatch => {
+    const headers = headerFunc();
+    return axios.delete(`/api/users/${id}/addresses/${addressId}`, { headers })
+      .then(() => dispatch(deletedAddress(addressId)));
+  };
+};
+
 const reducer = (state = [], action) => {
   switch (action.type) {
   case GOT_ADDRESSES:
@@ -56,6 +70,8 @@ const reducer = (state = [], action) => {
     return [...state, action.address];
   case GOT_UPDATED_ADDRESS:
     return state.map(address => address.id === action.address.id ? action.address : address);
+  case DELETED_ADDRESS:
+    return state.filter(address => address.id !== action.id);
   default:
     return state;
   }
