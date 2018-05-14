@@ -25,7 +25,11 @@ import Footer from './Footer';
 import EditReview from './EditReview';
 import CreateProduct from './createProduct';
 import AdminCatsAndProds from './AdminCatsAndProds';
+import AccountInformation from './AccountInformation';
 import AccountSettings from './AccountSettings';
+import Addresses from './Addresses';
+import EditAddress from './EditAddress';
+import ProductSearch from './ProductSearch';
 
 class Main extends React.Component {
   constructor(props) {
@@ -48,6 +52,7 @@ class Main extends React.Component {
           <div className='container-fluid'>
             <Switch>
               <Route path='/categories/:id' exact render={({match, history}) => <Category id={ match.params.id * 1 } history={ history } /> } />
+              <Route path='/edit-address/:id' component={ EditAddress } />
               <Route path='/users/:id' exact render={({ match, history }) => <EditUser id={ match.params.id } history={ history } /> } />
               <Route path='/users' exact render={({ history }) => <Users history={ history } /> } />
               <Route path='/createProduct' exact render={({history}) => <CreateProduct history={history} />} />
@@ -65,7 +70,10 @@ class Main extends React.Component {
               <Route path='/login' component={ Login } />
               <Route path='/cart' component={ Cart } />
               <Route path='/categories' component={ Categories } />
-              <Route path='/account-settings/:id' exact render={({ match, history }) => <AccountSettings id={ match.params.id } history={ history } /> } />
+              <Route path='/account-information' component={ AccountInformation } />
+              <Route path='/account-settings' component={ AccountSettings } />
+              <Route path='/addresses' component={ Addresses } />
+              <Route path='/productsearch' component={ ProductSearch } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>

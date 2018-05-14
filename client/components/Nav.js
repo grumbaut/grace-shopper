@@ -21,7 +21,7 @@ const Nav = ({ user, logout, cart }) => {
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <NavLink className="dropdown-item" to='/manage-orders' activeClassName='active'>Manage Orders</NavLink>
-                  <NavLink className="dropdown-item" to={`/account-settings/${user.id}`} activeClassName='active'>Account Settings</NavLink>
+                  <NavLink className="dropdown-item" to={`/account-settings`} activeClassName='active'>Account Settings</NavLink>
                   <NavLink className="dropdown-item" to='/logged-out' activeClassName='active' onClick={ logout }>Logout { user.firstName }</NavLink>
                 </div>
               </div>
@@ -35,7 +35,7 @@ const Nav = ({ user, logout, cart }) => {
                   Admin
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <NavLink className="dropdown-item" to='/createproduct' activeClassName='active'>Create New Product</NavLink>                  
+                  <NavLink className="dropdown-item" to='/createproduct' activeClassName='active'>Create New Product</NavLink>
                   <NavLink className="dropdown-item" to='/createcategory' activeClassName='active'>Create New Category</NavLink>
                   <NavLink className="dropdown-item" to='/admin-categories-products' activeClassName='active'>Update Categories & Products</NavLink>
                   <NavLink className="dropdown-item" to='/users' activeClassName='active'>View and Update Users</NavLink>
@@ -61,7 +61,7 @@ const Nav = ({ user, logout, cart }) => {
             }
           </div>
           <div>
-              { user && user.id ? <NavLink className="nav-link" to="/cart" activeClassName='active'>Cart {`(${totalItemsInCart})`}</NavLink> : null }
+            { user && user.id ? <NavLink className="nav-link" to="/cart" activeClassName='active'>Cart {`(${totalItemsInCart})`}</NavLink> : null }
 
           </div>
           <div className='nav-item'>

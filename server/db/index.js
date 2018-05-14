@@ -6,6 +6,7 @@ const Order = require('./Order');
 const LineItem = require('./LineItem');
 const Review = require('./Review');
 const PromoCode = require('./PromoCode')
+const Address = require('./Address');
 const seed = require('./seed');
 
 
@@ -22,6 +23,8 @@ Review.belongsTo(Product);
 Product.hasMany(Review);
 Review.belongsTo(User);
 User.hasMany(Review);
+Address.belongsTo(User);
+User.hasMany(Address);
 
 const syncAndSeed = () => {
   return conn.sync({ force: true })
@@ -40,6 +43,7 @@ module.exports = {
     LineItem,
     Order,
     Review, 
-    PromoCode
+    PromoCode,
+    Address
   }
 };

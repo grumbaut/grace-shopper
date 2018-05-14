@@ -17,6 +17,7 @@ class Checkout extends React.Component {
       state: '',
       zip: '',
       email: '',
+      addressId: 0,
       payment: false,
       errors: {},
       discount: 1
@@ -26,6 +27,7 @@ class Checkout extends React.Component {
     this.handlePaymentChange = this.handlePaymentChange.bind(this);
     this.changePromo = this.changePromo.bind(this)
 
+    this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.validators = {
       billingFirstName: value => {
         if(!value) return 'First name is required.';
@@ -103,8 +105,20 @@ class Checkout extends React.Component {
       
     }
   }
-
-  render() {
+  handleDropdownChange(event){
+    this.setState({ addressId: event.target.value });
+    const addressInfo = this.props.addresses.find(address => address.id === Number(event.target.value));
+    this.setState({
+      firstName: addressInfo.firstName,
+      lastName: addressInfo.lastName,
+      address: addressInfo.address,
+      email: addressInfo.email,
+      city: addressInfo.city,
+      state: addressInfo.state,
+      zip: addressInfo.zip
+    });
+  }
+  render(){
     const { billingFirstName, billingLastName, firstName, lastName, address, city, state, zip, email, errors } = this.state;
     const { cart, userId } = this.props;
     const { changePromo } = this;
@@ -161,6 +175,7 @@ class Checkout extends React.Component {
           </div>
           <hr className='style-eight' />
           <h2 className='header'>Shipment Information</h2>
+          <AddressDropdown addresses={ this.props.addresses } addressId={ this.state.addressId } handleDropdownChange={ this.handleDropdownChange } />
           <div className='form-group'>
             <input name='firstName' value={ firstName } className='element' onChange={ this.handleChange } placeholder='First Name' />
             <p className='error'>{ errors.firstName }</p>
@@ -196,10 +211,12 @@ class Checkout extends React.Component {
   }
 }
 
+
 const mapState = state => ({
   cart: state.cart,
   userId: state.user.id,
-  promoCodes: state.promoCodes
+  promoCodes: state.promoCodes,
+  addresses: state.addresses
 });
 
 const mapDispatch = (dispatch, { history }) => ({
@@ -210,3 +227,18 @@ const mapDispatch = (dispatch, { history }) => ({
 });
 
 export default connect(mapState, mapDispatch)(injectStripe(Checkout));
+
+const AddressDropdown = ({ addresses, addressId, handleDropdownChange }) => {
+  return (
+    <select value={ addressId } onChange={ handleDropdownChange }>
+      <option value='0'>Ship to a Saved Address</option>
+      { addresses.map(address => {
+        return (
+          <option key={ address.id } value={ address.id }>
+            { `${address.name}; ${address.email}; ${address.address}; ${address.city}, ${address.state} ${address.zip}` }
+          </option>
+        )}
+      )}
+    </select>
+  );
+};

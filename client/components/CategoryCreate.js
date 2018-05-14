@@ -39,6 +39,9 @@ class CategoryCreate extends React.Component {
       <div id='style'>
         <h2 className='header'>Add a New Category</h2>
         <form onSubmit={ onSave }>
+          <p>Name:<br />
+          </p>
+          <div className='error' >{ error }</div>
           <input value={ name } className='element' onChange={ onChangeInfo } placeholder='Category Name' />
           <button className='btn btn-primary btn-sm' type="submit">Add</button>
         </form>

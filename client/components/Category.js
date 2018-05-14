@@ -94,8 +94,8 @@ class Category extends React.Component {
                 <h3>Admin: you may update this category</h3>
                 <p>Name:<br />
                 <input value={ name } onChange={ onChangeInput } />
-                <div className='error' >{ error }</div>
                 </p>
+                <div className='error' >{ error }</div>
                 <button type="submit"> Update </button>
               </form>
 

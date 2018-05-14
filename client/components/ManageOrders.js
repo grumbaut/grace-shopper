@@ -17,7 +17,8 @@ class ManageOrders extends React.Component {
   }
 
   render() {
-    const { orders } = this.props;
+    const { orders, userId } = this.props;
+    if(!userId) return <h2>Please sign in to access this page.</h2>;
     if(this.checkIfEmpty(orders)) return <h2>You have no orders in your history.</h2>;
     const { pastOrders, shippedOrders, inProcess, cancelled } = orders;
     return (
@@ -79,7 +80,7 @@ const mapState = state => {
   const shippedOrders = orders.filter(order => order.userId === userId && order.status === 'shipped');
   const inProcess = orders.filter(order => order.userId === userId && order.status === 'processing');
   const cancelled = orders.filter(order => order.userId === userId && order.status === 'cancelled');
-  return { orders: { pastOrders, shippedOrders, inProcess, cancelled } };
+  return { userId, orders: { pastOrders, shippedOrders, inProcess, cancelled } };
 };
 
 export default connect(mapState)(ManageOrders);
