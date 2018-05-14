@@ -51,6 +51,7 @@ router.get('/:id/orders', (req, res, next)=> {
 });
 
 router.post('/:id/orders', (req, res, next)=> {
+  console.log(req.connection.remoteAddress)
   Order.findOrCreateCart(req.params.id)
     .then(cart => res.send(cart))
     .catch(next);
