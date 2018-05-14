@@ -81,8 +81,4 @@ User.exchangeTokenForUser = function(token){
   }
 };
 
-// User.prototype.correctPassword = function(password) { //this is a placeholder!!
-//   return password === 'bobshops' ? true : false;
-// };
-
 module.exports = User;

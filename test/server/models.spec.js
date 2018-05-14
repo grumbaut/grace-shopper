@@ -147,7 +147,7 @@ describe('cart', () => {
       expect(cart).to.be.ok;
     });
     it('has a cart status of true', () => {
-      expect(cart.cart).to.equal(true);
+      expect(cart.status).to.equal('cart');
     });
     it('can add products to cart', () => {
       let product;
@@ -163,7 +163,7 @@ describe('cart', () => {
     it('checkout method sets cart status to false', () => {
       cart.checkout(cart.id)
         .then(_cart => cart = _cart);
-      expect(cart.cart).to.equal(false);
+      expect(cart.status).to.equal('empty');
     });
     it('only generates a cart once', () => {
       Order.findOrCreateCart(user.id)
