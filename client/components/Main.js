@@ -25,7 +25,9 @@ import Footer from './Footer';
 import EditReview from './EditReview';
 import CreateProduct from './createProduct';
 import AdminCatsAndProds from './AdminCatsAndProds';
+import AccountInformation from './AccountInformation';
 import AccountSettings from './AccountSettings';
+import Addresses from './Addresses';
 
 class Main extends React.Component {
   constructor(props) {
@@ -65,7 +67,9 @@ class Main extends React.Component {
               <Route path='/login' component={ Login } />
               <Route path='/cart' component={ Cart } />
               <Route path='/categories' component={ Categories } />
-              <Route path='/account-settings/:id' exact render={({ match, history }) => <AccountSettings id={ match.params.id } history={ history } /> } />
+              <Route path='/account-information' component={ AccountInformation } />
+              <Route path='/account-settings' component={ AccountSettings } />
+              <Route path='/addresses' component={ Addresses } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>
