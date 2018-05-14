@@ -97,13 +97,10 @@ class Checkout extends React.Component {
     const code = event.target.value
     const promoCode2Apply = this.props.promoCodes.find(promoCode => promoCode.password === code)
     
-    console.log(promoCode2Apply, 'promoCode2apply')
-    
     if(promoCode2Apply){
       const discount = promoCode2Apply.discount
       this.setState({ discount })
       
-      console.log(discount, 'discount')
     }
   }
 
