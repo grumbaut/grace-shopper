@@ -72,7 +72,7 @@ Order.prototype.addToCart = function(quantity, product) {
 
 Order.prototype.checkout = function(userId, orderInfo) {
   const { firstName, lastName, address, city, state, zip, email } = orderInfo.shippingInfo;
-  const amount = this.total.split('.').join('');
+
   return this.update({
     status: 'processing',
     date: new Date(),
@@ -94,6 +94,7 @@ Order.prototype.checkout = function(userId, orderInfo) {
       })
     ]))
     .then(([user, order]) => {
+      const amount = order.total * 100;
       sendEmail(user, order);
       charge(orderInfo.token.id, amount);
       return this;
