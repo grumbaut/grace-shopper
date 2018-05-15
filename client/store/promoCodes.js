@@ -49,7 +49,7 @@ export const getPromoCodes = () => (
   }
 );
 
-export const deletePromocode = (promoCode, history) => (
+export const deletePromoCode = (promoCode, history) => (
   dispatch => {
     const headers = headerFunc();
     return axios.delete(`api/promocodes/${promocode.id}`, { headers })

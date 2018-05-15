@@ -13,6 +13,7 @@ class PromoCode extends Component {
       discount: promoCode.discount ? promoCode.discount : 1,
       password: promoCode.password ? promoCode.password : '',
       valid: promoCode.valid ? promoCode.valid : true,
+      id: this.props.id
     };
   }
 
@@ -31,7 +32,7 @@ class PromoCode extends Component {
     this.setState({ [ev.target.name]: ev.target.value });
   }
   onDelete(){
-    this.props.deletePromoCode({ id: this.props.id });
+    deletePromoCode({ id: this.props.id });
   } 
   render(){
     const { user, promoCode } = this.props;
@@ -81,6 +82,7 @@ const mapState = ({ user, promoCodes }, { id }) => {
 const mapDispatch = (dispatch, { history }) => {
   return {
     savePromoCode: (promoCode) => dispatch(savePromoCode(promoCode, history)),
+    deletePromoCode: (promoCode) => dispatch(deleteProduct(promoCode, history))
   };
 };
 
