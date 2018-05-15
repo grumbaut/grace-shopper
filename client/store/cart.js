@@ -29,8 +29,7 @@ export const getCart = userId => (
       .then(() => dispatch(getOrders()))
       .catch(err => console.error(err));
   }
-)
-;
+);
 
 export const updateCart = (userId, orderId, lineItems) => (
   dispatch => {
@@ -68,7 +67,7 @@ export const checkout = (userId, orderId, orderInfo, history) => (
       .then(res => res.data)
       .then(order => dispatch(checkoutOrder(order)))
       .then(() => dispatch(getCart(userId)))
-      .then(() => history.push('/'));
+      .then(() => history.push(`/confirmation/${orderId}`));
   }
 );
 
