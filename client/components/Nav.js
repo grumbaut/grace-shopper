@@ -40,6 +40,7 @@ const Nav = ({ user, logout, cart }) => {
                   <NavLink className="dropdown-item" to='/admin-categories-products' activeClassName='active'>Update Categories & Products</NavLink>
                   <NavLink className="dropdown-item" to='/users' activeClassName='active'>View and Update Users</NavLink>
                   <NavLink className="dropdown-item" to='/orders' activeClassName='active'>Manage Orders</NavLink>
+                  <NavLink className="dropdown-item" to='/promocodes' activeClassName='active'>Promotions</NavLink>
                 </div>
               </div>
               :

@@ -99,10 +99,9 @@ class Checkout extends React.Component {
     const code = event.target.value
     const promoCode2Apply = this.props.promoCodes.find(promoCode => promoCode.password === code)
     
-    if(promoCode2Apply){
+    if(promoCode2Apply.valid){
       const discount = promoCode2Apply.discount
       this.setState({ discount })
-      
     }
   }
   handleDropdownChange(event){
@@ -125,7 +124,7 @@ class Checkout extends React.Component {
 
     if(!cart.id) return null;
 
-    const discountedPrice = cart.total - (cart.total * this.state.discount)
+    const discountedPrice = cart.total * this.state.discount
 
     return (
       <div id='style'>
@@ -146,7 +145,7 @@ class Checkout extends React.Component {
         <p><strong>Total: </strong>{ '$' + cart.total }</p>
         
         <form onSubmit = { this.handleChange } >
-        <p><strong>Have a Promo code?</strong></p> 
+        <p><strong> Have a Promo code? </strong></p> 
         <input onChange = { changePromo } ></input>
         <button type = 'submit' className='btn btn-primary btn-sm'> Apply Discount </button>
         </form>

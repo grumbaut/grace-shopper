@@ -19,6 +19,7 @@ import Cart from './Cart';
 import Checkout from './Checkout';
 import ManageOrders from './ManageOrders';
 import AdminOrderStatus from './AdminOrderStatus';
+import AdminPromoCodes from './AdminPromoCodes';
 import EditOrder from './EditOrder';
 import LoggedOut from './LoggedOut';
 import Footer from './Footer';
@@ -74,6 +75,7 @@ class Main extends React.Component {
               <Route path='/account-settings' component={ AccountSettings } />
               <Route path='/addresses' component={ Addresses } />
               <Route path='/productsearch' component={ ProductSearch } />
+              <Route path='/promocodes' component={ AdminPromoCodes } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>

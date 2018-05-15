@@ -68,7 +68,7 @@ export const savePromoCode = (promoCode, history) => {
     }
   ) : (
     dispatch => {
-      return axios.post(`api/promocodes`, promocode, { headers })
+      return axios.post(`api/promocodes`, promoCode, { headers })
         .then(result => result.data)
         .then(promoCode => dispatch(createPromoCodesInStore(promoCode)))
         .then( () => history.push('/promocodes'))
