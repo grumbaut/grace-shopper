@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const db = require('../db');
 const { Review } = db.models;
-const { authorized, isAdmin, isCorrectUser } = require('./authFuncs');
+const { authorized, isCorrectUser } = require('./authFuncs');
 
 router.get('/', (req, res, next) => {
   Review.findAll()
