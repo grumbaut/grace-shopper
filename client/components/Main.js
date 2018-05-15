@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getCategories, getProducts, getUserFromToken, getReviews, getOrders, getUsers } from '../store';
+import { getCategories, getProducts, getUserFromToken, getReviews, getOrders, getUsers, getPromoCodes } from '../store';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -19,6 +19,8 @@ import Cart from './Cart';
 import Checkout from './Checkout';
 import ManageOrders from './ManageOrders';
 import AdminOrderStatus from './AdminOrderStatus';
+import AdminPromoCodes from './AdminPromoCodes';
+import PromoCode from './PromoCode';
 import EditOrder from './EditOrder';
 import LoggedOut from './LoggedOut';
 import Footer from './Footer';
@@ -72,6 +74,8 @@ class Main extends React.Component {
               <Route path='/account-settings' component={ AccountSettings } />
               <Route path='/addresses' component={ Addresses } />
               <Route path='/productsearch' component={ ProductSearch } />
+              <Route path='/promocodes' exact component={ AdminPromoCodes } />
+              <Route path='/promocodes/:id' exact render={({match, history}) => <PromoCode id={ match.params.id * 1 } history={ history } /> } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>
@@ -89,6 +93,7 @@ const mapDispatch = dispatch => ({
     dispatch(getProducts());
     dispatch(getReviews());
     dispatch(getOrders());
+    dispatch(getPromoCodes())
   },
   getUser(token) {
     dispatch(getUserFromToken(token));

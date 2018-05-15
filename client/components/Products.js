@@ -23,15 +23,24 @@ class Products extends React.Component {
   }
 
   render() {
-    const { categories } = this.props;
+    const { categories, promoCodes } = this.props;
     const { activePage } = this.state;
     const { changeActivePage } = this;
     const products = !(this.state.filter * 1)
       ? this.props.products
       :
       this.props.products.filter(product => product.categoryId === Number(this.state.filter));
+    const activePromoCodes = promoCodes.filter(promoCode => promoCode.valid === true)
     return (
       <div>
+        <div>
+          {
+            activePromoCodes ? (activePromoCodes.map(activePromoCode => <p key={ activePromoCode.name }><strong> Special Discount {activePromoCode.name} is available! Use code {activePromoCode.password}</strong></p>)
+            ) : (
+              <p><strong>No current promotions - check back soon!</strong></p>
+            )
+          }
+        </div>
         <div>
           <select value={ this.state.filter } onChange={ this.handleChange }>
             <option value={ 0 }>All Products</option>
@@ -53,7 +62,8 @@ class Products extends React.Component {
 
 const mapState = state => ({
   products: state.products,
-  categories: state.categories
+  categories: state.categories,
+  promoCodes: state.promoCodes
 });
 
 export default connect(mapState)(Products);

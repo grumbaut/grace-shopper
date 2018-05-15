@@ -5,8 +5,10 @@ const User = require('./User');
 const Order = require('./Order');
 const LineItem = require('./LineItem');
 const Review = require('./Review');
+const PromoCode = require('./PromoCode')
 const Address = require('./Address');
 const seed = require('./seed');
+
 
 Product.belongsTo(Category);
 Product.hasMany(LineItem);
@@ -15,6 +17,7 @@ LineItem.belongsTo(Order);
 LineItem.belongsTo(Product);
 Order.hasMany(LineItem);
 Order.belongsTo(User);
+//PromoCode.hasMany(Order);
 User.hasMany(Order);
 Review.belongsTo(Product);
 Product.hasMany(Review);
@@ -39,7 +42,8 @@ module.exports = {
     User,
     LineItem,
     Order,
-    Review,
+    Review, 
+    PromoCode,
     Address
   }
 };

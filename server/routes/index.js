@@ -22,5 +22,6 @@ router.use('/products', require('./products'));
 router.use('/orders', require('./orders'));
 router.use('/sessions', require('./sessions'));
 router.use('/reviews', require('./reviews'));
+router.use('/promocodes', require('./promoCodes'));
 
 module.exports = router;

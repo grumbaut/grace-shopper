@@ -8,13 +8,14 @@ import users from './users';
 import cart from './cart';
 import reviews from './reviews';
 import orders from './orders';
+import promoCodes from './promoCodes'
 import addresses from './addresses';
 
 import { signUp, getUserFromToken } from './sessions';
 import { addUser, saveUser } from './users';
 
 
-const reducers = combineReducers({ categories, products, user, cart, reviews, orders, users, addresses });
+const reducers = combineReducers({ categories, products, user, cart, reviews, orders, users, addresses, promoCodes  });
 const middleware = applyMiddleware(thunk, logger);
 
 const store = createStore(reducers, middleware);
@@ -45,4 +46,5 @@ export * from './reviews';
 export * from './cart';
 export * from './orders';
 export * from './users';
+export * from './promoCodes';
 export * from './addresses';

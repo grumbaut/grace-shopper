@@ -3,7 +3,7 @@ const { Sequelize } = conn;
 
 const LineItem = conn.define('lineitem', {
   quantity: Sequelize.INTEGER,
-  productPrice: Sequelize.FLOAT
+  productPrice: Sequelize.FLOAT, 
 },{
   getterMethods: {
     subtotal() {

@@ -3,6 +3,7 @@ const Product = require('./Product');
 const User = require('./User');
 const Order = require('./Order');
 const Review = require('./Review');
+const PromoCode = require('./PromoCode')
 
 const categories = [
   {
@@ -12,6 +13,27 @@ const categories = [
     name: 'Decorative'
   }
 ];
+
+const promoCodes = [
+  {
+    name: 'Seasonal',
+    discount: 0.90,
+    password: 'SEASONAL', 
+    valid: false
+  },
+  {
+    name: 'SuperDiscount',
+    discount: 0.80,
+    password: 'SUPER',
+    valid: false
+  },
+  {
+    name: 'FriendsAndFamily',
+    discount: 0.75,
+    password: 'FAF',
+    valid: true
+  }
+]
 
 const products = [
   {
@@ -368,6 +390,9 @@ const seed = () => {
     })
     .then(() => {
       return Promise.all(users.map( user => User.create(user)));
+    })
+    .then(() => {
+      return Promise.all(promoCodes.map( promoCode => PromoCode.create(promoCode)));
     })
     .then(() => {
       return Promise.all(reviews.map( review => Review.create(review)));

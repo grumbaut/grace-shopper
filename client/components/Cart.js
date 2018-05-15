@@ -18,9 +18,8 @@ class Cart extends React.Component {
     const { userId, cart } = this.props;
     this.props.updateCart(userId, cart.id, lineItems);
   }
-
   render() {
-    const { lineItems, deleteItem, userId, cart } = this.props;
+    const { lineItems, deleteItem, userId, cart, promoCodes } = this.props;
     if(!userId) {
       return (
         <h1>
@@ -58,7 +57,6 @@ class Cart extends React.Component {
             </div>
           </div>
         ))}
-        <p><strong>Total:</strong> ${ total }</p>
         <Link to='/checkout'><button className='btn btn-primary btn-sm'>Checkout</button></Link>
         <hr className='style-eight' />
       </div>
@@ -69,7 +67,7 @@ class Cart extends React.Component {
 const mapState = state => ({
   cart: state.cart,
   userId: state.user.id,
-  lineItems: state.cart.lineitems
+  lineItems: state.cart.lineitems,
 });
 
 const mapDispatch = dispatch => ({

@@ -18,13 +18,18 @@ const Order = conn.define('order', {
   city: Sequelize.STRING,
   state: Sequelize.STRING,
   zip: Sequelize.STRING,
-  email: Sequelize.STRING
+  email: Sequelize.STRING,
+  discount: {
+    type: Sequelize.FLOAT,
+    defaultValue: 1
+  }
 }, {
   getterMethods: {
     total() {
-      const total = this.lineitems.reduce((acc, item) => {
+      let total = this.lineitems.reduce((acc, item) => {
         return acc + Number(item.get().subtotal);
       }, 0);
+      total = total*this.discount
       return total.toFixed(2);
     },
     name() {
@@ -67,7 +72,7 @@ Order.prototype.addToCart = function(quantity, product) {
 
 Order.prototype.checkout = function(userId, orderInfo) {
   const { firstName, lastName, address, city, state, zip, email } = orderInfo.shippingInfo;
-  const amount = this.total.split('.').join('');
+
   return this.update({
     status: 'processing',
     date: new Date(),
@@ -89,6 +94,7 @@ Order.prototype.checkout = function(userId, orderInfo) {
       })
     ]))
     .then(([user, order]) => {
+      const amount = order.total * 100;
       sendEmail(user, order);
       charge(orderInfo.token.id, amount);
       return this;

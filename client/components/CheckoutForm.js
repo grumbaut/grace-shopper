@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { injectStripe, CardElement } from 'react-stripe-elements';
-import { checkout } from '../store';
+import { checkout, updateOrder } from '../store';
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -19,11 +19,14 @@ class Checkout extends React.Component {
       email: '',
       addressId: 0,
       payment: false,
-      errors: {}
+      errors: {},
+      discount: 1
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePaymentChange = this.handlePaymentChange.bind(this);
+    this.changePromo = this.changePromo.bind(this)
+
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.validators = {
       billingFirstName: value => {
@@ -75,10 +78,12 @@ class Checkout extends React.Component {
       return;
     }
     const name = `${this.state.billingFirstName} ${this.state.billingLastName}`;
+    const discount = this.state.discount
     this.props.stripe.createToken({type: 'card', name })
       .then(({token}) => {
         const orderInfo = { shippingInfo, token };
-        this.props.checkoutCart(userId, orderId, orderInfo);
+        const orderUpdate = { discount }
+        this.props.checkoutCart(userId, orderId, orderInfo, orderUpdate);
       });
   }
 
@@ -90,7 +95,16 @@ class Checkout extends React.Component {
     this.setState({ payment: event.complete });
   }
 
-  handleDropdownChange(event) {
+  changePromo(event){
+    const code = event.target.value
+    const promoCode2Apply = this.props.promoCodes.find(promoCode => promoCode.password === code)
+    
+    if(promoCode2Apply.valid){
+      const discount = promoCode2Apply.discount
+      this.setState({ discount })
+    }
+  }
+  handleDropdownChange(event){
     this.setState({ addressId: event.target.value });
     const addressInfo = this.props.addresses.find(address => address.id === Number(event.target.value));
     this.setState({
@@ -103,11 +117,15 @@ class Checkout extends React.Component {
       zip: addressInfo.zip
     });
   }
-
-  render() {
+  render(){
     const { billingFirstName, billingLastName, firstName, lastName, address, city, state, zip, email, errors } = this.state;
+    const { changePromo } = this;
+
     const { cart, userId, addresses } = this.props;
     if(!cart.id) return null;
+
+    const discountedPrice = (cart.total * this.state.discount).toFixed(2)
+
     return (
       <div id='style'>
         <h1 className='header'>Checkout</h1>
@@ -125,6 +143,20 @@ class Checkout extends React.Component {
         ))}
         <p><Link to='/cart'><button className='btn btn-primary btn-sm'>Edit Cart</button></Link></p>
         <p><strong>Total: </strong>{ '$' + cart.total }</p>
+        
+        <form>
+        <p><strong> Have a Promo code? </strong></p> 
+        <input onChange = { changePromo } ></input>
+        </form>
+        
+        {
+          this.state.discount !== 1 ?
+            <p><strong>Total with discount:</strong> ${ discountedPrice } </p>
+          :
+          <p><strong>Thanks for shopping!</strong></p>
+        }
+
+
         <form onSubmit={ event => this.handleSubmit(event, userId, cart.id, this.state) }>
           <h2 className='header'>Billing Information</h2>
           <div className='form-group'>
@@ -182,15 +214,18 @@ class Checkout extends React.Component {
   }
 }
 
+
 const mapState = state => ({
   cart: state.cart,
   userId: state.user.id,
+  promoCodes: state.promoCodes,
   addresses: state.addresses
 });
 
 const mapDispatch = (dispatch, { history }) => ({
-  checkoutCart(userId, orderId, orderInfo) {
+  checkoutCart(userId, orderId, orderInfo, update) {
     dispatch(checkout(userId, orderId, orderInfo, history));
+    dispatch(updateOrder(userId, orderId, update, history));
   }
 });
 

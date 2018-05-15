@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const OrderConfirmation = ({ user, order }) => {
-  if(!user || !order ) return null;
+  if(!user || !order || order.status === 'cart' ) return null;
   return (
     <div id='style'>
       <h1 className='header'>Your order is on the way!</h1>
