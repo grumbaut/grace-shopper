@@ -10,6 +10,10 @@ const PromoCode = conn.define('promoCode', {
   },
   password: {
      type: Sequelize.STRING
+  },
+  valid:  {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
   }
 });
 
