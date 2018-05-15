@@ -44,7 +44,7 @@ const Nav = ({ user, logout, cart }) => {
                 </div>
               </div>
               :
-              <NavLink className="nav-link" to='/support'>Contact Support</NavLink>
+              null
           }
           <div className="nav-item">
             <NavLink className="nav-link" to='/categories' activeClassName='active'>Categories</NavLink>
@@ -75,8 +75,8 @@ const Nav = ({ user, logout, cart }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const mapState = state => {
   return {

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getUsers } from '../store';
+import Datamap from 'datamaps';
 
 class Users extends React.Component {
   constructor(props) {
@@ -12,8 +13,10 @@ class Users extends React.Component {
     const { getUsers, user } = this.props;
     if(user.isAdmin) {
       getUsers();
+this.map = new Datamap({element: document.getElementById('container')});
     }
   }
+
 
   render() {
     const { users, user } = this.props;
@@ -27,6 +30,7 @@ class Users extends React.Component {
               users.map(user => <li key = {user.id}><Link to={`/users/${user.id}`}>{ user.firstName } { user.lastName }</Link></li>)
             }
           </ul>
+          <div id="container" style={{position: 'relative', width: '700px', height: '500px'}} />
         </div>
       </div>
     );

@@ -136,7 +136,9 @@ describe('cart', () => {
         user = _user;
         return Order.findOrCreateCart(user.id);
       })
-      .then(_cart => cart = _cart);
+      .then(_cart => {
+        cart = _cart;
+      });
   });
   describe('cart', () => {
     it('generates a cart', () => {
@@ -156,10 +158,24 @@ describe('cart', () => {
           expect(updatedCart.lineitems[0].product.name).to.equal(product.name);
         });
     });
-    xit('checkout method sets order status to processing', () => {
-      cart.checkout(cart.id, orderInfo)
-        .then(_cart => cart = _cart);
-      expect(cart.status).to.equal('processing');
+    it('checkout method sets order status to processing', () => {
+      const orderInfo = { token: {
+        id: 'tok_visa'
+      },
+      shippingInfo: {
+        firstName: 'Alice',
+        lastName: 'Buyer',
+        address: '123 Buyer Way',
+        city: 'New York',
+        state: 'NY',
+        zip: '10012',
+        email: 'alice@wonderland.com'
+      }
+      };
+      Product.findById(1)
+        .then(product => cart.addToCart(3, product))
+        .then(_cart => _cart.checkout(user.id, orderInfo))
+        .then(_cart => expect(_cart.status).to.equal('processing'));
     });
     it('only generates a cart once', () => {
       Order.findOrCreateCart(user.id)

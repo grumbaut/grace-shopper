@@ -2,60 +2,9 @@ const conn = require('./conn');
 const { Sequelize } = conn;
 const LineItem = require('./LineItem');
 const Product = require('./Product');
-const User = require('./User')
-const nodemailer = require('nodemailer');
-const stripe = require("stripe")("sk_test_LqwHQ45LaOBDNsZHnZOyzazP");
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'williams.pomona@gmail.com',
-    pass: 'graceshopper'
-  }
-});
-
-const generateEmail = (order, user) => {
-  const total = '$' + order.total;
-  return `
-    <div>
-    <h2>${user.firstName}, your Williams-Pomona order has been received!</h2>
-    <p>Hello, ${user.firstName},</p>
-    <p>Thank you for shopping Williams-Pomona! We've received your order and will let you know as soon as it's shipped.</p>
-    <table>
-    <tr>
-      <th>Quantity</th>
-      <th>Product</th>
-      <th>Subtotal</th>
-    </tr>
-    ${order.lineitems.reduce((string, item) => {
-    const subtotal = '$' + item.subtotal;
-    const row = `
-      <tr>
-        <td>${item.quantity}</td>
-        <td>${item.product.name}</td>
-        <td>${subtotal}</td>
-      </tr>
-      `;
-    return string += row;
-  }, ``)}
-    <tr>
-      <td><strong>Total: </strong>${total}</td>
-      <td></td>
-      <td></td>
-    </tr>
-    </table>
-    <p>Your order will be shipped to:</p>
-    <blockquote>
-      <p>${ order.name }</p>
-      <p>${ order.address }</p>
-      <p>${ order.city }, ${ order.state } ${ order.zip }</p>
-      <p>${ order.email }</p>
-    </blockquote>
-    <p>Best wishes,</p>
-    <p>Williams-Pomona</p>
-    </div>
-  `;
-};
+const User = require('./User');
+const sendEmail = require('./generateEmail');
+const charge = require('./stripe');
 
 const Order = conn.define('order', {
   status: {
@@ -124,38 +73,29 @@ Order.prototype.addToCart = function(quantity, product) {
 Order.prototype.checkout = function(userId, orderInfo) {
   const { firstName, lastName, address, city, state, zip, email } = orderInfo.shippingInfo;
   const amount = this.total.split('.').join('');
-  return stripe.charges.create({
-    amount,
-    currency: 'usd',
-    description: 'Williams-Pomona',
-    source: orderInfo.token.id
+  return this.update({
+    status: 'processing',
+    date: new Date(),
+    firstName,
+    lastName,
+    address,
+    city,
+    state,
+    zip,
+    email
   })
-    .then(() => this.update({
-      status: 'processing',
-      date: new Date(),
-      firstName,
-      lastName,
-      address,
-      city,
-      state,
-      zip,
-      email
-    }))
-    .then(() => User.findById(userId))
-    .then(user => {
-      const mailOptions = {
-        from: 'williams.pomona@gmail.com',
-        to: user.email,
-        subject: 'Williams-Pomona: Your order has been received!',
-        html: generateEmail(this, user)
-      };
-      transporter.sendMail(mailOptions, (err, info) => {
-        if(err) {
-          console.log(err);
-        } else {
-          console.log(info);
-        }
-      });
+    .then(() => Promise.all([
+      User.findById(userId),
+      Order.findById(this.id, {
+        include: [{
+          model: LineItem,
+          include: [Product]
+        }]
+      })
+    ]))
+    .then(([user, order]) => {
+      sendEmail(user, order);
+      charge(orderInfo.token.id, amount);
       return this;
     });
 };
