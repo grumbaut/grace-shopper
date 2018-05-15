@@ -20,7 +20,8 @@ class Users extends React.Component {
         element: document.getElementById('container'),
         responsive: true,
         geographyConfig: {
-          highlightBorderColor: '#bada55',
+          highlightBorderColor: '#5F9EA0',
+          highlightFillColor: '#66ff66',
           popupTemplate: function (geography, data) {
             return `<div class="hoverinfo">${geography.properties.name}: ${data.members} users`;
           },
