@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { savePromoCode } from '../store';
+import { Link } from 'react-router-dom';
 
 class AdminPromoCode extends Component {
   constructor(promoCode) {
@@ -37,7 +38,7 @@ class AdminPromoCode extends Component {
         <ul>
           <h3 className='header'>Current promotions</h3>
             {
-                promoCodes.map(promoCode => <li> { promoCode.name }</li> )
+                promoCodes.map(promoCode => <li> <Link to={`/promocodes/${promoCode.id}`}> { promoCode.name }</Link></li> )
             }
           <h3 className='header'>Create New Promotion</h3>
           <form onSubmit={this.onSave}>

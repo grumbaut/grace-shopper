@@ -124,7 +124,7 @@ class Checkout extends React.Component {
 
     if(!cart.id) return null;
 
-    const discountedPrice = cart.total * this.state.discount
+    const discountedPrice = (cart.total * this.state.discount).toFixed(2)
 
     return (
       <div id='style'>
