@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const request = require('supertest');
 const db = require('../../server/db');
-const { Product, User } = db.models;
+const { User } = db.models;
 const app = require('../../app.js');
 
 //Root route
@@ -19,9 +19,11 @@ describe('Loading express', ()=> {
 });
 
 
-//User routes test  NEEDS TO BE ADMIN LOGGED IN!
-xdescribe('User routes', () => {
+//User routes test, needs to be logged in as admin.
+
+describe('User routes', () => {
     const moesEmail = 'moe@gmail.com';
+    let token;
     beforeEach(() => {
       return db.syncAndSeed()
       .then(()=>{
@@ -32,12 +34,19 @@ xdescribe('User routes', () => {
         email: 'moe@gmail.com',
         password: 'moeshops'
       });
+      })
+      .then(()=>{  return User.authenticate({
+        email: 'alice@wonderland.com',
+        password: 'ALICE'
       });
+    })
+    .then(_token => token = _token);
     });
 
     it('GET /api/users returns all users in the database', () => {
       return request(app)
         .get('/api/users')
+        .set('authorization', token)
         .then(res => {
           expect(res.body).to.be.an('array');
           expect(res.body.length).to.be.equal(4);
@@ -47,9 +56,10 @@ xdescribe('User routes', () => {
     it('It has data on a newly created user', () => {
       return request(app)
         .get('/api/users')
+        .set('authorization', token)
         .expect(200)
         .then(res => {
-          expect(res.body[1].email).to.be.equal(moesEmail);
+          expect(res.body.find(user=> user.firstName === "Moe").email).to.be.equal(moesEmail);
         });
     });
 });
