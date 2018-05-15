@@ -34,14 +34,12 @@ class Products extends React.Component {
     return (
       <div>
         <div>
-          <ul>
-            {
-              activePromoCodes ? (activePromoCodes.map(activePromoCode => <li> Special Discount {activePromoCode.name} is available! Use code {activePromoCode.password}</li>)
-             ) : (
-                  <h4>No current promotions - check back soon! </h4>
-                )
-            }
-          </ul>
+          {
+            activePromoCodes ? (activePromoCodes.map(activePromoCode => <p key={ activePromoCode.name }><strong> Special Discount {activePromoCode.name} is available! Use code {activePromoCode.password}</strong></p>)
+            ) : (
+              <p><strong>No current promotions - check back soon!</strong></p>
+            )
+          }
         </div>
         <div>
           <select value={ this.state.filter } onChange={ this.handleChange }>
