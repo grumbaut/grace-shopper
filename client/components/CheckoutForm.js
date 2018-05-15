@@ -106,7 +106,7 @@ class Checkout extends React.Component {
 
   render() {
     const { billingFirstName, billingLastName, firstName, lastName, address, city, state, zip, email, errors } = this.state;
-    const { cart, userId } = this.props;
+    const { cart, userId, addresses } = this.props;
     if(!cart.id) return null;
     return (
       <div id='style'>
@@ -141,7 +141,12 @@ class Checkout extends React.Component {
           </div>
           <hr className='style-eight' />
           <h2 className='header'>Shipment Information</h2>
-          <AddressDropdown addresses={ this.props.addresses } addressId={ this.state.addressId } handleDropdownChange={ this.handleDropdownChange } />
+          {
+            addresses.length ?
+              <AddressDropdown addresses={ addresses } addressId={ this.state.addressId } handleDropdownChange={ this.handleDropdownChange } />
+              :
+              null
+          }
           <div className='form-group'>
             <input name='firstName' value={ firstName } className='element' onChange={ this.handleChange } placeholder='First Name' />
             <p className='error'>{ errors.firstName }</p>
