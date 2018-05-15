@@ -30,11 +30,15 @@ class AdminPromoCode extends Component {
     this.setState({ [ev.target.name]: ev.target.value });
   }
   render(){
-    const { user } = this.props;
+    const { user, promoCodes } = this.props;
     if (!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
       <div id='style'>
         <ul>
+          <h3 className='header'>Current promotions</h3>
+            {
+                promoCodes.map(promoCode => <li> { promoCode.name }</li> )
+            }
           <h3 className='header'>Create New Promotion</h3>
           <form onSubmit={this.onSave}>
             <div className='form-group'>
@@ -61,9 +65,10 @@ class AdminPromoCode extends Component {
   }
 }
 
-const mapState = ({ user }) => {
+const mapState = ({ user, promoCodes }) => {
   return {
-    user,
+    promoCodes,
+    user
   };
 };
 
