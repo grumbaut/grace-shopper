@@ -24,5 +24,3 @@ router.use('/sessions', require('./sessions'));
 router.use('/reviews', require('./reviews'));
 
 module.exports = router;
-
-

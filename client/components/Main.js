@@ -33,13 +33,9 @@ import ProductSearch from './ProductSearch';
 import OrderConfirmation from './OrderConfirmation';
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.fetch();
-    if(window.localStorage.getItem('token')) {
+    if (window.localStorage.getItem('token')) {
       const token = window.localStorage.getItem('token');
       this.props.getUser(token);
     }

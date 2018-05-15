@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import OrderInfo from './OrderInfo';
 
 class ManageOrders extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   checkIfEmpty(obj) {
     for(let key in obj) {
       if(obj[key].length) {

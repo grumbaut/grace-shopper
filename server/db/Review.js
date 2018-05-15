@@ -16,8 +16,6 @@ const Review = conn.define('review', {
       { model: User }
     ]
   }
-}
-);
-
+});
 
 module.exports = Review;

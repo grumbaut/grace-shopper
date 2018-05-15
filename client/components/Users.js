@@ -5,15 +5,11 @@ import { getUsers } from '../store';
 import Datamap from 'datamaps';
 
 class Users extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { getUsers, user } = this.props;
     if(user.isAdmin) {
       getUsers();
-this.map = new Datamap({element: document.getElementById('container')});
+      this.map = new Datamap({element: document.getElementById('container')});
     }
   }
 

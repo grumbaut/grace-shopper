@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { saveUser, deleteUser } from '../store/users';
-// import { variableDeclarator } from 'babel-types';
 
 class EditUser extends Component {
   constructor(props){
