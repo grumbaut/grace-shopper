@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { savePromoCode } from '../store';
-import { Link } from 'react-router-dom';
+import { savePromoCode, deletePromoCode } from '../store';
 
-class AdminPromoCode extends Component {
+class PromoCode extends Component {
   constructor(promoCode) {
     super(promoCode);
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.onDelete = this.onDelete.bind(this)
     this.state = {
       name: promoCode.name ? promoCode.name : '',
       discount: promoCode.discount ? promoCode.discount : 1,
@@ -30,26 +30,26 @@ class AdminPromoCode extends Component {
     }
     this.setState({ [ev.target.name]: ev.target.value });
   }
+  onDelete(){
+    this.props.deletePromoCode({ id: this.props.id });
+  } 
   render(){
-    const { user, promoCodes } = this.props;
+    const { user, promoCode } = this.props;
+    const { onDelete } = this;
     if (!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
       <div id='style'>
         <ul>
-          <h3 className='header'>Current promotions</h3>
-            {
-                promoCodes.map(promoCode => <li key = { promoCode.id }> <Link to={`/promocodes/${promoCode.id}`}> { promoCode.name }</Link></li> )
-            }
-          <h3 className='header'>Create New Promotion</h3>
+          <h3 className='header'>Edit Promotion</h3>
           <form onSubmit={this.onSave}>
             <div className='form-group'>
-              <input name='name' className='element' onChange={this.onChange} placeholder='PromoCode Name' />
+              <input name='name' className='element' onChange={this.onChange} placeholder= {promoCode.name} />
             </div>
             <div className='form-group'>
-              <input name='discount' className='element' onChange={this.onChange} placeholder='Discount (e.g., 10%)' />
+              <input name='discount' className='element' onChange={this.onChange} placeholder={promoCode.discount} />
             </div>
             <div className='form-group'>
-              <input name='password' className='element' onChange={this.onChange} placeholder='Password' />
+              <input name='password' className='element' onChange={this.onChange} placeholder={promoCode.password} />
             </div>
             <div className='form-group'>
               <select name='valid' className='element' onChange={this.onChange}>
@@ -58,18 +58,23 @@ class AdminPromoCode extends Component {
                 <option value= { false }> False </option>
               </select>
             </div>
-            <button type='submit' className="btn btn-primary btn-sm"> Create </button>
+            <button type='submit' className="btn btn-primary btn-sm"> Update </button>
           </form>
+          <form onSubmit = { onDelete }>
+            <button type='submit' className="btn btn-primary btn-sm"> Delete </button>
+          </form>  
         </ul>
       </div>
     );
   }
 }
 
-const mapState = ({ user, promoCodes }) => {
-  return {
-    promoCodes,
-    user
+const mapState = ({ user, promoCodes }, { id }) => {
+    const promoCode = promoCodes.find(promoCode => promoCode.id === id)
+    return {
+    promoCode,
+    user, 
+    id
   };
 };
 
@@ -79,4 +84,4 @@ const mapDispatch = (dispatch, { history }) => {
   };
 };
 
-export default connect(mapState, mapDispatch)(AdminPromoCode);
+export default connect(mapState, mapDispatch)(PromoCode);

@@ -20,6 +20,7 @@ import Checkout from './Checkout';
 import ManageOrders from './ManageOrders';
 import AdminOrderStatus from './AdminOrderStatus';
 import AdminPromoCodes from './AdminPromoCodes';
+import PromoCode from './PromoCode';
 import EditOrder from './EditOrder';
 import LoggedOut from './LoggedOut';
 import Footer from './Footer';
@@ -75,7 +76,8 @@ class Main extends React.Component {
               <Route path='/account-settings' component={ AccountSettings } />
               <Route path='/addresses' component={ Addresses } />
               <Route path='/productsearch' component={ ProductSearch } />
-              <Route path='/promocodes' component={ AdminPromoCodes } />
+              <Route path='/promocodes' exact component={ AdminPromoCodes } />
+              <Route path='/promocodes/:id' exact render={({match, history}) => <PromoCode id={ match.params.id * 1 } history={ history } /> } />
               <Route exact path='/' component={ Home } />
             </Switch>
           </div>
