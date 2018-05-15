@@ -74,8 +74,8 @@ const Nav = ({ user, logout, cart }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const mapState = state => {
   return {
