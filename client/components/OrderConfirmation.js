@@ -22,6 +22,11 @@ const OrderConfirmation = ({ user, order }) => {
         </div>
       ))}
       <p><strong>Total: </strong>{ '$' + order.total }</p>
+      <p><strong>Shipping Information:</strong></p>
+      <p>{ order.name }<br />
+        { order.address }<br />
+        { `${order.city}, ${order.state} ${order.zip}`}<br />
+        { order.email }</p>
       <Link to='/'><button className='btn btn-primary btn-sm'>Continue Shopping</button></Link>
     </div>
   );
