@@ -38,7 +38,7 @@ class AdminPromoCode extends Component {
         <ul>
           <h3 className='header'>Current promotions</h3>
             {
-                promoCodes.map(promoCode => <li key = { promoCode.id }> <Link to={`/promocodes/${promoCode.id}`}> { promoCode.name }</Link></li> )
+                promoCodes.map(promoCode => <li key = { promoCode.id }> <Link to={`/promocodes/${promoCode.id}`}> { promoCode.name } { promoCode.valid === true ? '    CURRENTLY ACTIVE' : '   CURRENTLY INACTIVE' } </Link></li> )
             }
           <h3 className='header'>Create New Promotion</h3>
           <form onSubmit={this.onSave}>

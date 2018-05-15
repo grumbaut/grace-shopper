@@ -7,7 +7,7 @@ class PromoCode extends Component {
     super(promoCode);
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
-    this.onDelete = this.onDelete.bind(this)
+    // this.onDelete = this.onDelete.bind(this)
     this.state = {
       name: promoCode.name ? promoCode.name : '',
       discount: promoCode.discount ? promoCode.discount : 1,
@@ -31,9 +31,9 @@ class PromoCode extends Component {
     }
     this.setState({ [ev.target.name]: ev.target.value });
   }
-  onDelete(){
-    deletePromoCode({ id: this.props.id });
-  } 
+//   onDelete(){
+//     deletePromoCode({ id: this.props.id });
+//   } 
   render(){
     const { user, promoCode } = this.props;
     const { onDelete } = this;
@@ -61,14 +61,15 @@ class PromoCode extends Component {
             </div>
             <button type='submit' className="btn btn-primary btn-sm"> Update </button>
           </form>
-          <form onSubmit = { onDelete }>
-            <button type='submit' className="btn btn-primary btn-sm"> Delete </button>
-          </form>  
         </ul>
       </div>
     );
   }
 }
+
+// <form onSubmit = { onDelete }>
+// <button type='submit' className="btn btn-primary btn-sm"> Delete </button>
+// </form>  
 
 const mapState = ({ user, promoCodes }, { id }) => {
     const promoCode = promoCodes.find(promoCode => promoCode.id === id)
@@ -82,7 +83,7 @@ const mapState = ({ user, promoCodes }, { id }) => {
 const mapDispatch = (dispatch, { history }) => {
   return {
     savePromoCode: (promoCode) => dispatch(savePromoCode(promoCode, history)),
-    deletePromoCode: (promoCode) => dispatch(deleteProduct(promoCode, history))
+    // deletePromoCode: (promoCode) => dispatch(deleteProduct(promoCode, history))
   };
 };
 
