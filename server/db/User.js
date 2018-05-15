@@ -73,16 +73,11 @@ User.exchangeTokenForUser = function(token){
           return user;
         }
         throw { status: 401 };
-      })
-      .catch(err=> console.error(err));
+      });
   }
   catch(ex){
     return Promise.reject({ status: 401 });
   }
 };
-
-// User.prototype.correctPassword = function(password) { //this is a placeholder!!
-//   return password === 'bobshops' ? true : false;
-// };
 
 module.exports = User;
