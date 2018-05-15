@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getUsers } from '../store';
+import { getUsers, gotAddresses } from '../store';
 import Datamap from 'datamaps';
 import data from './mapData';
 
@@ -13,8 +13,10 @@ class Users extends React.Component {
 
   componentDidMount() {
     const { getUsers, user } = this.props;
+
     if (user.isAdmin) {
       getUsers();
+
       this.map = new Datamap({
         scope: 'usa',
         element: document.getElementById('container'),
@@ -49,6 +51,7 @@ class Users extends React.Component {
 
   render() {
     const { users, user } = this.props;
+    console.log(users);
     if (!user || !user.isAdmin) return <h1>You are not authorized to access this page.</h1>;
     return (
       <div>
@@ -74,8 +77,11 @@ const mapState = ({ users, user }) => {
 };
 
 const mapDispatch = dispatch => ({
-  getUsers() {
+  getUsers: ()=>{
     dispatch(getUsers());
+  },
+  gotAddresses: ()=>{
+    dispatch(gotAddresses());
   }
 });
 
