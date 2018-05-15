@@ -24,7 +24,7 @@ class ProductCard extends React.Component {
     }
     if(!product) return null;
     return (
-      <div className='col-md-3 col-sm-5 col-xs-12 product-card'>
+      <div className='product-card'>
         <h1>{ product.name }</h1>
         <img src = {product.imageUrl} width={200} />
         <h2>{`$${product.price}`}</h2>

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('../db');
-const { User, Order, LineItem, Product } = db.models;
+const { User, Order, LineItem, Product, Address } = db.models;
 const { authorized, isCorrectUser, isAdmin } = require('./authFuncs');
 
 //USER ROUTES
@@ -117,6 +117,39 @@ router.put('/:id/orders/:orderId/checkout', authorized, isCorrectUser('params', 
   })
     .then(order => order.checkout(req.params.id, req.body))
     .then(order => res.send(order))
+    .catch(next);
+});
+
+//ADDRESS ROUTES
+router.get('/:id/addresses', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
+  Address.findAll({
+    where: { userId: req.params.id }
+  })
+    .then(addresses => res.send(addresses))
+    .catch(next);
+});
+
+router.post('/:id/addresses', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
+  Address.create(req.body)
+    .then(address => {
+      return User.findById(req.params.id)
+        .then(user => address.setUser(user));
+    })
+    .then(address => res.send(address))
+    .catch(next);
+});
+
+router.put('/:id/addresses/:addressId', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
+  Address.findById(req.params.addressId)
+    .then(address => address.update(req.body))
+    .then(address => res.send(address))
+    .catch(next);
+});
+
+router.delete('/:id/addresses/:addressId', authorized, isCorrectUser('params', 'id'), (req, res, next) => {
+  Address.findById(req.params.addressId)
+    .then(address => address.destroy())
+    .then(() => res.sendStatus(200))
     .catch(next);
 });
 
